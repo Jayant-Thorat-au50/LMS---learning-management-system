@@ -10,7 +10,6 @@ return res.status(statusCode).json({
   stack:err.stack
 })
 
-next()
 }
 
 export default errorMiddleware
