@@ -1,12 +1,12 @@
 
 const errorMiddleware = (err,res) => {
 
-    const statusCode = err.statusCode || 500
-    const message = err.message || 'Something went wrong'
+    err.statusCode = err.statusCode || 500
+     err.message = err.message || 'Something went wrong'
 
-return res.status(statusCode).json({
+return res.status(err.statusCode).json({
   success:false,
-  message:message,
+  message:err.message,
   stack:err.stack
 })
 

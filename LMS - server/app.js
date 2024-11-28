@@ -8,8 +8,10 @@ import errorMiddleware from "./Middlewares/Error.middleware.js";
 const app = express();
 const PORT = process.env.PORT
 
-app.use("/api/v1/user", userRoutes);
+app.use(express.json())
+app.use(express.urlencoded({extended:false}))
 
+app.use("/api/v1/user", userRoutes);
 app.use(errorMiddleware)
 
 app.listen(PORT, async ()=>{

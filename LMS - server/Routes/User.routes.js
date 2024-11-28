@@ -3,6 +3,6 @@ import signUp from '../Controller/user.controller.js'
 
 const UserRoutes = express.Router();
 
-UserRoutes.get('/', signUp )
+UserRoutes.post('/register', signUp )
 
 export default UserRoutes;
