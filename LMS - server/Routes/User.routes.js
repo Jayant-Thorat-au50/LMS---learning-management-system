@@ -1,8 +1,12 @@
 import express from 'express'
-import signUp from '../Controller/user.controller.js'
-
+import {signUp,login, getUser} from '../Controller/user.controller.js'
+import isLoggedIn from '../Middlewares/isLoggedIn.js'
 const UserRoutes = express.Router();
 
 UserRoutes.post('/register', signUp )
+
+UserRoutes.post('/login', login )
+
+UserRoutes.post('/getUser',isLoggedIn, getUser )
 
 export default UserRoutes;
