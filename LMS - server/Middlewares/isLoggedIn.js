@@ -1,23 +1,29 @@
 
-import JWT from 'jsonwebtoken'
+import JWT from "jsonwebtoken";
 
-const isLoggedIn = async (req,res,next) => {
+const isLoggedIn = async (req, res, next) => {
 
-const token = req.Cookie.token;
+  const token = req.cookies.Token
 
-if(!token){
+  if(!token){
     return res.status(400).json({
-        success:false,
-        message:'Not Authorized'
+      success:false,
+      message:'Not Authorized'
     })
-}
+  }
 
-const payload =  JWT.verify(token, process.env.JWT_SECRET)
-      
-req.user = {id:payload.id, email:payload.email }
+ try {
+  const payload = JWT.verify(token, process.env.JWT_SECRET)
 
-next()
+  req.user = {id:payload.id, email:payload.email}
 
-}
+ } catch (error) {
+  res.status(400).json({
+    success:false,
+    message:error.message
+  })
+ }
+ next()
+};
 
-export default isLoggedIn
+export { isLoggedIn };

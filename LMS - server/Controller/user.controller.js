@@ -2,6 +2,8 @@ import UserModel from "../Models/UserModel.js";
 import AppError from "../Utils/AppError.utils.js";
 import emailValidate from "email-validator";
 import bcrypt from "bcrypt";
+import JWT from 'jsonwebtoken'
+import { application } from "express";
 
 const cookieOption = {
   maxAge: 24 * 60 * 60 * 1000,
@@ -9,56 +11,60 @@ const cookieOption = {
 };
 
 const signUp = async (req, res, next) => {
-  const { fullName, email, password } = req.body;
+  // const { fullName, email, password } = req.body;
 
   // validating the extracted fields
-  if (!fullName || !email || !password) {
-    return next(new AppError("Every field ie required", 400));
-  }
 
-  try {
-    const emailValid = emailValidate.validate(email);
+  res.status(200).json({
+    data:req.body
+  });
+  // if (!fullName || !email || !password) {
+  //   return next(new AppError("Every field ie required", 400));
+  // }
 
-    if (!emailValid) {
-      return next(new AppError("invalid email address", 400));
-    }
+  // try {
+  //   const emailValid = emailValidate.validate(email);
 
-    const duplicateUser = await UserModel.findOne({ email });
+  //   if (!emailValid) {
+  //     return next(new AppError("invalid email address", 400));
+  //   }
 
-    if (duplicateUser) {
-      return next(new AppError("User with this email already exists", 400));
-    }
+  //   const duplicateUser = await UserModel.findOne({ email });
 
-    const User = await UserModel.create({
-      fullName,
-      email,
-      password,
-      avatar: {
-        public_id: email,
-        secure: "",
-      },
-    });
+  //   if (duplicateUser) {
+  //     return next(new AppError("User with this email already exists", 400));
+  //   }
 
-    if (!User) {
-      return next(new AppError("User registration failed", 400));
-    }
+  //   const User = await UserModel.create({
+  //     fullName,
+  //     email,
+  //     password,
+  //     avatar: {
+  //       publicid: email,
+  //       secure: "",
+  //     },
+  //   });
 
-    await User.save();
+  //   if (!User) {
+  //     return next(new AppError("User registration failed", 400));
+  //   }
 
-    User.password = undefined;
+  //   await User.save();
 
-    const token = await User.JwtToken();
+  //   User.password = undefined;
 
-    res.cookie("token", token, cookieOption);
+  //   // const token = await User.JwtToken();
 
-    return res.status(200).json({
-      success: true,
-      message: "User registered successfully",
-      User,
-    });
-  } catch (error) {
-    next(new AppError(error.message, 400));
-  }
+  //   // res.cookie("token", token, cookieOption);
+
+  //   return res.status(200).json({
+  //     success: true,
+  //     message: "registered successfully",
+  //     User,
+  //   });
+  // } catch (error) {
+  //   next(new AppError(error.message, 400));
+  // }
 };
 
 const login = async (req, res, next) => {
@@ -77,7 +83,7 @@ const login = async (req, res, next) => {
 
     const token = await user.JwtToken();
 
-    res.cookie("token", token, cookieOption);
+    res.cookie("Token", token, cookieOption);
 
     res.status(200).json({
       success: true,
@@ -87,23 +93,22 @@ const login = async (req, res, next) => {
   } catch (error) {
     return next(new AppError(error.message, 400));
   }
-  
-  
 };
-  const getUser = async (req, res, next) => {
-    
-    const userId = req.user.userId
+const getUser = async (req, res, next) => {
+  
+  const userid = req.user.id
 
 try {
-  const user = await UserModel.findById(userId);
+  const User = await UserModel.findById(userid);
 
   res.status(200).json({
     success:true,
-    user
+    data:User
   })
 } catch (error) {
-  next(new AppError(error.message, 400))
+next(new AppError(error.message, 400))
 }
-  }
+  
+};
 
 export { signUp, login, getUser };
