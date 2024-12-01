@@ -17,8 +17,8 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
-const upload = multer()
-app.use(upload.array())
+const useMulter = multer()
+app.use(useMulter.array())
 
 // app.use(bodyParser.urlencoded({extended:true}));
 app.use('/api/v1/user', userRoutes);
