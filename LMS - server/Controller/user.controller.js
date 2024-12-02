@@ -2,9 +2,10 @@ import UserModel from "../Models/UserModel.js";
 import AppError from "../Utils/AppError.utils.js";
 import emailValidate from "email-validator";
 import bcrypt from "bcrypt";
-import JWT from 'jsonwebtoken'
-import cloudinary from 'cloudinary'
-import fs from 'fs'
+import cloudinary from "cloudinary";
+import fs from "fs";
+import sendEmail from "../Utils/sendEmail.js";
+import crypto from "crypto";
 
 const cookieOption = {
   maxAge: 24 * 60 * 60 * 1000,
@@ -15,7 +16,6 @@ const signUp = async (req, res, next) => {
   const { fullName, email, password } = req.body;
 
   // validating the extracted fields
-
 
   if (!fullName || !email || !password) {
     return next(new AppError("Every field ie required", 400));
@@ -48,36 +48,36 @@ const signUp = async (req, res, next) => {
       return next(new AppError("User registration failed", 400));
     }
 
-    if(req.file){
+    console.log("file > ", JSON.stringify(req.file));
+
+    if (req.file) {
       try {
         const result = await cloudinary.v2.uploader.upload(req.file.path, {
-          folder:"lms",
-          width:250,
-          height:250,
-          gravity:'faces',
-          crop:'fill'
-        })
+          folder: "lms",
+          width: 250,
+          height: 250,
+          gravity: "faces",
+          crop: "fill",
+        });
 
-        if(result){
-          User.avatar.publicid = result.public_id
-          User.avatar.secureUrl = result.secure_url
+        if (result) {
+          User.avatar.publicid = result.public_id;
+          User.avatar.secureUrl = result.secure_url;
 
-          fs.rm(`uploads/${req.file.filename}`)
-
+          fs.rm(`uploads/${req.file.filename}`);
         }
       } catch (error) {
-        return next(new AppError('file not uploaded, please try again', 500))
+        return next(new AppError("file not uploaded, please try again", 500));
       }
-
     }
 
     await User.save();
 
     User.password = undefined;
 
-    // const token = await User.JwtToken();
+    const token = await User.JwtToken();
 
-    // res.cookie("token", token, cookieOption);
+    res.cookie("token", token, cookieOption);
 
     return res.status(200).json({
       success: true,
@@ -117,20 +117,172 @@ const login = async (req, res, next) => {
   }
 };
 const getUser = async (req, res, next) => {
-  
-  const userid = req.user.id
+  const userid = req.user.id;
 
-try {
-  const User = await UserModel.findById(userid);
+  try {
+    const User = await UserModel.findById(userid);
 
-  res.status(200).json({
-    success:true,
-    data:User
-  })
-} catch (error) {
-next(new AppError(error.message, 400))
-}
-  
+    res.status(200).json({
+      success: true,
+      data: User,
+    });
+  } catch (error) {
+    next(new AppError(error.message, 400));
+  }
 };
 
-export { signUp, login, getUser };
+const logout = (req, res) => {
+  try {
+    res.cookie("token", null, {
+      maxAge: 0,
+      secure: true,
+      httpOnly: true,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "User logged out successfully",
+    });
+  } catch (error) {
+    next(new AppError(error.message, 400));
+  }
+};
+
+const forgotPassword = async (req, res, next) => {
+  const { email } = req.body;
+
+  // validating the extracted fields
+  if (!email) {
+    next(new AppError("email is required", 400));
+  }
+
+  // validating the email
+  const user = await UserModel.findOne({ email });
+
+  if (!user) {
+    next(new AppError("user with this email does not exist", 400));
+  }
+
+  // generating reset password token inside the user obj as per the userSchema
+  const resetToken = await user.generateResetPasswordToken();
+
+  // saving the user obj with added token
+  await user.save();
+
+  // to send the email with reset link to the user
+  // here is the link generated with frontend url
+  const resetUrl = `http://localhost:6070/reset-password/${resetToken}`;
+
+  try {
+    // sendemail utility args
+    const subject = "reset password";
+    const message = `click here <a href=${resetUrl}> to reset your password`;
+    // sending email to email entered
+    await sendEmail(email, subject, message);
+
+    // responding user that email sent to the email id
+    res.status(200).json({
+      success: true,
+      message: "an email is sent to your registered email id",
+    });
+  } catch (error) {
+    // if error occurs the token set to the user obj will be disabled
+    user.forgetPasswordToken = undefined;
+    user.forgetPasswordExpiry = undefined;
+
+    await user.save();
+    next(new AppError(error.message, 400));
+  }
+};
+
+const resetPassword = async (req, res, next) => {
+  const { resetToken } = req.params;
+
+  const { newPassword } = req.body;
+
+  // validating extracted fields
+  if (!newPassword) {
+    next(new AppError("please enter new password", 400));
+  }
+
+  try {
+    // creating encrypted form of the token received
+    const forgetPasswordToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    // validating the token with user obj
+    const user = await UserModel.findOne({
+      forgetPasswordToken: forgetPasswordToken,
+      forgetPasswordExpiry: { $gt: Date.now() },
+    });
+
+    // err if link is expired
+    if (!user) {
+      next(new AppError("link is invalid or expired", 400));
+    }
+
+    // updating the new password
+    user.password = newPassword;
+
+    // removing the token from user obj
+    user.forgetPasswordToken = undefined;
+    user.forgetPasswordExpiry = undefined;
+
+    // saving the user obj
+    user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "password updated successfully",
+    });
+  } catch (error) {
+    next(new AppError(error.message, 400));
+  }
+};
+
+const changePassword = async (req, res, next) => {
+  const { oldPassword, newPassword } = req.body;
+
+  // validating extracted fields
+  if (!oldPassword || !newPassword) {
+    next(new AppError("please enter both old password and new password"), 400);
+  }
+
+  // getting user id from jwt auth
+  const userId = req.user.id;
+
+  try {
+    const user = await UserModel.findById(userId).select("+password");
+
+    // validating the the old password with the user obj
+    if (!(await bcrypt.compare(oldPassword, user.password))) {
+      next(new AppError("invalid old password", 400));
+    }
+
+    // assigning the new password to the user obj
+    user.password = newPassword;
+    await user.save();
+
+    // removing the password server's user instance
+    user.password = undefined;
+
+    res.status(200).json({
+      success: true,
+      message: "password changed successfully",
+    });
+  } catch (error) {
+    next(new AppError(error.message, 400));
+  }
+};
+
+export {
+  signUp,
+  login,
+  getUser,
+  logout,
+  forgotPassword,
+  resetPassword,
+  changePassword,
+};
