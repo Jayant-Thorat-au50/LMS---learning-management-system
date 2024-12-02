@@ -3,7 +3,8 @@ import AppError from "../Utils/AppError.utils.js";
 import emailValidate from "email-validator";
 import bcrypt from "bcrypt";
 import JWT from 'jsonwebtoken'
-import { application } from "express";
+import cloudinary from 'cloudinary'
+import fs from 'fs'
 
 const cookieOption = {
   maxAge: 24 * 60 * 60 * 1000,
@@ -11,60 +12,81 @@ const cookieOption = {
 };
 
 const signUp = async (req, res, next) => {
-  // const { fullName, email, password } = req.body;
+  const { fullName, email, password } = req.body;
 
   // validating the extracted fields
 
-  res.status(200).json({
-    data:req.body
-  });
-  // if (!fullName || !email || !password) {
-  //   return next(new AppError("Every field ie required", 400));
-  // }
 
-  // try {
-  //   const emailValid = emailValidate.validate(email);
+  if (!fullName || !email || !password) {
+    return next(new AppError("Every field ie required", 400));
+  }
 
-  //   if (!emailValid) {
-  //     return next(new AppError("invalid email address", 400));
-  //   }
+  try {
+    const emailValid = emailValidate.validate(email);
 
-  //   const duplicateUser = await UserModel.findOne({ email });
+    if (!emailValid) {
+      return next(new AppError("invalid email address", 400));
+    }
 
-  //   if (duplicateUser) {
-  //     return next(new AppError("User with this email already exists", 400));
-  //   }
+    const duplicateUser = await UserModel.findOne({ email });
 
-  //   const User = await UserModel.create({
-  //     fullName,
-  //     email,
-  //     password,
-  //     avatar: {
-  //       publicid: email,
-  //       secure: "",
-  //     },
-  //   });
+    if (duplicateUser) {
+      return next(new AppError("User with this email already exists", 400));
+    }
 
-  //   if (!User) {
-  //     return next(new AppError("User registration failed", 400));
-  //   }
+    const User = await UserModel.create({
+      fullName,
+      email,
+      password,
+      avatar: {
+        publicid: email,
+        secure: "",
+      },
+    });
 
-  //   await User.save();
+    if (!User) {
+      return next(new AppError("User registration failed", 400));
+    }
 
-  //   User.password = undefined;
+    if(req.file){
+      try {
+        const result = await cloudinary.v2.uploader.upload(req.file.path, {
+          folder:"lms",
+          width:250,
+          height:250,
+          gravity:'faces',
+          crop:'fill'
+        })
 
-  //   // const token = await User.JwtToken();
+        if(result){
+          User.avatar.publicid = result.public_id
+          User.avatar.secureUrl = result.secure_url
 
-  //   // res.cookie("token", token, cookieOption);
+          fs.rm(`uploads/${req.file.filename}`)
 
-  //   return res.status(200).json({
-  //     success: true,
-  //     message: "registered successfully",
-  //     User,
-  //   });
-  // } catch (error) {
-  //   next(new AppError(error.message, 400));
-  // }
+        }
+      } catch (error) {
+        return next(new AppError('file not uploaded, please try again', 500))
+      }
+
+    }
+
+    await User.save();
+
+    User.password = undefined;
+
+    // const token = await User.JwtToken();
+
+    // res.cookie("token", token, cookieOption);
+
+    return res.status(200).json({
+      success: true,
+      message: "registered successfully",
+      User,
+    });
+  } catch (error) {
+    next(new AppError(error.message, 400));
+  }
 };
 
 const login = async (req, res, next) => {
