@@ -12,6 +12,7 @@ const cookieOption = {
   httpOnly: true,
 };
 
+// user sign up
 const signUp = async (req, res, next) => {
   const { fullName, email, password } = req.body;
 
@@ -22,18 +23,22 @@ const signUp = async (req, res, next) => {
   }
 
   try {
+    // validating the email id
     const emailValid = emailValidate.validate(email);
 
     if (!emailValid) {
       return next(new AppError("invalid email address", 400));
     }
 
+    // validating that this email id not already registered
     const duplicateUser = await UserModel.findOne({ email });
 
     if (duplicateUser) {
       return next(new AppError("User with this email already exists", 400));
     }
 
+    // creating a user instance in the in collection
+    // this user not yet saved
     const User = await UserModel.create({
       fullName,
       email,
@@ -44,13 +49,17 @@ const signUp = async (req, res, next) => {
       },
     });
 
+    // for any reason user registration can fail
     if (!User) {
       return next(new AppError("User registration failed", 400));
     }
 
     console.log("file > ", JSON.stringify(req.file));
 
+    // file sent by the multer by saving in the server
     if (req.file) {
+    // sending this file to the cloudinary 
+    // to get the global resourse url
       try {
         const result = await cloudinary.v2.uploader.upload(req.file.path, {
           folder: "lms",
@@ -60,25 +69,31 @@ const signUp = async (req, res, next) => {
           crop: "fill",
         });
 
+    // assigning cloudinary url in the avatar url
         if (result) {
           User.avatar.publicid = result.public_id;
           User.avatar.secureUrl = result.secure_url;
-
+    // removing the file saved from multer in the uploads folder
           fs.rm(`uploads/${req.file.filename}`);
         }
       } catch (error) {
         return next(new AppError("file not uploaded, please try again", 500));
       }
     }
-
+    // saving the userobj
     await User.save();
 
+    // making password disappear when user obj sent to the client
     User.password = undefined;
 
+    // getting token created in userSchema methods
     const token = await User.JwtToken();
 
+    // setting cookies in the client side through the response
+    // before sending the data to client
     res.cookie("token", token, cookieOption);
 
+    // sending the saved user obj to the client
     return res.status(200).json({
       success: true,
       message: "registered successfully",
@@ -88,25 +103,31 @@ const signUp = async (req, res, next) => {
     next(new AppError(error.message, 400));
   }
 };
-
+// user login
 const login = async (req, res, next) => {
   const { email, password } = req.body;
 
+  // validaing the extracted fields
   if (!email || !password) {
     return next(new AppError("Every field is required", 400));
   }
 
   try {
+  // validaing the user's existence in the db
     const user = await UserModel.findOne({ email }).select("+password");
 
+  // validaing the passwpord with the user
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return next(new AppError("Invalid email or password", 400));
     }
 
+  // setting token created in the userSchema method
     const token = await user.JwtToken();
 
+  // setting cookies in the client side through the response
     res.cookie("Token", token, cookieOption);
 
+  // sending the user data to the client 
     res.status(200).json({
       success: true,
       message: "User logged in successfully",
@@ -116,12 +137,17 @@ const login = async (req, res, next) => {
     return next(new AppError(error.message, 400));
   }
 };
+
+// get user api
 const getUser = async (req, res, next) => {
+
+  // grabbing the id extracted from the token in jwt auth middleware
   const userid = req.user.id;
 
   try {
     const User = await UserModel.findById(userid);
 
+  // sending the user data to the client 
     res.status(200).json({
       success: true,
       data: User,
@@ -131,14 +157,18 @@ const getUser = async (req, res, next) => {
   }
 };
 
+// user logout
 const logout = (req, res) => {
   try {
+
+// deactivating the token existing at the client side  
     res.cookie("token", null, {
       maxAge: 0,
       secure: true,
       httpOnly: true,
     });
 
+ // sending the response message    
     res.status(200).json({
       success: true,
       message: "User logged out successfully",
@@ -148,6 +178,7 @@ const logout = (req, res) => {
   }
 };
 
+// forget passowrd for user
 const forgotPassword = async (req, res, next) => {
   const { email } = req.body;
 
@@ -195,6 +226,7 @@ const forgotPassword = async (req, res, next) => {
   }
 };
 
+// user reset password
 const resetPassword = async (req, res, next) => {
   const { resetToken } = req.params;
 
@@ -242,6 +274,7 @@ const resetPassword = async (req, res, next) => {
   }
 };
 
+// change password
 const changePassword = async (req, res, next) => {
   const { oldPassword, newPassword } = req.body;
 
@@ -265,9 +298,10 @@ const changePassword = async (req, res, next) => {
     user.password = newPassword;
     await user.save();
 
-    // removing the password server's user instance
+    // removing the password from  server's user instance
     user.password = undefined;
 
+    // sending the response message
     res.status(200).json({
       success: true,
       message: "password changed successfully",
