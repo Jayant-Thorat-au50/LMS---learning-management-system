@@ -3,7 +3,7 @@ import JWT from "jsonwebtoken";
 
 const isLoggedIn = async (req, res, next) => {
 
-  const token = req.cookies.Token
+  const token = req.cookies.Token || null
 
   if(!token){
     return res.status(400).json({

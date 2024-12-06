@@ -187,6 +187,7 @@ const forgotPassword = async (req, res, next) => {
     next(new AppError("email is required", 400));
   }
 
+  try {
   // validating the email
   const user = await UserModel.findOne({ email });
 
@@ -204,7 +205,6 @@ const forgotPassword = async (req, res, next) => {
   // here is the link generated with frontend url
   const resetUrl = `http://localhost:6070/reset-password/${resetToken}`;
 
-  try {
     // sendemail utility args
     const subject = "reset password";
     const message = `click here <a href=${resetUrl}> to reset your password`;

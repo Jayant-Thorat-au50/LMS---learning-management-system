@@ -21,12 +21,16 @@ const courseSchema = new Schema({
     maxLength: [200, "description must not be more than 50 characters"],
   },
   thumbnail: {
-    public_id: { type: String },
+    public_id: {
+       type: String ,
+      default:'thumbnail'
+      },
     secure_Url: { type: String },
-    required: [true, "course thumbnail is reqiuired"],
+  
   },
   price: {
     type: Number,
+    default:0
   },
   noOfLectures: {
     type: Number,
@@ -52,10 +56,12 @@ const courseSchema = new Schema({
     type:String,
     required:true
   },
+ 
+},{
   timestamps:true
 });
 
 // creating the course model with schema declared above and new collection 'course
-CourseModel = model("course", courseSchema, "course");
+const CourseModel = model("course", courseSchema, "course");
 
 export default CourseModel;

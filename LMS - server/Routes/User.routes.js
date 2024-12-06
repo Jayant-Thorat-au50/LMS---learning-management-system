@@ -13,7 +13,7 @@ UserRoutes.get('/me',isLoggedIn, getUser )
 
 UserRoutes.get('/logout',logout )
 
-UserRoutes.post('/forgotPassword',isLoggedIn,forgotPassword)
+UserRoutes.post('/forgotPassword',forgotPassword)
 
 UserRoutes.post('/reset-password/:resetToken',resetPassword)
 

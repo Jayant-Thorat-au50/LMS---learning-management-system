@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 const useMulter = multer()
-app.use(useMulter.array())
+app.use(useMulter.single())
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.use('/api/v1/user', userRoutes);
