@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import multer from 'multer'
 import cloudinary from 'cloudinary'
+import courseRoutes from "./Routes/courseRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT
@@ -25,6 +26,7 @@ app.use(useMulter.array())
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/course', courseRoutes);
 app.use(errorMiddleware);
 
 app.listen(PORT,  ()=>{
