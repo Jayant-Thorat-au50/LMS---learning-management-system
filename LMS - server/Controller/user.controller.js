@@ -162,7 +162,7 @@ const logout = (req, res) => {
   try {
 
 // deactivating the token existing at the client side  
-    res.cookie("token", null, {
+    res.cookie("Token", null, {
       maxAge: 0,
       secure: true,
       httpOnly: true,

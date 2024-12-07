@@ -11,6 +11,8 @@ courseRoutes.post('/add-course',isLoggedIn, addCourse)
 
 courseRoutes.get('/get-one-course/:id',isLoggedIn, getOneCourse)
 
+courseRoutes.post('/get-one-course/:id',isLoggedIn, getOneCourse)
+
 
 
 export default courseRoutes

@@ -1,5 +1,4 @@
 import CourseModel from "../Models/CouresModel.js";
-import courseRoutes from "../Routes/courseRoutes.js";
 import AppError from "../Utils/AppError.utils.js";
 
 const addCourse = async (req, res, next) => {
@@ -82,10 +81,41 @@ try {
     success:false,
     message:'Course details fetched successfully',
     Course
-  })
+  });
 } catch (error) {
   return next(new AppError(error.message, 400))
 }
 }
 
-export { addCourse, getAllCourses, getOneCourse };
+const updateCourse = async (req,res) => {
+
+  const {id} = req.params;
+
+try {
+  const course = await CourseModel.findByIdAndDelete(
+    id,
+    {
+      $set:req.body
+    },
+    {
+      runValidators:true
+    }
+  )
+
+  if(!course){
+    return next(new AppError('unable to update the course, please try again',400))
+  }
+
+  return res.status(200).json({
+    success:true,
+    message:'course updated successfully',
+    course
+  })
+} catch (error) {
+   return next(new AppError(error.message, 400))
+}
+
+
+}
+
+export { addCourse, getAllCourses, getOneCourse, updateCourse };
