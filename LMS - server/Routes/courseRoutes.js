@@ -1,6 +1,6 @@
 
 import express from 'express'
-import { addCourse, getAllCourses, getOneCourse } from '../Controller/courseController.js';
+import { addCourse, deleteCourse, getAllCourses, getOneCourse, updateCourse } from '../Controller/courseController.js';
 import { isLoggedIn } from '../Middlewares/isLoggedIn.js';
 
 const courseRoutes = express.Router();
@@ -11,7 +11,9 @@ courseRoutes.post('/add-course',isLoggedIn, addCourse)
 
 courseRoutes.get('/get-one-course/:id',isLoggedIn, getOneCourse)
 
-courseRoutes.post('/get-one-course/:id',isLoggedIn, getOneCourse)
+courseRoutes.put('/update-course/:id',isLoggedIn, updateCourse)
+
+courseRoutes.post('/delete-course/:id',isLoggedIn, deleteCourse)
 
 
 

@@ -87,12 +87,12 @@ try {
 }
 }
 
-const updateCourse = async (req,res) => {
+const updateCourse = async (req,res,next) => {
 
   const {id} = req.params;
 
 try {
-  const course = await CourseModel.findByIdAndDelete(
+  const course = await CourseModel.findByIdAndUpdate(
     id,
     {
       $set:req.body
@@ -114,8 +114,28 @@ try {
 } catch (error) {
    return next(new AppError(error.message, 400))
 }
-
-
 }
 
-export { addCourse, getAllCourses, getOneCourse, updateCourse };
+const deleteCourse = async (req,res, next) => {
+
+  const {id} = req.params
+try {
+  
+  const course = await CourseModel.findById(id);
+
+  if(!course){
+    return next(new AppError('course does not exists', 400));
+  }
+
+     await CourseModel.findByIdAndDelete(id);
+
+  return res.status(200).json({
+    success:true,
+    message:'course deleted successfully'
+  });
+} catch (error) {
+  return next(new AppError(e.message, 400))
+}
+}
+
+export { addCourse, getAllCourses, getOneCourse, updateCourse, deleteCourse };
