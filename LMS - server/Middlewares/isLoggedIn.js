@@ -1,5 +1,6 @@
 
 import JWT from "jsonwebtoken";
+import AppError from "../Utils/AppError.utils.js";
 
 const isLoggedIn = async (req, res, next) => {
 
@@ -15,7 +16,7 @@ const isLoggedIn = async (req, res, next) => {
  try {
   const payload = JWT.verify(token, process.env.JWT_SECRET)
 
-  req.user = {id:payload.id, email:payload.email}
+  req.user = {id:payload.id, email:payload.email, role:payload.role, subscription:payload.subscription}
 
  } catch (error) {
   res.status(400).json({
@@ -25,5 +26,7 @@ const isLoggedIn = async (req, res, next) => {
  }
  next()
 };
+
+
 
 export { isLoggedIn };
