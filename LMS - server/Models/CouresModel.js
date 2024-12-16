@@ -43,13 +43,11 @@ const courseSchema = new Schema({
       thumbnail: {
         public_id: {
           type: String,
-          required: true,
         },
         secure_Url: {
           type: String,
-          required: true,
         },
-      },
+      }
     },
   ],
   createdby:{
