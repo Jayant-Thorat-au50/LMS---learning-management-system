@@ -1,12 +1,13 @@
 import React from 'react'
 import HomeLayout from '../components/HomeLayout'
 import { Link } from 'react-router-dom'
+import homePageImg from '../assets/download-removebg-preview.png'
 
 function HomePage() {
     return (
         <HomeLayout>
 
-        <div className=' pt-10 text-white flex items-center justify-center gap-10 mx-16 h-[90vh]'>
+        <div className=' pt-10 text-white flex items-center justify-center gap-8  mx-16 h-[90vh]'>
          <div className=' w-1/2 space-y-6'>
               <h1 className=' text-5xl font-semibold'>
                   Find out best
@@ -33,7 +34,7 @@ function HomePage() {
          </div>
 
    <div className=' w-1/2 flex items-center justify-center'>
-          <img src="" alt="" height={100} width={100} />
+          <img  alt="" height={350} width={300} src={homePageImg} />
    </div>
 
 
