@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.0",
     "@tailwindcss/line-clamp": "^0.4.4",
+    "axios": "^1.7.9",
     "chart.js": "^4.4.7",
     "daisyui": "^4.12.22",
     "eslint-plugin-simple-import-sort": "^12.1.1",
