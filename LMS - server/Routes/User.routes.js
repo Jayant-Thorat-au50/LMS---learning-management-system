@@ -4,15 +4,18 @@ import { isLoggedIn } from '../Middlewares/isLoggedIn.js';
 import upload from '../Middlewares/multer.middleware.js';
 
 
+
 const UserRoutes = express.Router();
 
-UserRoutes.post('/register', upload.single('avatar'),(req,res)=> res.send(req.body));
+UserRoutes.post('/register',signUp);
 
 UserRoutes.post('/login', login )
 
 UserRoutes.get('/me',isLoggedIn, getUser )
 
 UserRoutes.get('/logout',logout )
+
+UserRoutes.get('/get',(req,res)=> res.send('ok') )
 
 UserRoutes.post('/forgotPassword',forgotPassword)
 

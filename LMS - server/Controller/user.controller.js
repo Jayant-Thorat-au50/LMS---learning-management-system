@@ -15,13 +15,13 @@ const cookieOption = {
 // user sign up
 const signUp = async (req, res, next) => {
   const { fullName, email, password } = req.body;
-
+  
   // validating the extracted fields
-
   if (!fullName || !email || !password) {
     return next(new AppError("Every field ie required", 400));
   }
 
+  
   try {
     // validating the email id
     const emailValid = emailValidate.validate(email);
@@ -54,10 +54,12 @@ const signUp = async (req, res, next) => {
       return next(new AppError("User registration failed", 400));
     }
 
-    console.log("file > ", JSON.stringify(req.file));
+    // console.log("file > ", JSON.stringify(req.file));
 
     // file sent by the multer by saving in the server
     if (req.file) {
+      console.log(req.file);
+      
     // sending this file to the cloudinary 
     // to get the global resourse url
       try {
@@ -102,6 +104,8 @@ const signUp = async (req, res, next) => {
   } catch (error) {
     next(new AppError(error.message, 400));
   }
+
+
 };
 // user login
 const login = async (req, res, next) => {

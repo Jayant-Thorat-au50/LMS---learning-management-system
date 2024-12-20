@@ -78,7 +78,7 @@ function HomeLayout({ children }) {
                     <Link>Login</Link>
                   </button>
                   <button className=" rounded-md bg-secondary w-1/2 lg:w-1/3 text-white  text-lg font-semibold">
-                    <Link>Signup</Link>
+                    <Link to={'/signUp'}>Signup</Link>
                   </button>
                 </div>
               </li>

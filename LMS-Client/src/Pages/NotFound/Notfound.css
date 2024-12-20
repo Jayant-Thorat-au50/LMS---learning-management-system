@@ -1,0 +1,40 @@
+
+
+.notfound{
+    rotate: 30deg;
+    animation-name: pageNotFound;
+    /* animation-timing-function: ease-in-out; */
+    animation-iteration-count: infinite;
+    animation-duration: 2s;
+}
+
+@keyframes pageNotFound {
+    from{
+    rotate: 30deg;
+    }
+
+    to{
+    rotate: 210deg;
+    }
+}
+
+.statusCode{
+    animation-name: statusCode;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes statusCode {
+    0%{
+     filter: drop-shadow(0px 0px 0px #000000);
+    }
+    25%{
+     filter: drop-shadow(30px 10px 4px #e85757);
+    }
+    50%{
+     filter: drop-shadow(30px 10px 4px #e2ff3c);
+    }
+    100%{
+     filter: drop-shadow(0px 0px 0px #b7ff78);
+    }
+}
