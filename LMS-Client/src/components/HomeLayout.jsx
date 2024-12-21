@@ -4,18 +4,25 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../Redux/Slices/Authslice";
 
 function HomeLayout({ children }) {
-  const dispatch = useDispatch();
+
+  const Dispactch = useDispatch()
   const navigate = useNavigate();
 
-  const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
-  const role = useSelector((state) => state?.auth?.role);
+  const isLoggedIn = useSelector((state) => state?.authstate?.isLoggedIn);
+  const role = useSelector((state) => state?.authstate?.role);
+  console.log(role);
+  
 
-  const handleLogout = (e) => {
-    e.preventDefault();
-
-    navigate("/");
+  const handleLogout = async () => {
+     const response = await Dispactch(logout());
+     console.log(response);
+     if(response?.payload?.success){
+      navigate('/')
+     }
+     
   };
 
   const changeWidth = () => {
@@ -75,7 +82,7 @@ function HomeLayout({ children }) {
               <li>
                 <div className="  flex items-center justify-start">
                   <button className=" rounded-md bg-primary w-1/2 lg:w-1/3 text-white text-lg font-semibold">
-                    <Link>Login</Link>
+                    <Link to={'/login'}>Login</Link>
                   </button>
                   <button className=" rounded-md bg-secondary w-1/2 lg:w-1/3 text-white  text-lg font-semibold">
                     <Link to={'/signUp'}>Signup</Link>
@@ -85,15 +92,13 @@ function HomeLayout({ children }) {
             )}
             {isLoggedIn && (
               <li>
-                <div className="   flex items-center justify-center">
-                  <button className=" rounded-md bg-primary text-white  p-1 text-xl font-semibold">
+                <div className="  flex items-center justify-start">
+                  <button className=" rounded-md bg-primary w-1/2 lg:w-1/3 text-white text-lg font-semibold">
                     <Link>profile</Link>
                   </button>
-                  <button
-                    className=" rounded-md bg-secondary  text-white  p-1 text-xl font-semibold"
-                    onClick={handleLogout}
-                  >
-                    <Link>logout</Link>
+                  <button className=" rounded-md bg-secondary w-1/2 lg:w-1/3 text-white  text-lg font-semibold"
+                  onClick={()=> handleLogout()}>
+                    logout
                   </button>
                 </div>
               </li>

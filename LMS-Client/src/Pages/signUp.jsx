@@ -4,10 +4,7 @@ import HomeLayout from '../components/HomeLayout';
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
 import { register } from '../../Redux/Slices/Authslice';
-import axiosInstance from '../Helpers/axiosInstance';
-import { useSelector } from 'react-redux';
 
 function SignUp() {
 
@@ -79,7 +76,6 @@ function SignUp() {
         const response = await dispatch(register(formData));
 
         if (response?.payload?.success) {
-            localStorage.setItem("isLoggedIn", 'true')
             navigate(`/`)
             setSignUpData({
                 fullName: "",
@@ -93,7 +89,7 @@ function SignUp() {
 
     }
 
-    console.log(signUpData);
+
 
     return (
         <HomeLayout>
@@ -125,8 +121,12 @@ function SignUp() {
                         <input type="password" placeholder="Enter your password...." onChange={handleUserInput} value={signUpData.password} id='password' className='border bg-transparent px-5 text-white py-1 w-full borderbg-transparent' required name='password' />
                     </div>
 
-                    <div className=' px-10  w-full flex justify-center items-center my-3 mb-5'>
+                    <div className=' px-10  w-full flex justify-center items-center my-2'>
                         <button type='submit' className=' bg-yellow-500 w-full font-bold text-2xl py-1 rounded text-black hover:bg-yellow-800'>Create Account</button>
+                    </div>
+
+                    <div className='my-3'>
+                        <p className='text-lg text-white bg-transparent'>Already have an acc? <span onClick={() => navigate('/login')} className=' text-blue-500' >login</span></p>
                     </div>
 
 

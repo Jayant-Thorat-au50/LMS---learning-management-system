@@ -15,13 +15,11 @@ const cookieOption = {
 // user sign up
 const signUp = async (req, res, next) => {
   const { fullName, email, password } = req.body;
-  
+
   // validating the extracted fields
   if (!fullName || !email || !password) {
     return next(new AppError("Every field ie required", 400));
   }
-
-  
   try {
     // validating the email id
     const emailValid = emailValidate.validate(email);
@@ -59,9 +57,9 @@ const signUp = async (req, res, next) => {
     // file sent by the multer by saving in the server
     if (req.file) {
       console.log(req.file);
-      
-    // sending this file to the cloudinary 
-    // to get the global resourse url
+
+      // sending this file to the cloudinary
+      // to get the global resourse url
       try {
         const result = await cloudinary.v2.uploader.upload(req.file.path, {
           folder: "lms",
@@ -71,11 +69,11 @@ const signUp = async (req, res, next) => {
           crop: "fill",
         });
 
-    // assigning cloudinary url in the avatar url
+        // assigning cloudinary url in the avatar url
         if (result) {
           User.avatar.publicid = result.public_id;
           User.avatar.secureUrl = result.secure_url;
-    // removing the file saved from multer in the uploads folder
+          // removing the file saved from multer in the uploads folder
           fs.rm(`uploads/${req.file.filename}`);
         }
       } catch (error) {
@@ -104,8 +102,6 @@ const signUp = async (req, res, next) => {
   } catch (error) {
     next(new AppError(error.message, 400));
   }
-
-
 };
 // user login
 const login = async (req, res, next) => {
@@ -117,24 +113,24 @@ const login = async (req, res, next) => {
   }
 
   try {
-  // validaing the user's existence in the db
+    // validaing the user's existence in the db
     const user = await UserModel.findOne({ email }).select("+password");
 
-  // validaing the passwpord with the user
+    // validaing the password with the user
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return next(new AppError("Invalid email or password", 400));
     }
 
-  // setting token created in the userSchema method
-    const token = await user.JwtToken();
+    // setting token created in the userSchema method
+    const token =  user.JwtToken();
 
-  // setting cookies in the client side through the response
+    // setting cookies in the client side through the response
     res.cookie("Token", token, cookieOption);
 
-  // sending the user data to the client 
+    // sending the user data to the client
     res.status(200).json({
       success: true,
-      message: "User logged in successfully",
+      message: "User log in successfully",
       user,
     });
   } catch (error) {
@@ -144,14 +140,13 @@ const login = async (req, res, next) => {
 
 // get user api
 const getUser = async (req, res, next) => {
-
   // grabbing the id extracted from the token in jwt auth middleware
   const userid = req.user.id;
 
   try {
     const User = await UserModel.findById(userid);
 
-  // sending the user data to the client 
+    // sending the user data to the client
     res.status(200).json({
       success: true,
       data: User,
@@ -164,15 +159,14 @@ const getUser = async (req, res, next) => {
 // user logout
 const logout = (req, res) => {
   try {
-
-// deactivating the token existing at the client side  
+    // deactivating the token existing at the client side
     res.cookie("Token", null, {
       maxAge: 0,
       secure: true,
       httpOnly: true,
     });
 
- // sending the response message    
+    // sending the response message
     res.status(200).json({
       success: true,
       message: "User logged out successfully",
@@ -192,22 +186,22 @@ const forgotPassword = async (req, res, next) => {
   }
 
   try {
-  // validating the email
-  const user = await UserModel.findOne({ email });
+    // validating the email
+    const user = await UserModel.findOne({ email });
 
-  if (!user) {
-    next(new AppError("user with this email does not exist", 400));
-  }
+    if (!user) {
+      next(new AppError("user with this email does not exist", 400));
+    }
 
-  // generating reset password token inside the user obj as per the userSchema
-  const resetToken = await user.generateResetPasswordToken();
+    // generating reset password token inside the user obj as per the userSchema
+    const resetToken = await user.generateResetPasswordToken();
 
-  // saving the user obj with added token
-  await user.save();
+    // saving the user obj with added token
+    await user.save();
 
-  // to send the email with reset link to the user
-  // here is the link generated with frontend url
-  const resetUrl = `http://localhost:6070/reset-password/${resetToken}`;
+    // to send the email with reset link to the user
+    // here is the link generated with frontend url
+    const resetUrl = `http://localhost:6070/reset-password/${resetToken}`;
 
     // sendemail utility args
     const subject = "reset password";

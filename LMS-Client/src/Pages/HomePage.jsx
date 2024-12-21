@@ -1,16 +1,21 @@
 import React from 'react'
 import HomeLayout from '../components/HomeLayout'
-import { Link } from 'react-router-dom'
+import { data, Link } from 'react-router-dom'
 import homePageImg from '../assets/pexels-photo-10725897-removebg-preview.png'
 import { useSelector } from 'react-redux'
 
+
 function HomePage() {
 
+    
     return (
         <HomeLayout>
 
         <div className=' pt-10 text-white flex items-center justify-center gap-5 mx-16  h-[90vh]'>
          <div className=' w-1/2 space-y-6'>
+         <h1>
+    
+         </h1>
               <h1 className=' text-5xl font-semibold'>
                   Find out best
                   <span className= 'text-yellow-500 font-bold'>
