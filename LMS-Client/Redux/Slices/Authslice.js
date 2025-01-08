@@ -3,18 +3,23 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../.././src/Helpers/axiosInstance";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { data } from "react-router-dom";
 
 const initialState = {
   isLoggedIn:localStorage.getItem("isLoggedIn") || false,
   role: localStorage.getItem("role") || " ",
-  data: localStorage.getItem("data") || {},
+  data:JSON.parse( localStorage.getItem("data") || {},)
 };
 
 export const register = createAsyncThunk("auth/signUp", async (singnUpData) => {
   try {
     const res = axios.post(
       "http://localhost:6070/api/v1/user/register",
-      singnUpData
+      singnUpData,
+      {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      }}
     );
 
     toast.promise(res, {
@@ -77,7 +82,7 @@ const AuthSlice = createSlice({
       localStorage.setItem("data", JSON.stringify(action?.payload?.user));
       localStorage.setItem("isLoggedIn", true);
       localStorage.setItem("role", action?.payload.user?.role);
-      state.data = action?.payload?.user;
+      state.data = JSON.parse(action?.payload?.user)
       state.role = action?.payload?.user?.role;
       state.isLoggedIn = true
     })
@@ -86,6 +91,14 @@ const AuthSlice = createSlice({
       state.data = {}
       state.role = " "
       state.isLoggedIn = false
+    })
+    .addCase(register.fulfilled, (state, action) => {
+      localStorage.setItem(data,JSON.stringify(action?.payload?.User));
+      localStorage.setItem('isLoggedIn', true);
+      localStorage.setItem("role", action?.payload?.User.role);
+      state.isLoggedIn = true,
+      state.data = (action?.payload?.User)
+      state.role = action?.payload?.User?.role
     })
   },
 });

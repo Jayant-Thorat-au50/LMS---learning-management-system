@@ -72,6 +72,7 @@ function SignUp() {
         formData.append("email", signUpData.email)
         formData.append("password", signUpData.password)
 
+ 
 
         const response = await dispatch(register(formData));
 
@@ -99,33 +100,36 @@ function SignUp() {
                     <h1 className=' text-center capitalize font-bold text-3xl my-2 text-yellow-400'>registration page</h1>
 
                     <div className=' flex justify-center items-center flex-col'>
-                        <label htmlFor="avatar" className=' cursor-pointer'>
+                        <label htmlFor="Avatar" className=' cursor-pointer'>
                             {previewImg ? (<img src={previewImg} alt="" className='w-24 h-24 rounded-full m-auto' />) : (<BsPersonCircle
                                 className=' w-24 h-24 rounded-full m-auto'
                             />)}
 
                         </label>
-                        <input type="file" id='avatar' hidden required name='avatar' onChange={getImg} />
+                        <input type="file" id='Avatar' hidden required name='Avatar' onChange={getImg} />
                     </div>
 
                     <div className=' flex flex-col items-start w-full px-10 space-y-2'>
-                        <label htmlFor="fullName" className=' font-semibold text-white text-xl'>Full Name</label>
+                        <label htmlFor="fullName" className=' font-semibold text-yellow-500 text-xl'>Full Name</label>
                         <input type="text" id='fullName' className='border px-5 text-white py-1 bg-transparent w-full' placeholder="Enter your name...." required name='fullName' onChange={handleUserInput} value={signUpData.fullName} />
                     </div>
                     <div className=' flex flex-col items-start w-full px-10 space-y-2'>
-                        <label htmlFor="email" className=' font-semibold text-white text-xl'>Email</label>
+                        <label htmlFor="email" className=' font-semibold  text-yellow-500 text-xl'>Email</label>
                         <input type="email" id='email' placeholder="Enter your email...." onChange={handleUserInput} value={signUpData.email} className='px-5 py-1 bg-transparent border w-full' required name='email' />
                     </div>
                     <div className=' flex flex-col items-start w-full px-10 space-y-2'>
-                        <label htmlFor="password" className=' font-semibold  text-white text-xl' >Password</label>
+                        <label htmlFor="password" className=' font-semibold  text-yellow-500 text-xl' >Password</label>
                         <input type="password" placeholder="Enter your password...." onChange={handleUserInput} value={signUpData.password} id='password' className='border bg-transparent px-5 text-white py-1 w-full borderbg-transparent' required name='password' />
                     </div>
 
-                    <div className=' px-10  w-full flex justify-center items-center my-2'>
+                    <div className=' px-10  w-full flex justify-center items-center mt-2 mb-0'>
                         <button type='submit' className=' bg-yellow-500 w-full font-bold text-2xl py-1 rounded text-black hover:bg-yellow-800'>Create Account</button>
                     </div>
+                    <div className='my-0'>
+                        <p className='text-lg text-blue-500 bg-transparent'>forget your password?  <span onClick={() => navigate('/login')} className=' text-white' ><u>reset now</u></span></p>
+                    </div>
 
-                    <div className='my-3'>
+                    <div className='mb-3'>
                         <p className='text-lg text-white bg-transparent'>Already have an acc? <span onClick={() => navigate('/login')} className=' text-blue-500' >login</span></p>
                     </div>
 

@@ -9,6 +9,8 @@ import AboutUs from "./Pages/aboutUs.jsx";
 import NotFound from "./Pages/NotFound/NotFound.jsx";
 import SignUp from "./Pages/signUp.jsx";
 import Login from "./Pages/login.jsx";
+import CourseList from "./Pages/Course/CourseList.jsx";
+import ContactUs from "./Pages/contactUs.jsx";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
       <Route path="/about" element={<AboutUs />} />
       <Route path="/signUp" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/courses" element={<CourseList />} />
+      <Route path="/contact-us" element={<ContactUs />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );

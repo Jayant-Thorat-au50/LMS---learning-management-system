@@ -13,6 +13,8 @@ function Login() {
     console.log(auth);
     
 
+
+
     const [loginData, setLoginData] = useState({
         email: "",
         password: "",
@@ -25,6 +27,9 @@ function Login() {
             [name]: value
         })
     }
+
+
+
 
     const login = async (e) => {
 
@@ -49,19 +54,17 @@ function Login() {
         formData.append("password", loginData.password)
 
 
-        const response = await dispatch(loginNow(formData));
-   console.log(response);
-   
+        const response = await dispatch(loginNow(loginData));
+        console.log(response);
+
         if (response?.payload?.success) {
             console.log(response?.payload?.success);
-            
+
             navigate(`/`)
             setLoginData({
                 email: "",
                 password: "",
             })
-            console.log(auth);
-            
         }
 
     }
@@ -74,8 +77,7 @@ function Login() {
             <div className=' w-full h-screen flex justify-center items-center'>
                 <form action="" onSubmit={login} encType='multipart/form-data' noValidate className='shadow-[0_0_10px_black] w-96 flex  flex-col gap-2 items-center'>
                     <h1 className=' text-center capitalize font-bold text-3xl my-2 text-yellow-400'>registration page</h1>
-
-
+                    
                     <div className=' flex flex-col items-start w-full px-10 space-y-2'>
                         <label htmlFor="email" className=' font-semibold text-white text-xl'>Email</label>
                         <input type="email" id='email' placeholder="Enter your email...." onChange={handleUserInput} value={loginData.email} className='px-5 py-1 bg-transparent border w-full' required name='email' />

@@ -3,7 +3,7 @@ import AppError from "../Utils/AppError.utils.js";
 import emailValidate from "email-validator";
 import bcrypt from "bcrypt";
 import cloudinary from "cloudinary";
-import fs from "fs";
+import fs from "fs/promises";
 import sendEmail from "../Utils/sendEmail.js";
 import crypto from "crypto";
 
@@ -43,7 +43,7 @@ const signUp = async (req, res, next) => {
       password,
       avatar: {
         publicid: email,
-        secure: "",
+        secureUrl:  'https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg',
       },
     });
 
@@ -56,8 +56,6 @@ const signUp = async (req, res, next) => {
 
     // file sent by the multer by saving in the server
     if (req.file) {
-      console.log(req.file);
-
       // sending this file to the cloudinary
       // to get the global resourse url
       try {
@@ -74,10 +72,16 @@ const signUp = async (req, res, next) => {
           User.avatar.publicid = result.public_id;
           User.avatar.secureUrl = result.secure_url;
           // removing the file saved from multer in the uploads folder
-          fs.rm(`uploads/${req.file.filename}`);
+          fs.rm(`./uploads/${req.file.filename}`);
         }
       } catch (error) {
-        return next(new AppError("file not uploaded, please try again", 500));
+        return next(
+          new AppError(
+            "file not uploaded, please try again",
+            error.message,
+            500
+          )
+        );
       }
     }
     // saving the userobj
@@ -107,6 +111,8 @@ const signUp = async (req, res, next) => {
 const login = async (req, res, next) => {
   const { email, password } = req.body;
 
+  console.log(req.body);
+  
   // validaing the extracted fields
   if (!email || !password) {
     return next(new AppError("Every field is required", 400));
@@ -122,7 +128,7 @@ const login = async (req, res, next) => {
     }
 
     // setting token created in the userSchema method
-    const token =  user.JwtToken();
+    const token = user.JwtToken();
 
     // setting cookies in the client side through the response
     res.cookie("Token", token, cookieOption);

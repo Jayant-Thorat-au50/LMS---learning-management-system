@@ -13,12 +13,11 @@ function HomeLayout({ children }) {
 
   const isLoggedIn = useSelector((state) => state?.authstate?.isLoggedIn);
   const role = useSelector((state) => state?.authstate?.role);
-  console.log(role);
+
   
 
   const handleLogout = async () => {
      const response = await Dispactch(logout());
-     console.log(response);
      if(response?.payload?.success){
       navigate('/')
      }
@@ -52,15 +51,15 @@ function HomeLayout({ children }) {
         </div>
 
         <div className="drawer-side w-0">
-          <label htmlFor="my-drawer" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-48 sm:w-80 bg-base-200  text-base-content relative">
+          <label htmlFor="my-drawer" className="drawer-overlay "></label>
+          <ul className="menu pr-0 text-lg p-4 w-48 sm:w-64 bg-base-200 h-screen   text-base-content relative">
             <li className="absolute right-2 z-50">
               <button onClick={hideDrawer}>
                 <AiFillCloseCircle />
               </button>
             </li>
 
-            <li>
+            <li className=" ">
               <Link to={"/"}>Home</Link>
             </li>
             {isLoggedIn && role === "ADMIN" && (
@@ -81,10 +80,10 @@ function HomeLayout({ children }) {
             {!isLoggedIn && (
               <li>
                 <div className="  flex items-center justify-start">
-                  <button className=" rounded-md bg-primary w-1/2 lg:w-1/3 text-white text-lg font-semibold">
+                  <button className=" rounded-md bg-primary w-1/2 lg:w-6/12 text-white text-lg font-semibold hover:bg-blue-700 transition-all ease-in-out duration-400 hover:font-bold">
                     <Link to={'/login'}>Login</Link>
                   </button>
-                  <button className=" rounded-md bg-secondary w-1/2 lg:w-1/3 text-white  text-lg font-semibold">
+                  <button className=" rounded-md bg-secondary w-1/2 lg:w-6/12 text-white  text-lg font-semibold hover:bg-pink-500 transition-all ease-in-out duration-400 hover:font-bold">
                     <Link to={'/signUp'}>Signup</Link>
                   </button>
                 </div>
@@ -93,10 +92,10 @@ function HomeLayout({ children }) {
             {isLoggedIn && (
               <li>
                 <div className="  flex items-center justify-start">
-                  <button className=" rounded-md bg-primary w-1/2 lg:w-1/3 text-white text-lg font-semibold">
+                  <button className=" rounded-md bg-primary w-1/2 lg:w-1/2 text-white text-lg font-semibold">
                     <Link>profile</Link>
                   </button>
-                  <button className=" rounded-md bg-secondary w-1/2 lg:w-1/3 text-white  text-lg font-semibold"
+                  <button className=" rounded-md bg-secondary w-1/2 lg:w-1/2 text-white  text-lg font-semibold"
                   onClick={()=> handleLogout()}>
                     logout
                   </button>
