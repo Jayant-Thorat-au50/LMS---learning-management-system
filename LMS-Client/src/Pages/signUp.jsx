@@ -5,6 +5,7 @@ import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../../Redux/Slices/Authslice';
+import { isEmail, isPassword} from '../Helpers/regexMatcher.js';
 
 function SignUp() {
 
@@ -57,11 +58,11 @@ function SignUp() {
             toast.error(' name must at least more than five characters')
             return;
         }
-        if (!signUpData.email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+        if (!isEmail(signUpData.email)) {
             toast.error('invalid email id')
             return;
         }
-        if (!signUpData.password.match(/^[a-zA-Z0-9!@#$%^&*]{6,16}$/)) {
+        if (!isPassword(signUpData.password)) {
             toast.error('password must be 6 to 16 char long')
             return;
         }

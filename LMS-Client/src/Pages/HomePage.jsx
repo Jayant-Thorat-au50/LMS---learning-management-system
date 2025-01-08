@@ -33,7 +33,7 @@ function HomePage() {
                                 Explore courses
                             </button>
                         </Link>
-                        <Link to={'/contact'}>
+                        <Link to={'/contact-us'}>
                             <button className='px-5 py-3 border rounded-md font-semibold cursor-pointer text-lg hover:bg-yellow-600 transition-all ease-in-out duration-300 '>
                                 Contact Us
                             </button>

@@ -8,7 +8,7 @@ import { data } from "react-router-dom";
 const initialState = {
   isLoggedIn:localStorage.getItem("isLoggedIn") || false,
   role: localStorage.getItem("role") || " ",
-  data:JSON.parse( localStorage.getItem("data") || {},)
+  data: localStorage.getItem("data") || {},
 };
 
 export const register = createAsyncThunk("auth/signUp", async (singnUpData) => {
