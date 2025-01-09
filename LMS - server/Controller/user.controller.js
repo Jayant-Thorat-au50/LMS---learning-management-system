@@ -43,7 +43,8 @@ const signUp = async (req, res, next) => {
       password,
       avatar: {
         publicid: email,
-        secureUrl:  'https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg',
+        secureUrl:
+          "https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg",
       },
     });
 
@@ -59,6 +60,7 @@ const signUp = async (req, res, next) => {
       // sending this file to the cloudinary
       // to get the global resourse url
       try {
+        console.log(User);
         const result = await cloudinary.v2.uploader.upload(req.file.path, {
           folder: "lms",
           width: 250,
@@ -66,7 +68,6 @@ const signUp = async (req, res, next) => {
           gravity: "faces",
           crop: "fill",
         });
-
         // assigning cloudinary url in the avatar url
         if (result) {
           User.avatar.publicid = result.public_id;
@@ -75,6 +76,8 @@ const signUp = async (req, res, next) => {
           fs.rm(`./uploads/${req.file.filename}`);
         }
       } catch (error) {
+        console.log(error.message);
+
         return next(
           new AppError(
             "file not uploaded, please try again",
@@ -112,7 +115,7 @@ const login = async (req, res, next) => {
   const { email, password } = req.body;
 
   console.log(req.body);
-  
+
   // validaing the extracted fields
   if (!email || !password) {
     return next(new AppError("Every field is required", 400));
