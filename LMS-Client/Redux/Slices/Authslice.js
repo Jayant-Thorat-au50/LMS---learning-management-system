@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../.././src/Helpers/axiosInstance";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { data } from "react-router-dom";
+
 
 const initialState = {
   isLoggedIn:localStorage.getItem("isLoggedIn") || false,
@@ -82,7 +82,7 @@ const AuthSlice = createSlice({
       localStorage.setItem("data", JSON.stringify(action?.payload?.user));
       localStorage.setItem("isLoggedIn", true);
       localStorage.setItem("role", action?.payload.user?.role);
-      state.data = JSON.parse(action?.payload?.user)
+      state.data = action?.payload?.user
       state.role = action?.payload?.user?.role;
       state.isLoggedIn = true
     })
@@ -93,11 +93,11 @@ const AuthSlice = createSlice({
       state.isLoggedIn = false
     })
     .addCase(register.fulfilled, (state, action) => {
-      localStorage.setItem(data,JSON.stringify(action?.payload?.User));
+      localStorage.setItem('data',JSON.stringify(action?.payload?.User));
       localStorage.setItem('isLoggedIn', true);
       localStorage.setItem("role", action?.payload?.User?.role);
       state.isLoggedIn = true,
-      state.data = (action?.payload?.User)
+      state.data = action?.payload?.User
       state.role = action?.payload?.User?.role
     })
   },

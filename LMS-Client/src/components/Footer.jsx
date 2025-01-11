@@ -8,7 +8,7 @@ function Footer() {
   return (
     <footer className=" relative left-0 bottom-0 h-[10vh] flex flex-column sm:flex-row items-center justify-between text-white bg-gray-800 py-5 sm:px-20 px-5 lg:px-5">
       <section className=" text-lg">
-        copyright {year} | All rights reserved
+        Copyright &copy; {year} | All rights reserved
       </section>
 
       <section className=" flex gap-5 text-2xl items-center justify-center text-white">

@@ -39,6 +39,11 @@ const userSchema = new Schema({
         enum:['USER', 'ADMIN'],
         default:'USER'
     },
+    isSubscribed:{
+        type:String,
+        enum:['Active', 'notActive'],
+        default:'Active'
+    },
     forgetPasswordToken:{type:String},
     forgetPasswordExpiry:Date,
 },{
