@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import HomeLayout from '../components/HomeLayout';
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { loginNow } from '../../Redux/Slices/Authslice';
 
 
@@ -11,9 +11,6 @@ function Login() {
     const dispatch = useDispatch();
     const auth = useSelector((state) => state.authstate)
     console.log(auth);
-    
-
-
 
     const [loginData, setLoginData] = useState({
         email: "",
@@ -77,7 +74,7 @@ function Login() {
             <div className=' w-full h-screen flex justify-center items-center'>
                 <form action="" onSubmit={login} encType='multipart/form-data' noValidate className='shadow-[0_0_10px_black] w-96 flex  flex-col gap-2 items-center'>
                     <h1 className=' text-center capitalize font-bold text-3xl my-2 text-yellow-400'>registration page</h1>
-                    
+
                     <div className=' flex flex-col items-start w-full px-10 space-y-2'>
                         <label htmlFor="email" className=' font-semibold text-white text-xl'>Email</label>
                         <input type="email" id='email' placeholder="Enter your email...." onChange={handleUserInput} value={loginData.email} className='px-5 py-1 bg-transparent border w-full' required name='email' />

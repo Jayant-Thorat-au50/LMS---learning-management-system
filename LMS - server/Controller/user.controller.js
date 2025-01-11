@@ -78,6 +78,11 @@ const signUp = async (req, res, next) => {
       } catch (error) {
         console.log(error.message);
 
+        const partiallyAddedUser = await UserModel.find({ email: email });
+        if (partiallyAddedUser) {
+          await UserModel.deleteOne({ email });
+        }
+
         return next(
           new AppError(
             "file not uploaded, please try again",

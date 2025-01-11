@@ -9,9 +9,6 @@ function HomePage() {
 
     const authData = useSelector(state => state?.authstate.data);
 
-  
-    
-
     return (
         <HomeLayout>
 
