@@ -93,7 +93,7 @@ function HomeLayout({ children }) {
               <li>
                 <div className="  flex items-center justify-start">
                   <button className=" rounded-md bg-primary w-1/2 lg:w-1/2 text-white text-lg font-semibold">
-                    <Link>profile</Link>
+                    <Link to='/user/profile'>profile</Link>
                   </button>
                   <button className=" rounded-md bg-secondary w-1/2 lg:w-1/2 text-white  text-lg font-semibold"
                   onClick={()=> handleLogout()}>

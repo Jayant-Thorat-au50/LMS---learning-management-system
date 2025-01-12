@@ -8,7 +8,7 @@ import axios from "axios";
 const initialState = {
   isLoggedIn:localStorage.getItem("isLoggedIn") || false,
   role: localStorage.getItem("role") || " ",
-  data: localStorage.getItem("data") || {},
+  data: JSON.parse(localStorage.getItem("data")) || {},
 };
 
 export const register = createAsyncThunk("auth/signUp", async (singnUpData) => {
