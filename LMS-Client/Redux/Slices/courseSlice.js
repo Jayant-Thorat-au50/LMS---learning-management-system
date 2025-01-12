@@ -27,6 +27,30 @@ export const getcoursesList = createAsyncThunk("Course/getAllCourses", async () 
   }
 });
 
+export const addCourse = createAsyncThunk("course/create",async (courseData) => {
+  try {
+
+    const response = axios.post("http://localhost:6070/api/v1/course/add-course", courseData,
+     {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      }}
+    );
+    toast.promise(response,{
+      loading:"wait! creating your course",
+      success:(data) => {
+        return data?.data?.message
+      },
+      error:'failed to create a course'
+    })
+
+    return (await response).data
+    
+  } catch (error) {
+    toast.error(error?.response?.data?.message)
+  }
+})
+
 
 const courseSlice = createSlice({
   name: "Course",
@@ -35,7 +59,7 @@ const courseSlice = createSlice({
   extraReducers: (builder) => {
     builder
   .addCase(getcoursesList.fulfilled, (state, action) => {
-    state.coursesList = action?.payload?.coursesList
+    state.coursesList = (action?.payload?.coursesList)
   })
   },
 });

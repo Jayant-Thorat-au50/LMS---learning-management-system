@@ -15,7 +15,7 @@ const cookieOption = {
 // user sign up
 const signUp = async (req, res, next) => {
   const { fullName, email, password } = req.body;
-
+  
   // validating the extracted fields
   if (!fullName || !email || !password) {
     return next(new AppError("Every field ie required", 400));
@@ -53,14 +53,13 @@ const signUp = async (req, res, next) => {
       return next(new AppError("User registration failed", 400));
     }
 
-    // console.log("file > ", JSON.stringify(req.file));
 
     // file sent by the multer by saving in the server
     if (req.file) {
       // sending this file to the cloudinary
       // to get the global resourse url
       try {
-        console.log(User);
+   
         const result = await cloudinary.v2.uploader.upload(req.file.path, {
           folder: "lms",
           width: 250,
@@ -76,8 +75,6 @@ const signUp = async (req, res, next) => {
           fs.rm(`./uploads/${req.file.filename}`);
         }
       } catch (error) {
-        console.log(error.message);
-
         const partiallyAddedUser = await UserModel.find({ email: email });
         if (partiallyAddedUser) {
           await UserModel.deleteOne({ email });

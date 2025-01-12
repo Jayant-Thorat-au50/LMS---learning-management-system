@@ -26,7 +26,7 @@ function CourseDescription() {
                     <div className=' space-y-5'>
                         <img
                             className=' w-full h-64  '
-                            src={state?.thubnail?.public_id}
+                            src={state?.thumbnail?.secure_Url}
                             alt="thumbnail" />
 
                         <div className=' flex flex-col justify-between items-start text-xl'>
@@ -41,7 +41,7 @@ function CourseDescription() {
                         </div>
 
                         {role === "ADMIN" || data?.isSubscribed === "Active" ? (
-                            <button className=' bg-yellow-600 text-xl rounded-md px-5 py-3 font-bold hover:bg-yellow-500 transition-all ease-in-out duration-300 hover:text-black w-full tracking-widest'>Watch Lectures</button>
+                            <button className=' bg-yellow-600 text-xl rounded-md px-5 py-3 font-bold hover:bg-yellow-500 transition-all ease-in-out duration-150 hover:text-black w-full tracking-widest'>Watch Lectures</button>
                         ) : (
                             <button className=' bg-yellow-600 text-xl rounded-md px-5 py-3 font-bold hover:bg-yellow-500 transition-all ease-in-out duration-300 hover:text-black w-full tracking-widest'>Subscribe</button>
                         )}

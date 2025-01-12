@@ -12,13 +12,18 @@ function CourseList() {
     const Dispatch = useDispatch()
     const list = useSelector(state => state.courseState.coursesList)
 
+    
+    const catagories = [...new Set(list.map(ele => ele.catagory))]
+    console.log(catagories);
+    
+
 
     const getCoursesList = async () => {
         const response = await Dispatch(getcoursesList());
 
         if (response?.payload?.success) {
 
-   console.log(response);
+
    
         }
     }
