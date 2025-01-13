@@ -12,6 +12,8 @@ function CourseList() {
     const Dispatch = useDispatch()
     const list = useSelector(state => state.courseState.coursesList)
 
+
+
     
     const catagories = [...new Set(list.map(ele => ele.catagory))]
     console.log(catagories);

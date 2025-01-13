@@ -9,6 +9,8 @@ function Profile() {
     // if(typeof(userData === String)){
     // }
 
+    console.log(userData);
+    
 
 
 
@@ -19,16 +21,16 @@ function Profile() {
                     <img src={userData?.avatar?.secureUrl}
                         className=' rounded-full w-40 m-auto border-black'
                         alt="" />
-                    <h3 className=' text-center capitalize text-xl font-semibold'>
+                    <h3 className=' text-center capitalize text-xl font-semibold tracking-wide'>
                         <u> {userData?.fullName}
 
                         </u>
                     </h3>
 
                     <div className=' grid grid-rows-3'>
-                        <div className=' flex justify-between'>  <p className=' w-[45%]'>Email</p> <span>:</span> <p className=' w-1/2 text-start'>{userData?.email}</p></div>
-                        <div className=' flex justify-between'>  <p className=' w-[45%]'>Role</p> <span>:</span> <p className=' w-1/2 text-start'> {userData?.role}</p></div>
-                        <div className=' flex justify-between'>  <p className=' w-[45%]'>Subscription:</p> <span>:</span> <p className=' w-1/2 text-start'> {userData?.isSubscribed}</p></div>
+                        <div className=' flex justify-between'>  <p className=' w-[30%]'>Email</p> <span>:</span> <p className=' w-[60%] text-start'>{userData?.email}</p></div>
+                        <div className=' flex justify-between'>  <p className=' w-[30%]'>Role</p> <span>:</span> <p className='  w-[60%] text-start'> {userData?.role}</p></div>
+                        <div className=' flex justify-between'>  <p className=' w-[30%]'>Subscription:</p> <span>:</span> <p className='  w-[60%] text-start'> {userData?.isSubscribed}</p></div>
                     </div>
 
                     <div className=' flex items-center justify-between gap-2'>

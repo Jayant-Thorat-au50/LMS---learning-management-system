@@ -61,7 +61,7 @@ const signUp = async (req, res, next) => {
       try {
    
         const result = await cloudinary.v2.uploader.upload(req.file.path, {
-          folder: "lms",
+          folder: "lms-user profiles",
           width: 250,
           height: 250,
           gravity: "faces",
