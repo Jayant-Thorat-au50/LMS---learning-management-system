@@ -1,19 +1,13 @@
 import React from 'react'
 import HomeLayout from '../../components/HomeLayout'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { data, Link } from 'react-router-dom'
 
 function Profile() {
 
-    let userData = useSelector(state => state.authstate.data)
-    // if(typeof(userData === String)){
-    // }
-
+    let userData = useSelector(state => state?.authstate?.data)
     console.log(userData);
     
-
-
-
     return (
         <HomeLayout>
             <div className=' min-h-[90vh] flex flex-col justify-center items-center'>

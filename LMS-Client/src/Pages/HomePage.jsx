@@ -5,9 +5,11 @@ import homePageImg from '../assets/pexels-photo-10725897-removebg-preview.png'
 import { useSelector } from 'react-redux'
 
 
+
 function HomePage() {
 
     const authData = useSelector(state => state?.authstate.data);
+    const isLoggedIn = useSelector(state => state?.authstate.isLoggedIn);
 
     return (
         <HomeLayout>
@@ -18,7 +20,7 @@ function HomePage() {
                     <h1 className=' text-2xl lg:text-5xl font-semibold w-full'>
                         Find out best
                         <span className='text-yellow-500 font-bold'>
-                         Online Course
+                            Online Course
                         </span>
                     </h1>
                     <p className=' text-xl text-gray-200'>

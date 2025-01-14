@@ -15,7 +15,7 @@ const cookieOption = {
 // user sign up
 const signUp = async (req, res, next) => {
   const { fullName, email, password } = req.body;
-  
+
   // validating the extracted fields
   if (!fullName || !email || !password) {
     return next(new AppError("Every field ie required", 400));
@@ -53,13 +53,11 @@ const signUp = async (req, res, next) => {
       return next(new AppError("User registration failed", 400));
     }
 
-
     // file sent by the multer by saving in the server
     if (req.file) {
       // sending this file to the cloudinary
       // to get the global resourse url
       try {
-   
         const result = await cloudinary.v2.uploader.upload(req.file.path, {
           folder: "lms-user profiles",
           width: 250,
@@ -152,15 +150,15 @@ const login = async (req, res, next) => {
 // get user api
 const getUser = async (req, res, next) => {
   // grabbing the id extracted from the token in jwt auth middleware
-  const userid = req.user.id;
+  const {userId} = req.params
 
   try {
-    const User = await UserModel.findById(userid);
+    const User = await UserModel.findById(userId);
 
     // sending the user data to the client
     res.status(200).json({
       success: true,
-      data: User,
+      User,
     });
   } catch (error) {
     next(new AppError(error.message, 400));
@@ -320,6 +318,51 @@ const changePassword = async (req, res, next) => {
   }
 };
 
+const userUpdate = async (req, res, next) => {
+  const { fullName } = req.body;
+  const { userId } = req.params;
+
+  const userTobeUpdated = await UserModel.findById(userId);
+
+  if (!userTobeUpdated) {
+    return next(new AppError("Invalid user plaese try again",400));
+  }
+
+  userTobeUpdated.fullName = fullName;
+
+  if (req.file) {
+    try {
+      await cloudinary.v2.uploader.destroy(userTobeUpdated.avatar.publicid);
+
+      const result = await cloudinary.v2.uploader.upload(req.file.path, {
+        folder: "lms-user profiles",
+        height: 250,
+        width: 250,
+        gravity: "faces",
+        crop: "fill",
+      });
+
+      if (result) {
+        userTobeUpdated.avatar.publicid = result.public_id;
+        userTobeUpdated.avatar.secureUrl = result.secure_url;
+      }
+      fs.rm(`./uploads/${req.file.filename}`);
+    } catch (error) {
+      return next(
+        new AppError("failed to upload the image please try again", 500)
+      );
+    }
+  }
+
+  await userTobeUpdated.save();
+
+  res.status(200).json({
+    success: true,
+    data: userTobeUpdated,
+    message: "User updated successfully",
+  });
+};
+
 export {
   signUp,
   login,
@@ -328,4 +371,5 @@ export {
   forgotPassword,
   resetPassword,
   changePassword,
+  userUpdate,
 };

@@ -25,7 +25,7 @@ function SignUp() {
         const uploadedImg = e.target.files[0]
         console.log(uploadedImg);
         if (uploadedImg) {
-            console.log('uploaded');
+           
             setSignUpData({
                 ...signUpData,
                 avatar: uploadedImg
