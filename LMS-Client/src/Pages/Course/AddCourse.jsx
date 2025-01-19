@@ -92,7 +92,7 @@ function AddCourse() {
                     onSubmit={onFormSubmit}
                     action="">
 
-                    <Link className=" text-2xl text-accent cursor-pointer absolute top-5 hover:bg-black p-1 rounded-full transition-all ease-in-out duration-100 hover:text-3xl hover:top-4 link">
+                    <Link to={-1} className=" text-2xl text-accent cursor-pointer absolute top-5 hover:bg-black p-1 rounded-full transition-all ease-in-out duration-100 hover:text-3xl hover:top-4 link">
                         <AiOutlineArrowLeft />
                     </Link>
                     <h1 className=' text-center text-2xl font-bold'>Create new course</h1>

@@ -17,6 +17,10 @@ import RequireAuth from "./components/RequireAuth.jsx";
 import AddCourse from "./Pages/Course/AddCourse.jsx";
 import Profile from "./Pages/User/profile.jsx";
 import EditProfile from "./Pages/User/EditProfile.jsx";
+import Cheackout from "./Pages/Payment/cheackout.jsx";
+import PaymentsFailure from "./Pages/Payment/paymentsFailure.jsx";
+import PaymentSuccess from "./Pages/Payment/paymentSuccess.jsx";
+
 
 function App() {
   return (
@@ -35,6 +39,9 @@ function App() {
       </Route>
       <Route element={<RequireAuth allowedRoles={['ADMIN', 'USER']} />}>
         <Route path="/user/profile" element={<Profile />} />
+        <Route path="/checkout" element={<Cheackout />} />
+        <Route path="/payment/success" element={< PaymentSuccess/>} />
+        <Route path="/payment/failure" element={<PaymentsFailure />} />
       </Route>
       <Route element={<RequireAuth allowedRoles={['ADMIN', 'USER']} />}>
       <Route path="/user/editprofile" element={<EditProfile/>}/>

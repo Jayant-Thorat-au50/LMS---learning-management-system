@@ -5,7 +5,7 @@ import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../../Redux/Slices/Authslice';
-import { isEmail, isPassword} from '../Helpers/regexMatcher.js';
+import { isEmail, isPassword } from '../Helpers/regexMatcher.js';
 
 function SignUp() {
 
@@ -25,7 +25,7 @@ function SignUp() {
         const uploadedImg = e.target.files[0]
         console.log(uploadedImg);
         if (uploadedImg) {
-           
+
             setSignUpData({
                 ...signUpData,
                 avatar: uploadedImg
@@ -97,7 +97,7 @@ function SignUp() {
         <HomeLayout>
 
             <div className=' w-full h-screen flex justify-center items-center'>
-                <form action="" onSubmit={createAccount} encType='multipart/form-data' noValidate className='shadow-[0_0_10px_black] w-96 flex  flex-col gap-2 items-center'>
+                <form action="" onSubmit={createAccount} encType='multipart/form-data' noValidate className='shadow-[0_0_10px_black]  w-96 flex  flex-col gap-2 items-center'>
                     <h1 className=' text-center capitalize font-bold text-3xl my-2 text-yellow-400'>registration page</h1>
 
                     <div className=' flex justify-center items-center flex-col'>
@@ -126,9 +126,7 @@ function SignUp() {
                     <div className=' px-10  w-full flex justify-center items-center mt-2 mb-0'>
                         <button type='submit' className=' bg-yellow-500 w-full font-bold text-2xl py-1 rounded text-black hover:bg-yellow-800'>Create Account</button>
                     </div>
-                    <div className='my-0'>
-                        <p className='text-lg text-blue-500 bg-transparent'>forget your password?  <span onClick={() => navigate('/login')} className=' text-white' ><u>reset now</u></span></p>
-                    </div>
+
 
                     <div className='mb-3'>
                         <p className='text-lg text-white bg-transparent'>Already have an acc? <span onClick={() => navigate('/login')} className=' text-blue-500' >login</span></p>

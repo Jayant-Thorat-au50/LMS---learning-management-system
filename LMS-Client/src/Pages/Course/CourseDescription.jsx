@@ -1,24 +1,16 @@
 import React, { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import HomeLayout from '../../components/HomeLayout';
 import { useSelector } from 'react-redux';
 
 function CourseDescription() {
 
     const { state } = useLocation();
+    const navigate = useNavigate()
     let { role, data } = useSelector(state => state.authstate);
 
-    console.log(role);
-
-
     console.log(data);
-
-
-
-    useEffect(() => {
-        console.log(state);
-
-    }, [])
+    
     return (
         <HomeLayout>
             <div className=' w-full min-h-[90vh] flex justify-center items-center flex-col pt-12 px-28 text-white'>
@@ -40,10 +32,12 @@ function CourseDescription() {
                             </p>
                         </div>
 
-                        {role === "ADMIN" || data?.isSubscribed === "Active" ? (
+                        {role === "ADMIN" || data?.subscription.status === "Active" ? (
                             <button className=' bg-yellow-600 text-xl rounded-md px-5 py-3 font-bold hover:bg-yellow-500 transition-all ease-in-out duration-150 hover:text-black w-full tracking-widest'>Watch Lectures</button>
                         ) : (
-                            <button className=' bg-yellow-600 text-xl rounded-md px-5 py-3 font-bold hover:bg-yellow-500 transition-all ease-in-out duration-300 hover:text-black w-full tracking-widest'>Subscribe</button>
+                            <button className=' bg-yellow-600 text-xl rounded-md px-5 py-3 font-bold hover:bg-yellow-500 transition-all ease-in-out duration-300 hover:text-black w-full tracking-widest'
+                            onClick={() => navigate('/checkout')}
+                            >Subscribe</button>
                         )}
 
                     </div>

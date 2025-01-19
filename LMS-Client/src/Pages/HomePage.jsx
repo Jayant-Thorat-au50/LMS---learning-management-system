@@ -1,15 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import HomeLayout from '../components/HomeLayout'
 import { data, Link } from 'react-router-dom'
 import homePageImg from '../assets/pexels-photo-10725897-removebg-preview.png'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../../Redux/Slices/Authslice'
+
+
 
 
 
 function HomePage() {
 
+
     const authData = useSelector(state => state?.authstate.data);
     const isLoggedIn = useSelector(state => state?.authstate.isLoggedIn);
+
 
     return (
         <HomeLayout>

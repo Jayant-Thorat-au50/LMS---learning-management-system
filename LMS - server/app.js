@@ -1,29 +1,24 @@
 import express from "express";
 import { config } from "dotenv";
 config();
-import userRoutes from "./Routes/User.routes.js";
-import dbConnect from "./dbConnect.js";
-import errorMiddleware from "./Middlewares/Error.middleware.js";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
-import multer from "multer";
-import cloudinary from "cloudinary";
-import courseRoutes from "./Routes/courseRoutes.js";
 import cors from "cors";
 import morgan from "morgan";
-import formData from "express-form-data";
-import os from "os";
 
-// const options = {
-//   uploadDir: os.tmpdir(),
-//   autoClean: true
-// };
+// custom lib and middleware imports
+import cloudinary from "cloudinary";
+import dbConnect from "./dbConnect.js";
+import errorMiddleware from "./Middlewares/Error.middleware.js";
+// Routes imports
+import courseRoutes from "./Routes/courseRoutes.js";
+import userRoutes from "./Routes/User.routes.js";
+import paymentRoutes from "./Routes/PaymentRoutes.js";
 
 const app = express();
 app.use(cors());
 const PORT = process.env.PORT;
 dbConnect();
-// app.use(formData.parse(options))
 cloudinary.v2.config({
   cloud_name: "lms-jayant-thorat",
   api_key: "819524559332278",
@@ -37,6 +32,7 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/course", courseRoutes);
+app.use("/api/v1/payments", paymentRoutes);
 app.use(errorMiddleware);
 
 app.listen(PORT, () => {

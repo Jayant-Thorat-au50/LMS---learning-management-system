@@ -42,7 +42,7 @@ export const loginNow = createAsyncThunk("auth/login", async (loginData) => {
       loginData
     );
     toast.promise(res, {
-      loading: "wait! loggin in",
+      loading: "wait! loggin you in",
       success: (response) => {
         return response?.data?.message;
       },
@@ -113,13 +113,16 @@ const AuthSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginNow.fulfilled, (state, action) => {
-        localStorage.setItem("data", JSON.stringify(action?.payload?.user));
-        localStorage.setItem("isLoggedIn", true);
-        localStorage.setItem("role", action?.payload.user?.role);
-        state.data = action?.payload?.user;
-        state.role = action?.payload?.user?.role;
-        state.isLoggedIn = true;
+        if(action?.payload?.success){
+          localStorage.setItem("data", JSON.stringify(action?.payload?.user));
+          localStorage.setItem("isLoggedIn", true);
+          localStorage.setItem("role", action?.payload.user?.role);
+          state.data = action?.payload?.user;
+          state.role = action?.payload?.user?.role;
+          state.isLoggedIn = true;
+        }
       })
+
       .addCase(logout.fulfilled, (state, action) => {
         localStorage.clear();
         state.data = {};
@@ -130,7 +133,8 @@ const AuthSlice = createSlice({
         localStorage.setItem("data", JSON.stringify(action?.payload?.User));
         localStorage.setItem("isLoggedIn", true);
         localStorage.setItem("role", action?.payload?.User?.role);
-        (state.isLoggedIn = true), (state.data = action?.payload?.User);
+        state.isLoggedIn = true,
+        state.data = action?.payload?.User;
         state.role = action?.payload?.User?.role;
       })
       .addCase(getUserData.fulfilled, (state, action) => {

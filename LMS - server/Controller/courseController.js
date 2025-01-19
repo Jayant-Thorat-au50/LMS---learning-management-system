@@ -85,6 +85,7 @@ const getAllCourses = async (req, res, next) => {
       success: true,
       noofCourses: coursesList.length,
       coursesList,
+      message:'All available courses fetched '
     });
   } catch (error) {
     return next(new AppError(error.message, 500));

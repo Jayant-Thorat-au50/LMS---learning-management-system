@@ -114,7 +114,6 @@ const signUp = async (req, res, next) => {
 const login = async (req, res, next) => {
   const { email, password } = req.body;
 
-  console.log(req.body);
 
   // validaing the extracted fields
   if (!email || !password) {

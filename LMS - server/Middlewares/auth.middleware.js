@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 
 import AppError from '../Utils/AppError.utils.js'
+import UserModel from "../Models/UserModel.js";
 
 
 export const isLoggedIn = async (req, _res, next) => {
@@ -48,3 +49,22 @@ export const authorizeSubscribers = async (req, _res, next) => {
 
   next();
 };
+
+export const isPremiumMember = async (req,res, next) => {
+
+  const {userId} = req.params;
+
+  const user = await UserModel.findById(userId);
+  console.log(user);
+  
+
+  if(!user){
+    return next(new AppError('Unauthorized user please login to continue'));
+  };
+
+  if(user.subscription.status === "Active"){
+    return next(new AppError('already a subscriber'))
+  }else{
+    next();
+  } 
+}

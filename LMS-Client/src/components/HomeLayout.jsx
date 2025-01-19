@@ -16,7 +16,7 @@ function HomeLayout({ children }) {
 
   
 
-  const handleLogout = async () => {
+ const handleLogout = async () => {
      const response = await Dispactch(logout());
      if(response?.payload?.success){
       navigate('/')
@@ -52,10 +52,10 @@ function HomeLayout({ children }) {
 
         <div className="drawer-side w-0">
           <label htmlFor="my-drawer" className="drawer-overlay "></label>
-          <ul className="menu pr-0 text-lg p-4 w-48 sm:w-64 bg-base-200 h-screen   text-base-content relative">
-            <li className="absolute right-2 z-50">
-              <button onClick={hideDrawer}>
-                <AiFillCloseCircle />
+          <ul className="menu pr-0 text-lg p-4 w-48 sm:w-64 bg-base-200 h-screen text-base-content relative">
+            <li className="absolute h-10 text-xl right-2 z-50">
+              <button onClick={hideDrawer} className=" text-center hover:bg-gray-600 hover:text-white h-[100%]">
+                <AiFillCloseCircle className="" />
               </button>
             </li>
 
@@ -114,3 +114,4 @@ function HomeLayout({ children }) {
 }
 
 export default HomeLayout;
+

@@ -87,6 +87,10 @@ function Login() {
                     <div className=' px-10  w-full flex justify-center items-center my-1'>
                         <button type='submit' className=' bg-yellow-500 w-full font-bold text-2xl py-1 rounded text-black hover:bg-yellow-800'>login</button>
                     </div>
+
+                    <div className='my-0'>
+                        <p className='text-lg text-blue-500 bg-transparent'>forget your password?  <span onClick={() => navigate('/login')} className=' text-white' ><u>reset now</u></span></p>
+                    </div>
                     <div className='my-2'>
                         <p className='text-lg text-white bg-transparent'>Do not have an acc? <span onClick={() => navigate('/signUp')} className=' text-yellow-500' >register</span></p>
                     </div>
