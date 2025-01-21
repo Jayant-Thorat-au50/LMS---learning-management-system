@@ -1,9 +1,9 @@
 
-import express from 'express'
-import { addCourse, addLecture, deleteCourse, deleteLecture, getAllCourses, getOneCourse, updateCourse } from '../Controller/courseController.js';
-import { isLoggedIn } from '../middlewares/auth.middleware.js'
-import { authorizeRoles } from '../middlewares/auth.middleware.js'
-import upload from '../middlewares/multer.middleware.js';
+const express = require ('express')
+const {addCourse, getAllCourses, getOneCourse, updateCourse, deleteCourse, addLecture, deleteLecture} = require('../Controller/courseController.js')
+ const {isLoggedIn} = require('../middlewares/auth.middleware.js')
+const {authorizeRoles} = require('../middlewares/auth.middleware.js')
+const {upload} = require('../middlewares/multer.middleware.js');
 
 
 const courseRoutes = express.Router();
@@ -25,5 +25,4 @@ courseRoutes.delete('/delete-lecture/:Course_id/:Lecture_id',isLoggedIn,authoriz
 
 
 
-
-export default courseRoutes
+module.exports = courseRoutes;

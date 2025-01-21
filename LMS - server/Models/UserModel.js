@@ -1,9 +1,11 @@
-import { Schema, model } from "mongoose";
-import bcrypt from "bcrypt";
-import JWT from "jsonwebtoken";
-import crypto from "crypto";
 
-const userSchema = new Schema(
+const mongoose = require('mongoose')
+const bcrypt = require ('bcrypt')
+const JWT = require('jsonwebtoken')
+const crypto = require('crypto')
+
+
+const userSchema = new mongoose.Schema(
   {
     fullName: {
       type: String,
@@ -91,6 +93,6 @@ userSchema.methods = {
   },
 };
 
-const UserModel = model("user", userSchema, "user");
+const UserModel = mongoose.model("user", userSchema, "user");
 
-export default UserModel;
+module.exports = UserModel;

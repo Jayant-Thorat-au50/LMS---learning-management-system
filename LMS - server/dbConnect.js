@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose')
 const mongodbUri = 'mongodb://127.0.0.1:27017/LMS'
 
 const dbConnect =  () => {
@@ -9,4 +9,4 @@ const dbConnect =  () => {
       )
 }
 
-export default dbConnect
+module.exports = dbConnect;

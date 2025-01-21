@@ -99,8 +99,8 @@ export const userUpdate = createAsyncThunk(
 
 export const getUserData = createAsyncThunk("user/me", async (userId) => {
   try {
-    const res = axios.get(`http://localhost:6070/api/v1/user/me/${userId}`);
-    return (await res).data;
+    const res = await axios.get(`http://localhost:6070/api/v1/user/me/${userId}`);
+    return res.data
   } catch (error) {
     return toast.error(error?.response?.data?.message);
   }
@@ -130,20 +130,24 @@ const AuthSlice = createSlice({
         state.isLoggedIn = false;
       })
       .addCase(register.fulfilled, (state, action) => {
+       if(action?.payload?.success){
         localStorage.setItem("data", JSON.stringify(action?.payload?.User));
         localStorage.setItem("isLoggedIn", true);
         localStorage.setItem("role", action?.payload?.User?.role);
         state.isLoggedIn = true,
         state.data = action?.payload?.User;
         state.role = action?.payload?.User?.role;
+       }
       })
       .addCase(getUserData.fulfilled, (state, action) => {
-        localStorage.setItem("data", JSON.stringify(action?.payload?.User));
+        if(action?.payload?.success){
+          localStorage.setItem("data", JSON.stringify(action?.payload?.User));
         localStorage.setItem("isLoggedIn", true);
         localStorage.setItem("role", action?.payload?.User?.role);
         state.data = action?.payload?.User;
         state.role = action?.payload?.User?.role;
         state.isLoggedIn = true;
+        }
       });
   },
 });

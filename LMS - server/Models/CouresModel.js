@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+const mongoose = require('mongoose')
 
-const courseSchema = new Schema({
+const courseSchema = new mongoose.Schema({
   catagory: {
     type: String,
     required: [true, "catagory title is reqiuired"],
@@ -60,6 +60,6 @@ const courseSchema = new Schema({
 });
 
 // creating the course model with schema declared above and new collection 'course
-const CourseModel = model("course", courseSchema, "course");
+const CourseModel = mongoose.model("course", courseSchema, "course");
 
-export default CourseModel;
+module.exports = CourseModel

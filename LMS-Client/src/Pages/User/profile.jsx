@@ -1,12 +1,21 @@
 import React from 'react'
 import HomeLayout from '../../components/HomeLayout'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { data, Link } from 'react-router-dom'
+// import { cancelSubscription } from '../../../../LMS - server/Controller/PaymentController'
 
 function Profile() {
 
+    const dispatch = useDispatch()
+
     let userData = useSelector(state => state?.authstate?.data)
     console.log(userData);
+
+    // const handleCancelSubscription = async () => {
+        
+    //     const response = await dispatch(cancelSubscription([userData._id, userData.subscription.id]))
+
+    // }
     
     return (
         <HomeLayout>
@@ -42,7 +51,7 @@ function Profile() {
                     </div>
                     <div>
                         {userData?.isSubscribed === "Active" ? (
-                            <button className=' bg-red-600 w-full font-bold py-2 text-xl hover:bg-red-400 transition-all ease-in-out duration-300'>Cancel subscription</button>
+                            <button onClick={handleCancelSubscription} className=' bg-red-600 w-full font-bold py-2 text-xl hover:bg-red-400 transition-all ease-in-out duration-300'>Cancel subscription</button>
                         ) : null}
                     </div>
                 </div>

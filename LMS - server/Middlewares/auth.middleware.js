@@ -1,10 +1,9 @@
-import jwt from "jsonwebtoken";
+const jwt = require('jsonwebtoken')
+const AppError = require('../Utils/AppError.utils.js')
+const UserModel = require('../Models/UserModel.js')
 
-import AppError from '../Utils/AppError.utils.js'
-import UserModel from "../Models/UserModel.js";
 
-
-export const isLoggedIn = async (req, _res, next) => {
+ const isLoggedIn = async (req, _res, next) => {
   // extracting token from the cookies
   const { token } = req.cookies;
 
@@ -29,7 +28,7 @@ export const isLoggedIn = async (req, _res, next) => {
 };
 
 // Middleware to check if user is admin or not
-export const authorizeRoles = (...roles) =>
+ const authorizeRoles = (...roles) =>
 async (req, _res, next) => {
     if (!roles.includes(req.user.role)) {
       return next(
@@ -41,7 +40,7 @@ async (req, _res, next) => {
   };
 
 // Middleware to check if user has an active subscription or not
-export const authorizeSubscribers = async (req, _res, next) => {
+ const authorizeSubscribers = async (req, _res, next) => {
   // If user is not admin or does not have an active subscription then error else pass
   if (req.user.role !== "ADMIN" && req.user.subscription.status !== "active") {
     return next(new AppError("Please subscribe to access this route.", 403));
@@ -50,7 +49,7 @@ export const authorizeSubscribers = async (req, _res, next) => {
   next();
 };
 
-export const isPremiumMember = async (req,res, next) => {
+ const isPremiumMember = async (req,res, next) => {
 
   const {userId} = req.params;
 
@@ -67,4 +66,7 @@ export const isPremiumMember = async (req,res, next) => {
   }else{
     next();
   } 
+}
+module.exports = {
+  isLoggedIn, authorizeRoles, authorizeSubscribers,isPremiumMember
 }

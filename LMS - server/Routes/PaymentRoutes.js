@@ -1,9 +1,9 @@
-import { Router } from "express";
-import { buySubscription, cancelSubscription, getAllPayments, getRazorpayApiKey, verifySubscription } from "../Controller/PaymentController.js";
-import { isPremiumMember } from "../middlewares/auth.middleware.js";
+const express = require ('express')
+const {getRazorpayApiKey, buySubscription,verifySubscription, cancelSubscription, getAllPayments} = require("../Controller/PaymentController.js");
+const {isPremiumMember} = require ('../middlewares/auth.middleware.js')
 
 
-const paymentRoutes = Router();
+const paymentRoutes = express.Router()
 
 paymentRoutes.get("/razorpay_ApiKey", getRazorpayApiKey);
 
@@ -15,4 +15,4 @@ paymentRoutes.post("unsubscribe", cancelSubscription);
 
 paymentRoutes.get("allPayments", getAllPayments);
 
-export default paymentRoutes;
+module.exports = paymentRoutes;

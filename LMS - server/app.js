@@ -1,19 +1,19 @@
-import express from "express";
-import { config } from "dotenv";
-config();
-import cookieParser from "cookie-parser";
-import bodyParser from "body-parser";
-import cors from "cors";
-import morgan from "morgan";
+const express = require("express");
+require("dotenv").config();
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const morgan = require("morgan");
 
 // custom lib and middleware imports
-import cloudinary from "cloudinary";
-import dbConnect from "./dbConnect.js";
-import errorMiddleware from "./Middlewares/Error.middleware.js";
+const cloudinary = require("cloudinary");
+const dbConnect = require("./dbConnect.js");
+const errorMiddleware = require("./middlewares/error.middleware.js");
+
 // Routes imports
-import courseRoutes from "./Routes/courseRoutes.js";
-import userRoutes from "./Routes/User.routes.js";
-import paymentRoutes from "./Routes/PaymentRoutes.js";
+const courseRoutes = require("./Routes/courseRoutes.js");
+const userRoutes = require("./Routes/User.routes.js");
+const paymentRoutes = require("./Routes/PaymentRoutes.js");
 
 const app = express();
 app.use(cors());

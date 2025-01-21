@@ -48,8 +48,24 @@ const verifySubscription = createAsyncThunk(
         data[1]
       );
 
-  
       return response.data;
+    } catch (error) {
+      console.log(error);
+
+      return toast.error("failed to load data");
+    }
+  }
+);
+const cancelSubscription = createAsyncThunk(
+  "/cancelSubscription",
+  async (data) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:6070/api/v1/payments/unsubscribe/${data[0]}`,
+        data[1]
+      );
+
+      return response
     } catch (error) {
       console.log(error);
 
@@ -71,13 +87,11 @@ const paymentSlice = createSlice({
         state.subscription_id = action?.payload?.subscription_Id;
       })
       .addCase(verifySubscription.fulfilled, (state, action) => {
-        toast.success(action?.payload.message)
+        toast.success(action?.payload.message);
         state.isPaymentVerified = true;
-      })
-      
-      
-  }
+      });
+  },
 });
 
 export default paymentSlice.reducer;
-export { getRazorpayApiKey, purchaseSubcription, verifySubscription };
+export { getRazorpayApiKey, purchaseSubcription, verifySubscription, cancelSubscription };

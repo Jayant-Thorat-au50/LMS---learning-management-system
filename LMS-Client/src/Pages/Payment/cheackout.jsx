@@ -6,7 +6,7 @@ import HomeLayout from '../../components/HomeLayout'
 import { BiRupee } from 'react-icons/bi'
 
 import razorpay from 'razorpay'
-import { useNavigate, useRevalidator } from 'react-router-dom'
+import { useNavigate,  } from 'react-router-dom'
 import { getUserData } from '../../../Redux/Slices/Authslice'
 
 
@@ -74,14 +74,6 @@ function Cheackout() {
                 response1?.payload?.success ? navigate("/payment/success") : navigate("payment/failure")
             }
         }
-
-
-
-
-
-
-
-
 
 
         const paymentObject = new window.Razorpay(options)

@@ -1,11 +1,12 @@
-import UserModel from "../Models/UserModel.js";
-import AppError from "../Utils/AppError.utils.js";
-import emailValidate from "email-validator";
-import bcrypt from "bcrypt";
-import cloudinary from "cloudinary";
-import fs from "fs/promises";
-import sendEmail from "../Utils/sendEmail.js";
-import crypto from "crypto";
+const UserModel = require("../Models/UserModel.js")
+const AppError = require("../Utils/AppError.utils.js")
+const emailValidate = require("email-validator");
+const bcrypt = require('bcrypt')
+const cloudinary = require('cloudinary');
+const fs = require('fs/promises')
+const sendEmail = require('../Utils/sendEmail.js')
+const crypto = require('crypto')
+
 
 const cookieOption = {
   maxAge: 24 * 60 * 60 * 1000,
@@ -362,7 +363,9 @@ const userUpdate = async (req, res, next) => {
   });
 };
 
-export {
+
+
+module.exports = {
   signUp,
   login,
   getUser,
@@ -371,4 +374,4 @@ export {
   resetPassword,
   changePassword,
   userUpdate,
-};
+}

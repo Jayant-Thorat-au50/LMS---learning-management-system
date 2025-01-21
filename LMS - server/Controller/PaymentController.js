@@ -1,8 +1,8 @@
-import UserModel from "../Models/UserModel.js";
-import PaymentModel from "../Models/PaymentModule.js";
-import AppError from "../Utils/AppError.utils.js";
-import Razorpay from "razorpay";
-import crypto from "crypto";
+const PaymentModel = require("../Models/PaymentModule.js");
+const AppError = require("../Utils/AppError.utils.js");
+const Razorpay = require("razorpay");
+const UserModel = require("../Models/UserModel.js");
+const crypto = require("crypto");
 
 const key_id = "rzp_test_nVbvUISEyz14Qf";
 const key_secret = "7DsWX1XnQd1yHxf4SLksFXOm";
@@ -30,7 +30,7 @@ const buySubscription = async (req, res, next) => {
     return next(new AppError("Unauthorized user please login", 500));
   }
 
-  // throw error if the user is admin
+  //   // throw error if the user is admin
   if (user.role === "ADMIN") {
     return next(new AppError("Admin cannot purchase a subscription", 400));
   }
@@ -41,11 +41,10 @@ const buySubscription = async (req, res, next) => {
       customer_notify: 1,
       total_count: 12,
     });
-
     user.subscription.id = subscription.id;
     user.subscription.status = " ";
 
-    // saving the user obj
+    //     // saving the user obj
 
     await user.save();
 
@@ -64,46 +63,80 @@ const verifySubscription = async (req, res, next) => {
   const { razorpay_payment_id, razorpay_subscription_id, razorpay_signature } =
     req.body;
 
+  console.log(req.body);
+
+  const user = await UserModel.findById(id);
+  console.log(user);
+
+  try {
+    if (!user) {
+      return next(new AppError("unauthorized please login", 400));
+    }
+
+    const subscription_id = user.subscription.id;
+
+    const generatedSignature = crypto
+      .createHmac("sha256", key_secret)
+      .update(`${razorpay_payment_id}|${subscription_id}`)
+      .digest("hex");
+
+    if (generatedSignature !== razorpay_signature) {
+      return next(new AppError("payment not verified please try again", 500));
+    }
+
+    await PaymentModel.create({
+      razorpay_payment_id: razorpay_payment_id,
+      razorpay_subscription_id: subscription_id,
+      razorpay_signature: razorpay_signature,
+    });
+
+    user.subscription.status = "Active";
+
+    await user.save();
+
+    console.log("user is", user);
+
+    res.status(200).json({
+      success: true,
+      message: "payment verified successfully!",
+      user,
+    });
+  } catch (error) {
+    console.log(error.message);
+
+    return next(new AppError(error.message, 500));
+  }
+};
+const cancelSubscription = async (req, res, next) => {
+  const { id } = req.params;
+
+  const { subscription_Id } = req.body;
+
   const user = await UserModel.findById(id);
 
   if (!user) {
-    return next(new AppError("unauthorized please login", 400));
+    next(new AppError("unauthorized user"));
   }
 
-  const subscription_id = user.subscription.id;
+  let isMember;
 
-  const generatedSignature = crypto
-    .createHmac("sha256", key_secret)
-    .update(`${razorpay_payment_id}|${subscription_id}`)
-    .digest("hex");
-
-  if (generatedSignature !== razorpay_signature) {
-    return next(new AppError("payment not verified please try again", 500));
+  if (user.subscription.status === "Active") {
+    isMember = true;
   }
 
-  await PaymentModel.create({
-    razorpay_payment_id: razorpay_payment_id,
-    razorpay_subscription_id: subscription_id,
-    razorpay_signature: razorpay_signature,
+  if (!isMember) {
+    return next(new AppError("user is not a member"));
+  }
+
+  const cancelledSubscription = razorpay.subscriptions.cancel({
+    id: subscription_Id,
   });
 
-  user.subscription.status = "Active";
-
-  await user.save();
-
-  console.log(user);
-  
-
-  res.status(200).json({
-    success: true,
-    message: "payment verifiled successfully!",
-    user,
-  });
+  console.log(cancelledSubscription);
 };
-const cancelSubscription = async (req, res, next) => {};
 const getAllPayments = async (req, res, next) => {};
 
-export {
+module.exports = {
   getRazorpayApiKey,
   buySubscription,
   verifySubscription,

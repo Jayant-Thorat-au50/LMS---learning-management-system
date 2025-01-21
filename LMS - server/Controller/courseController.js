@@ -1,7 +1,7 @@
-import CourseModel from "../Models/CouresModel.js";
-import AppError from "../Utils/AppError.utils.js";
-import cloudinary from "cloudinary";
-import fs from "fs/promises";
+const CourseModel = require("../Models/CouresModel.js");
+const AppError = require("../Utils/AppError.utils.js");
+const cloudinary = require("cloudinary");
+const fs = require("fs/promises");
 
 const addCourse = async (req, res, next) => {
   // validating the extracted fields
@@ -85,7 +85,7 @@ const getAllCourses = async (req, res, next) => {
       success: true,
       noofCourses: coursesList.length,
       coursesList,
-      message:'All available courses fetched '
+      message: "All available courses fetched ",
     });
   } catch (error) {
     return next(new AppError(error.message, 500));
@@ -269,7 +269,8 @@ const deleteLecture = async (req, res, next) => {
     return next(new AppError(error.message, 400));
   }
 };
-export {
+
+module.exports = {
   addCourse,
   getAllCourses,
   getOneCourse,
