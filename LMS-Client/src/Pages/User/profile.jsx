@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { cancelSubscription } from '../../../Redux/Slices/PaymentsSlice';
 import { getUserData } from '../../../Redux/Slices/Authslice';
+import toast from 'react-hot-toast';
 
 
 function Profile() {
@@ -15,16 +16,19 @@ function Profile() {
     console.log(userData);
 
     const handleCancelSubscription = async () => {
-        await dispatch(cancelSubscription([userData._id, userData.subscription.id]))
+        toast.loading('Initiating cancellation')
+     await dispatch(cancelSubscription([userData._id, userData.subscription.id]))
+      
         const response = await dispatch(getUserData(userData._id))
+        console.log(response);
+        
+        toast.dismiss()
+        toast.success('subscription cancelled successfully')
         if (response?.pyaload?.success) {
-            navigate('user/profile')
+            navigate('/user/profile')
         }
 
     }
-
-
-
     return (
         <HomeLayout>
             <div className=' min-h-[90vh] flex flex-col justify-center items-center'>

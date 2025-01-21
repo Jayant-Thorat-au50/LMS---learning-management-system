@@ -66,8 +66,9 @@ const cancelSubscription = createAsyncThunk(
         `http://localhost:6070/api/v1/payments/unsubscribe/${data[0]}`,
         data[1]
       );
+      
 
-      return response;
+      return  response;
     } catch (error) {
       console.log(error.response);
 
