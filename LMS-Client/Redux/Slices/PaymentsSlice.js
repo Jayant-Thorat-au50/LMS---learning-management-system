@@ -59,15 +59,17 @@ const verifySubscription = createAsyncThunk(
 const cancelSubscription = createAsyncThunk(
   "/cancelSubscription",
   async (data) => {
+    console.log(data);
+    
     try {
       const response = await axios.post(
         `http://localhost:6070/api/v1/payments/unsubscribe/${data[0]}`,
         data[1]
       );
 
-      return response
+      return response;
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
 
       return toast.error("failed to load data");
     }
@@ -89,9 +91,17 @@ const paymentSlice = createSlice({
       .addCase(verifySubscription.fulfilled, (state, action) => {
         toast.success(action?.payload.message);
         state.isPaymentVerified = true;
-      });
+      })
+      .addCase(cancelSubscription.fulfilled, (state, action) => {
+       
+      })
   },
 });
 
 export default paymentSlice.reducer;
-export { getRazorpayApiKey, purchaseSubcription, verifySubscription, cancelSubscription };
+export {
+  getRazorpayApiKey,
+  purchaseSubcription,
+  verifySubscription,
+  cancelSubscription,
+};

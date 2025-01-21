@@ -110,29 +110,43 @@ const verifySubscription = async (req, res, next) => {
 const cancelSubscription = async (req, res, next) => {
   const { id } = req.params;
 
-  const { subscription_Id } = req.body;
+  
+  try {
+    const user = await UserModel.findById(id);
 
-  const user = await UserModel.findById(id);
+    
+    
+    if (!user) {
+      next(new AppError("unauthorized user"));
+    }
+    const subscription_Id =  user.subscription.id
 
-  if (!user) {
-    next(new AppError("unauthorized user"));
+    let isMember;
+
+    if (user.subscription.status === "Active") {
+      isMember = true;
+    }
+
+    if (!isMember) {
+      return next(new AppError("user is not a member"));
+    }
+
+    const cancelledSubscription = await razorpay.subscriptions.cancel(
+       subscription_Id
+    );
+
+   user.subscription.status = cancelledSubscription.status
+   user.subscription.id = null
+     await user.save()
+
+   return res.status(200).json({
+      success: true,
+      message: "subscription cancelled successfully",
+      user,
+    });
+  } catch (error) {
+    return next(new AppError(error.message, 400));
   }
-
-  let isMember;
-
-  if (user.subscription.status === "Active") {
-    isMember = true;
-  }
-
-  if (!isMember) {
-    return next(new AppError("user is not a member"));
-  }
-
-  const cancelledSubscription = razorpay.subscriptions.cancel({
-    id: subscription_Id,
-  });
-
-  console.log(cancelledSubscription);
 };
 const getAllPayments = async (req, res, next) => {};
 

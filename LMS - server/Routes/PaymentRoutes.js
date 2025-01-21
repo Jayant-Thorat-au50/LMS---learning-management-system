@@ -11,8 +11,8 @@ paymentRoutes.get("/subscribe/:userId",isPremiumMember, buySubscription);
 
 paymentRoutes.post("/verify-subscription/:id", verifySubscription);
 
-paymentRoutes.post("unsubscribe", cancelSubscription);
+paymentRoutes.post("/unsubscribe/:id", cancelSubscription);
 
-paymentRoutes.get("allPayments", getAllPayments);
+paymentRoutes.get("/allPayments", (req, res) => res.send('kkkkkk'));
 
 module.exports = paymentRoutes;

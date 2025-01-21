@@ -42,10 +42,9 @@ function App() {
         <Route path="/checkout" element={<Cheackout />} />
         <Route path="/payment/success" element={< PaymentSuccess/>} />
         <Route path="/payment/failure" element={<PaymentsFailure />} />
-      </Route>
-      <Route element={<RequireAuth allowedRoles={['ADMIN', 'USER']} />}>
       <Route path="/user/editprofile" element={<EditProfile/>}/>
       </Route>
+  
 
 
     </Routes>

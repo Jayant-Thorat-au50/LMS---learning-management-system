@@ -1,22 +1,30 @@
 import React from 'react'
 import HomeLayout from '../../components/HomeLayout'
 import { useDispatch, useSelector } from 'react-redux'
-import { data, Link } from 'react-router-dom'
-// import { cancelSubscription } from '../../../../LMS - server/Controller/PaymentController'
+import { Link, useNavigate } from 'react-router-dom'
+import { cancelSubscription } from '../../../Redux/Slices/PaymentsSlice';
+import { getUserData } from '../../../Redux/Slices/Authslice';
+
 
 function Profile() {
 
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     let userData = useSelector(state => state?.authstate?.data)
     console.log(userData);
 
-    // const handleCancelSubscription = async () => {
-        
-    //     const response = await dispatch(cancelSubscription([userData._id, userData.subscription.id]))
+    const handleCancelSubscription = async () => {
+        await dispatch(cancelSubscription([userData._id, userData.subscription.id]))
+        const response = await dispatch(getUserData(userData._id))
+        if (response?.pyaload?.success) {
+            navigate('user/profile')
+        }
 
-    // }
-    
+    }
+
+
+
     return (
         <HomeLayout>
             <div className=' min-h-[90vh] flex flex-col justify-center items-center'>
@@ -50,8 +58,8 @@ function Profile() {
 
                     </div>
                     <div>
-                        {userData?.isSubscribed === "Active" ? (
-                            <button onClick={handleCancelSubscription} className=' bg-red-600 w-full font-bold py-2 text-xl hover:bg-red-400 transition-all ease-in-out duration-300'>Cancel subscription</button>
+                        {userData?.subscription.status === "Active" ? (
+                            <button onClick={() => handleCancelSubscription()} className=' bg-red-600 w-full font-bold py-2 text-xl hover:bg-red-400 transition-all ease-in-out duration-300'>Cancel subscription</button>
                         ) : null}
                     </div>
                 </div>

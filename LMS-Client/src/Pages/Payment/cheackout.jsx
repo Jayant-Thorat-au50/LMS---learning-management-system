@@ -5,8 +5,8 @@ import toast from 'react-hot-toast'
 import HomeLayout from '../../components/HomeLayout'
 import { BiRupee } from 'react-icons/bi'
 
-import razorpay from 'razorpay'
-import { useNavigate,  } from 'react-router-dom'
+
+import { useNavigate, } from 'react-router-dom'
 import { getUserData } from '../../../Redux/Slices/Authslice'
 
 
@@ -17,23 +17,12 @@ function Cheackout() {
     const userData = useSelector(state => state?.authstate?.data)
     const razorpay_key = useSelector(state => state?.paymentstate?.api_key);
     const subscription_id = useSelector(state => state?.paymentstate?.subscription_id);
-    const isPaymentVerified = useSelector(state => state?.paymentstate?.isPaymentVerified);
-
-
-
 
     const paymentDetails = {
-
         razorpay_payment_id: "",
         razorpay_subscription_id: "",
         razorpay_signature: "",
     }
-
-    console.log(subscription_id);
-    console.log(userData);
-    
-    
-
 
     const load = async () => {
         await dispatch(getRazorpayApiKey());
@@ -41,9 +30,7 @@ function Cheackout() {
     }
 
     const handleSubscription = async (e) => {
-
         e.preventDefault();
-
         if (!razorpay_key || !subscription_id) {
             return toast.error('something went wrong');
         };
@@ -68,21 +55,15 @@ function Cheackout() {
                     toast.success("payment successfull");
                 const response1 = await dispatch(verifySubscription([userData._id, paymentDetails]))
                 const response2 = await dispatch(getUserData(userData._id))
-
                 console.log(response2);
-                
                 response1?.payload?.success ? navigate("/payment/success") : navigate("payment/failure")
             }
         }
-
-
         const paymentObject = new window.Razorpay(options)
         paymentObject.open()
-
     }
 
     useEffect(() => {
-
         load();
     }, [])
     return (
