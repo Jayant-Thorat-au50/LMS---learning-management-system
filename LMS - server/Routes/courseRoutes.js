@@ -12,7 +12,7 @@ courseRoutes.get('/', getAllCourses)
 
 courseRoutes.post('/add-course', upload.single('thumbnail'), addCourse)
 
-courseRoutes.get('/get-one-course/:id',isLoggedIn, getOneCourse)
+courseRoutes.get('/get-one-course/:id', getOneCourse)
 
 courseRoutes.put('/update-course/:id',isLoggedIn,authorizeRoles('ADMIN'), updateCourse)
 

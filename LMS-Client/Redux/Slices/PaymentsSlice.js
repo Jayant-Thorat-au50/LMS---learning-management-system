@@ -94,7 +94,8 @@ const paymentSlice = createSlice({
         state.isPaymentVerified = true;
       })
       .addCase(cancelSubscription.fulfilled, (state, action) => {
-       
+       if(!action?.payload?.success) return;
+       state.subscription_id = null
       })
   },
 });

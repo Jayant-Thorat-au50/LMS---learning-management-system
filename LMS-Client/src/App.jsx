@@ -3,6 +3,9 @@ import "./App.css";
 // lib imports
 import { Routes, Route } from "react-router-dom";
 
+// middleware imports
+import RequireAuth from "./components/RequireAuth.jsx";
+
 // component imports
 import HomePage from "./Pages/HomePage.jsx";
 import AboutUs from "./Pages/aboutUs.jsx";
@@ -13,13 +16,13 @@ import CourseList from "./Pages/Course/CourseList.jsx";
 import ContactUs from "./Pages/contactUs.jsx";
 import Denied from "./Pages/denied.jsx";
 import CourseDescription from "./Pages/Course/CourseDescription.jsx";
-import RequireAuth from "./components/RequireAuth.jsx";
 import AddCourse from "./Pages/Course/AddCourse.jsx";
 import Profile from "./Pages/User/profile.jsx";
 import EditProfile from "./Pages/User/EditProfile.jsx";
 import Cheackout from "./Pages/Payment/cheackout.jsx";
 import PaymentsFailure from "./Pages/Payment/paymentsFailure.jsx";
 import PaymentSuccess from "./Pages/Payment/paymentSuccess.jsx";
+import DisplayLectures from "./Pages/Dashboard/displayLectures.jsx";
 
 
 function App() {
@@ -40,11 +43,12 @@ function App() {
       <Route element={<RequireAuth allowedRoles={['ADMIN', 'USER']} />}>
         <Route path="/user/profile" element={<Profile />} />
         <Route path="/checkout" element={<Cheackout />} />
-        <Route path="/payment/success" element={< PaymentSuccess/>} />
+        <Route path="/payment/success" element={< PaymentSuccess />} />
         <Route path="/payment/failure" element={<PaymentsFailure />} />
-      <Route path="/user/editprofile" element={<EditProfile/>}/>
+        <Route path="/user/editprofile" element={<EditProfile />} />
+        <Route path="/course/displayLectures" element={<DisplayLectures />} />
       </Route>
-  
+
 
 
     </Routes>
