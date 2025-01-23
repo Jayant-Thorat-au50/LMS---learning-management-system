@@ -4,3 +4,6 @@ body{
   max-width: 1440px;
   position: relative;
 }
+*{
+  box-sizing: border-box;
+}

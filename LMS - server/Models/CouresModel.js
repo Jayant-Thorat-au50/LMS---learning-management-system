@@ -40,11 +40,11 @@ const courseSchema = new mongoose.Schema({
     {
       title: { type: String },
       description: { type: String },
-      thumbnail: {
+      lectureSrc: {
         public_id: {
           type: String,
         },
-        secure_Url: {
+        secure_url: {
           type: String,
         },
       }

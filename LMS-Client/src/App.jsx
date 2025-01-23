@@ -23,6 +23,7 @@ import Cheackout from "./Pages/Payment/cheackout.jsx";
 import PaymentsFailure from "./Pages/Payment/paymentsFailure.jsx";
 import PaymentSuccess from "./Pages/Payment/paymentSuccess.jsx";
 import DisplayLectures from "./Pages/Dashboard/displayLectures.jsx";
+import AddNewLecture from "./Pages/Dashboard/addNewLecture.jsx";
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
       <Route path="/*" element={<NotFound />} />
       <Route element={<RequireAuth allowedRoles={['ADMIN']} />}>
         <Route path="/course/create" element={<AddCourse />} />
+        <Route path="/course/add-lecture" element={<AddNewLecture />} />
       </Route>
       <Route element={<RequireAuth allowedRoles={['ADMIN', 'USER']} />}>
         <Route path="/user/profile" element={<Profile />} />

@@ -13,7 +13,7 @@ function DisplayLectures() {
     const {role, data} = useSelector(state => state?.authstate)
     const [currentVideo, setCurrentVideo] = useState(0)
     
-    console.log(role);
+    console.log(state);
 
     useEffect(() => {
       if(!state) navigate("/courses");
@@ -60,7 +60,9 @@ function DisplayLectures() {
                        {role === "ADMIN"?(
                             <div className=' flex justify-between  w-full'>
                               <p className=' text-2xl'>Lectures list</p>
-                          <button className=' text-xl text-yellow-400 hover:text-yellow-600 transition-all ease-in-out duration-200 font-bold bg-purple-700 px-2
+                          <button
+                          onClick={() => navigate("/course/add-lecture", {state:{...state}})}
+                          className=' text-xl text-white hover:text-gray-300  transition-all ease-in-out duration-200 font-bold bg-purple-700 px-2
                            rounded-lg'>Add new lecture</button>
                            </ div>
                         ):null}
@@ -68,7 +70,9 @@ function DisplayLectures() {
                        {
                         lectures && lectures.map((lecture, idx) => {
                           return (
-                           <li key={lecture._id}>
+                           <li 
+                           onClick={() => setCurrentVideo(idx)}
+                           key={lecture._id}>
                              <p>
                               <span>
                                {" "} lecture no. {idx + 1}
@@ -82,8 +86,6 @@ function DisplayLectures() {
                               </button>
                             )}
                            </li>
-
-                            
                           )
                         })
                        }

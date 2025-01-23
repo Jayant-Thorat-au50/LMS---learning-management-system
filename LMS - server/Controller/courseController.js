@@ -105,7 +105,7 @@ const getOneCourse = async (req, res, next) => {
     }
 
     res.status(200).json({
-      success: false,
+      success: true,
       message: "Course details fetched successfully",
       Course,
     });
@@ -176,8 +176,12 @@ const addLecture = async (req, res, next) => {
     // creating a lec instance
 
     const lecture = {
-      title: title,
-      description: description,
+      title: "",
+      description: "",
+      lectureSrc:{
+        public_id : "",
+        secure_url: "",
+      }
     };
 
     if (!lecture) {
@@ -203,6 +207,33 @@ const addLecture = async (req, res, next) => {
           400
         )
       );
+    }
+
+    if(req.file){
+
+
+      try {
+        const uploadedVideo = await cloudinary.v2.uploader.upload(req.file.path, {
+          folder:"lms-lecture-videos",
+          chunk_size:50000000,
+          resource_type:"video"
+      })
+      if(uploadedVideo){
+        console.log(uploadedVideo.public_id);
+        console.log(uploadedVideo.secure_url);
+        lecture.title = title,
+        lecture.description = description,
+        lecture.lectureSrc.public_id = " kkkkkk",
+        lecture.lectureSrc.secure_url = uploadedVideo.secure_url
+        console.log('done');
+        
+      }
+      
+      fs.rm(`./uploads/${req.file.filename}`)
+      } catch (error) {
+        return next(new AppError(error.message, 500))
+      }
+      
     }
 
     // let's push this lec obj in the lectures array in course obj

@@ -73,6 +73,7 @@ function SignUp() {
         formData.append("email", signUpData.email)
         formData.append("password", signUpData.password)
 
+        
 
         const response = await dispatch(register(formData));
 

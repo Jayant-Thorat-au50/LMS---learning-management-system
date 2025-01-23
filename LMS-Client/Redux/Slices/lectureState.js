@@ -10,7 +10,7 @@ const initialState = {
 const getCourseLectures = createAsyncThunk(
   "course/lectures",
   async (courseId) => {
-    console.log(courseId);
+    console.log('courseId is');
     
     try {
       const response = axios.get(`http://localhost:6070/api/v1/course/get-one-course/${courseId}`);
@@ -33,11 +33,9 @@ const getCourseLectures = createAsyncThunk(
 );
 
 const addNewLecture = createAsyncThunk("course/addLecture", async (data) => {
-  const response = axiosInstance.post(
-    `/course/add-lecture/${data[0]}`,
-    data[1]
-  );
-
+  
+ try {
+  const response = axios.post(`http://localhost:6070/api/v1/course/add-lecture/${data[0]}`, data[1])
   toast.promise(response, {
     loading: "wait! adding new lecture",
     success: (res) => {
@@ -47,6 +45,11 @@ const addNewLecture = createAsyncThunk("course/addLecture", async (data) => {
   });
 
   return (await response).data;
+ } catch (error) {
+  console.log(error);
+  toast.error(error?.response?.data?.message)
+  
+ }
 });
 
 const deleteLecture = createAsyncThunk("course/deleteLecture", async (data) => {
@@ -75,6 +78,8 @@ const lectureSlice = createSlice({
         console.log(action);
         if (!action?.payload?.success) return;
         state.lectures = action?.payload?.Course?.lectures;
+        console.log('done');
+        
       })
       .addCase(addNewLecture.fulfilled, (state, action) => {
         console.log(action);
