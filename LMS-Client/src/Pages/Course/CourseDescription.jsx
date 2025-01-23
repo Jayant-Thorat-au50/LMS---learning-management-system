@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import HomeLayout from '../../components/HomeLayout';
 import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 
 function CourseDescription() {
 
@@ -11,7 +12,15 @@ function CourseDescription() {
 
    const courseData = state
 
-   console.log(data);
+
+   const displayLectures = () => {
+    if(!role === "ADMIN" || courseData.createdby != data.fullName ){
+        toast.error('Admins can only view own courses');
+        return;
+    }
+    navigate("/course/displayLectures", {state:{...courseData}})
+   }
+
    
     
     return (
@@ -38,7 +47,7 @@ function CourseDescription() {
 
                         {role === "ADMIN" || data?.subscription?.status === "Active" ? (
                             <button
-                            onClick={() => navigate("/course/displayLectures", {state:{...courseData}})}
+                            onClick={displayLectures}
                             className=' bg-yellow-600 text-xl rounded-md px-5 py-3 font-bold hover:bg-yellow-500 transition-all ease-in-out duration-150 hover:text-black w-full tracking-widest'>Watch Lectures</button>
                         ) : (
                             <button className=' bg-yellow-600 text-xl rounded-md px-5 py-3 font-bold hover:bg-yellow-500 transition-all ease-in-out duration-300 hover:text-black w-full tracking-widest'
