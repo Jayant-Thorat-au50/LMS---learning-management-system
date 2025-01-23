@@ -75,8 +75,7 @@ function EditProfile() {
         formData.append("avatar", userInput.avatar)
 
         const response = await dispatch(userUpdate([userInput.userId, formData]));
-        const result = await dispatch(getUserData(userInput.userId));
-
+    
         if (response?.payload?.success) {
             navigate('/user/profile')
             console.log(response?.payload);

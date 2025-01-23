@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import HomeLayout from '../../components/HomeLayout'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
@@ -29,6 +29,14 @@ function Profile() {
         }
 
     }
+
+    const load = async () => {
+        await dispatch(getUserData(userData._id))
+    }
+
+    useEffect(() => {
+          load()
+    }, [])
     return (
         <HomeLayout>
             <div className=' min-h-[90vh] flex flex-col justify-center items-center'>

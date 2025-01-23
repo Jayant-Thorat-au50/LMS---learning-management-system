@@ -10,18 +10,22 @@ function CourseDescription() {
     let { role, data } = useSelector(state => state.authstate);
 
    const courseData = state
+
+   console.log(data);
+   
     
     return (
         <HomeLayout>
             <div className=' w-full min-h-[90vh] flex justify-center items-center flex-col pt-12 px-28 text-white'>
                 <div className=' grid grid-cols-2 gap-10  py-10 relative'>
-                    <div className=' space-y-5'>
+                    {/* left side of the page */}
+                    <div className=' space-y-5  border rounded-md '>
                         <img
                             className=' w-full h-64  '
                             src={state?.thumbnail?.secure_Url}
                             alt="thumbnail" />
 
-                        <div className=' flex flex-col justify-between items-start text-xl'>
+                        <div className=' w-full px-3 gap-2 flex flex-col justify-between items-start text-xl'>
                             <p className=' font-semibold'>
                                 <span className=" text-yellow-400 font-bold">Total lectures : {" "}</span>
                                 {state?.noOfLectures}

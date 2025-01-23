@@ -14,9 +14,6 @@ function DisplayLectures() {
   const { role, data } = useSelector(state => state?.authstate)
   const [currentVideo, setCurrentVideo] = useState(0)
 
-  console.log(lectures);
-
-  
 
   useEffect(() => {
     if (!state) navigate("/courses");
@@ -25,7 +22,7 @@ function DisplayLectures() {
 
   return (
     <HomeLayout>
-
+      {lectures.length > 0 ? (
       <div className=' flex flex-col gap-10 items-center justify-center min-h-[90vh] py-10 text-white'>
         <div className=' text-center font-semibold text-2xl text-yellow-500'>
           Course name : <span className=' text-white capitalize'>{state.title}</span>
@@ -103,6 +100,18 @@ function DisplayLectures() {
 
         </div>
       </div>
+      ):role === "ADMIN" && state.createdby == data.fullName ? (
+      <div className=' min-h-[90vh] flex justify-center items-center'>
+          <div className='  bg-gray-700 rounded-md flex justify-between  w-[40rem] shadow-[0_0_10px_black] py-4 px-3 relative'>
+        <p className=' text-white font-semibold text-2xl'>Lectures list</p>
+        <button
+          onClick={() => navigate("/course/add-lecture", { state: { ...state } })}
+          className=' flex items-center gap-5 text-xl text-white hover:text-gray-300  transition-all ease-in-out duration-200 font-bold bg-purple-700 px-2
+                 rounded-lg'> <FaPlus /> <p> Add new lecture</p></button>
+      </ div>
+      </div>
+      ) : navigate(-1) }
+
 
     </HomeLayout>
   )

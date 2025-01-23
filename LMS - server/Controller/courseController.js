@@ -104,7 +104,7 @@ const getOneCourse = async (req, res, next) => {
       );
     }
 
-    Course.noOfLectures = Course.lectures.length
+    Course.noOfLectures = Course.lectures.length;
     await Course.save();
 
     res.status(200).json({
@@ -223,7 +223,7 @@ const addLecture = async (req, res, next) => {
           }
         );
         if (uploadedVideo) {
-            (lecture.lectureSrc.public_id = uploadedVideo.public_id),
+          (lecture.lectureSrc.public_id = uploadedVideo.public_id),
             (lecture.lectureSrc.secure_url = uploadedVideo.secure_url);
         }
 
@@ -277,10 +277,11 @@ const deleteLecture = async (req, res, next) => {
       }
     });
 
-    
-
+  console.log(LectureToBeDeleted);
+  
     // lets delete the lecture if exists
     if (LectureToBeDeleted) {
+      await cloudinary.v2.uploader.destroy(LectureToBeDeleted.lectureSrc.public_id, {resource_type:"video"})
       course.lectures.splice(course.lectures.indexOf(LectureToBeDeleted), 1);
       course.noOfLectures = course.lectures.length;
     } else {

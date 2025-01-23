@@ -76,7 +76,7 @@ function AddNewLecture() {
             <div
                 className=' min-h-[95vh] flex flex-col justify-center items-center '
             >
-                <div className=' w-96 flex flex-col justify-center items-center shadow-[0_0_10px_black] px-4 py-6 gap-2'>
+                <div className=' w-96 flex flex-col justify-center items-center shadow-[0_0_10px_black] px-4 py-1 gap-3'>
 
                     <header className=' flex justify-center items-center relative'>
                         <h1 className=' text-2xl text-yellow-500 font-semibold '>
@@ -84,7 +84,7 @@ function AddNewLecture() {
                         </h1>
 
                         <button onClick={() => navigate(-1)} className=' absolute  -left-24  bottom-0'>
-                            <AiOutlineArrowLeft className=' hover:text-blue-500 transition-all ease-in-out duration-200 text-2xl' />
+                            <AiOutlineArrowLeft className=' text-white font-bold hover:text-blue-500 transition-all ease-in-out duration-200 text-2xl' />
                         </button>
                     </header>
 
@@ -137,7 +137,7 @@ function AddNewLecture() {
                             )
                         }
 
-                        <button type='submit' className=' my-2 bg-green-500 text-white text-2xl p-0 py-2 w-full font-bold hover:bg-green-600'>
+                        <button type='submit' className=' bg-green-500 text-white text-2xl p-0 py-2 w-full font-bold hover:bg-green-600'>
                             Upload lecture
                         </button>
 

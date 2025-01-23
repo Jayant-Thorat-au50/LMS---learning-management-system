@@ -5,6 +5,7 @@ import axios from "axios";
 
 const initialState = {
   lectures: [],
+
 };
 
 const getCourseLectures = createAsyncThunk(
