@@ -172,6 +172,7 @@ const addLecture = async (req, res, next) => {
   const { title, description } = req.body;
 
   try {
+    // validating the xtracted fields
     if (!title || !description) {
       return next(new AppError("Every field is required", 400));
     }
@@ -179,6 +180,7 @@ const addLecture = async (req, res, next) => {
     // creating a lec instance
 
     const lecture = {
+      id: "",
       title: title,
       description: description,
       lectureSrc: {
@@ -195,8 +197,13 @@ const addLecture = async (req, res, next) => {
 
     const course = await CourseModel.findById(id);
 
-    // validation for the duplicate title
+    //validating the course
 
+    if (!course) {
+      return next(new AppError("course does not exists"));
+    }
+
+    // validation for the duplicate title
     let duplicateTitle;
 
     course.lectures.forEach((lecture) => {
@@ -212,7 +219,10 @@ const addLecture = async (req, res, next) => {
       );
     }
 
+    // let's upload the lecture video to cloudinary "lms-lecture-videos" folder
     if (req.file) {
+      console.log(course.lectures.length);
+
       try {
         const uploadedVideo = await cloudinary.v2.uploader.upload(
           req.file.path,
@@ -223,13 +233,14 @@ const addLecture = async (req, res, next) => {
           }
         );
         if (uploadedVideo) {
-          (lecture.lectureSrc.public_id = uploadedVideo.public_id),
+          (lecture.id = course.lectures.length + 1),
+            (lecture.lectureSrc.public_id = uploadedVideo.public_id),
             (lecture.lectureSrc.secure_url = uploadedVideo.secure_url);
         }
 
         fs.rm(`./uploads/${req.file.filename}`);
       } catch (error) {
-        return next(new AppError(error.message, 500));
+        return next(new AppError("failed to upload the video", 500));
       }
     }
 
@@ -237,7 +248,7 @@ const addLecture = async (req, res, next) => {
     course.lectures.push(lecture);
     course.noOfLectures = course.lectures.length;
 
-    // save the course
+    // save the course obj
     await course.save();
 
     return res.status(200).json({
@@ -277,11 +288,14 @@ const deleteLecture = async (req, res, next) => {
       }
     });
 
-  console.log(LectureToBeDeleted);
-  
+    console.log(LectureToBeDeleted);
+
     // lets delete the lecture if exists
     if (LectureToBeDeleted) {
-      await cloudinary.v2.uploader.destroy(LectureToBeDeleted.lectureSrc.public_id, {resource_type:"video"})
+      await cloudinary.v2.uploader.destroy(
+        LectureToBeDeleted.lectureSrc.public_id,
+        { resource_type: "video" }
+      );
       course.lectures.splice(course.lectures.indexOf(LectureToBeDeleted), 1);
       course.noOfLectures = course.lectures.length;
     } else {

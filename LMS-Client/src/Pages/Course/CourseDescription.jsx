@@ -10,19 +10,19 @@ function CourseDescription() {
     const navigate = useNavigate()
     let { role, data } = useSelector(state => state.authstate);
 
-   const courseData = state
+    const courseData = state
 
 
-   const displayLectures = () => {
-    if(!role === "ADMIN" || courseData.createdby != data.fullName ){
-        toast.error('Admins can only view own courses');
-        return;
+    const displayLectures = () => {
+        if (!role === "ADMIN" || courseData.createdby != data.fullName) {
+            toast.error('Admins can only view own courses');
+            return;
+        }
+        navigate("/course/displayLectures", { state: { ...courseData } })
     }
-    navigate("/course/displayLectures", {state:{...courseData}})
-   }
 
-   
-    
+
+
     return (
         <HomeLayout>
             <div className=' w-full min-h-[90vh] flex justify-center items-center flex-col pt-12 px-28 text-white'>
@@ -47,11 +47,11 @@ function CourseDescription() {
 
                         {role === "ADMIN" || data?.subscription?.status === "Active" ? (
                             <button
-                            onClick={displayLectures}
-                            className=' bg-yellow-600 text-xl rounded-md px-5 py-3 font-bold hover:bg-yellow-500 transition-all ease-in-out duration-150 hover:text-black w-full tracking-widest'>Watch Lectures</button>
+                                onClick={displayLectures}
+                                className=' bg-yellow-600 text-xl rounded-md px-5 py-3 font-bold hover:bg-yellow-500 transition-all ease-in-out duration-150 hover:text-black w-full tracking-widest'>Watch Lectures</button>
                         ) : (
                             <button className=' bg-yellow-600 text-xl rounded-md px-5 py-3 font-bold hover:bg-yellow-500 transition-all ease-in-out duration-300 hover:text-black w-full tracking-widest'
-                            onClick={() => navigate('/checkout')}
+                                onClick={() => navigate('/checkout')}
                             >Subscribe</button>
                         )}
 

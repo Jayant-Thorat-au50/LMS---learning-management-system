@@ -6,7 +6,7 @@ import { CiEdit } from "react-icons/ci";
 import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import toast from 'react-hot-toast';
-import { getUserData, userUpdate } from '../../../Redux/Slices/Authslice';
+import { userUpdate } from '../../../Redux/Slices/Authslice';
 
 function EditProfile() {
 

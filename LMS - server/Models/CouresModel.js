@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const { type } = require('os');
 
 const courseSchema = new mongoose.Schema({
   catagory: {
@@ -38,6 +39,7 @@ const courseSchema = new mongoose.Schema({
   },
   lectures: [
     {
+      id:{type:Number},
       title: { type: String },
       description: { type: String },
       lectureSrc: {
