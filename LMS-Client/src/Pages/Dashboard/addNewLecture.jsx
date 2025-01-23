@@ -18,9 +18,6 @@ function AddNewLecture() {
         videoSrc: ""
     })
 
-    console.log(userInput);
-
-
     const hanldeInputChange = (e) => {
 
         const { name, value } = e.target
@@ -59,14 +56,14 @@ function AddNewLecture() {
         );
         const response = await dispatch(addNewLecture([state._id, formData]));
 
-        if(response?.payload?.success){
-           navigate(-1)
-           setUserInput({
-            title: "",
-            description: "",
-            lecture: undefined,
-            videoSrc: ""
-           })
+        if (response?.payload?.success) {
+            navigate(-1)
+            setUserInput({
+                title: "",
+                description: "",
+                lecture: undefined,
+                videoSrc: ""
+            })
         }
 
 
@@ -118,8 +115,13 @@ function AddNewLecture() {
                                         className=' nodownloads relative'
                                         src={userInput.videoSrc}>
                                     </video>
-                                    <button className=' absolute -bottom-5 left-1 bg-red-600 text-white rounded-md px-2 hover:bg-red-700 transition-all ease-in-out duration-200 text-xl '
-                                        onClick={() => setUserInput({ videoSrc: " " })}
+                                    <button className=' absolute -bottom-4 left-1 bg-red-600 text-white rounded-md px-2 hover:bg-red-700 transition-all ease-in-out duration-200 text-xl cursor-auto '
+                                        onClick={() => setUserInput({
+                                            title: "",
+                                            description: "",
+                                            lecture: undefined,
+                                            videoSrc: ""
+                                        })}
                                     >
                                         remove video
                                     </button>
@@ -135,7 +137,7 @@ function AddNewLecture() {
                             )
                         }
 
-                        <button type='submit' className=' my-2 bg-green-500 text-white text-2xl p-0 py-2 w-full font-bold'>
+                        <button type='submit' className=' my-2 bg-green-500 text-white text-2xl p-0 py-2 w-full font-bold hover:bg-green-600'>
                             Upload lecture
                         </button>
 

@@ -20,7 +20,7 @@ courseRoutes.delete('/delete-course/:id',isLoggedIn,authorizeRoles('ADMIN'), del
 
 courseRoutes.post('/add-lecture/:id',upload.single('lecture') , addLecture)
 
-courseRoutes.delete('/delete-lecture/:Course_id/:Lecture_id',isLoggedIn,authorizeRoles('ADMIN'), deleteLecture)
+courseRoutes.delete('/delete-lecture/:Course_id/:Lecture_id', deleteLecture)
 
 
 

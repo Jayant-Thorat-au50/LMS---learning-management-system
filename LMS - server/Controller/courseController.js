@@ -104,6 +104,9 @@ const getOneCourse = async (req, res, next) => {
       );
     }
 
+    Course.noOfLectures = Course.lectures.length
+    await Course.save();
+
     res.status(200).json({
       success: true,
       message: "Course details fetched successfully",
@@ -176,12 +179,12 @@ const addLecture = async (req, res, next) => {
     // creating a lec instance
 
     const lecture = {
-      title: "",
-      description: "",
-      lectureSrc:{
-        public_id : "",
+      title: title,
+      description: description,
+      lectureSrc: {
+        public_id: "",
         secure_url: "",
-      }
+      },
     };
 
     if (!lecture) {
@@ -209,31 +212,25 @@ const addLecture = async (req, res, next) => {
       );
     }
 
-    if(req.file){
-
-
+    if (req.file) {
       try {
-        const uploadedVideo = await cloudinary.v2.uploader.upload(req.file.path, {
-          folder:"lms-lecture-videos",
-          chunk_size:50000000,
-          resource_type:"video"
-      })
-      if(uploadedVideo){
-        console.log(uploadedVideo.public_id);
-        console.log(uploadedVideo.secure_url);
-        lecture.title = title,
-        lecture.description = description,
-        lecture.lectureSrc.public_id = " kkkkkk",
-        lecture.lectureSrc.secure_url = uploadedVideo.secure_url
-        console.log('done');
-        
-      }
-      
-      fs.rm(`./uploads/${req.file.filename}`)
+        const uploadedVideo = await cloudinary.v2.uploader.upload(
+          req.file.path,
+          {
+            folder: "lms-lecture-videos",
+            chunk_size: 50000000,
+            resource_type: "video",
+          }
+        );
+        if (uploadedVideo) {
+            (lecture.lectureSrc.public_id = uploadedVideo.public_id),
+            (lecture.lectureSrc.secure_url = uploadedVideo.secure_url);
+        }
+
+        fs.rm(`./uploads/${req.file.filename}`);
       } catch (error) {
-        return next(new AppError(error.message, 500))
+        return next(new AppError(error.message, 500));
       }
-      
     }
 
     // let's push this lec obj in the lectures array in course obj
@@ -275,10 +272,12 @@ const deleteLecture = async (req, res, next) => {
 
     // lets get the lecture to be deleted if exists
     course.lectures.forEach((lecture) => {
-      if (lecture.id === Lecture_id) {
+      if (lecture._id == Lecture_id) {
         return (LectureToBeDeleted = lecture);
       }
     });
+
+    
 
     // lets delete the lecture if exists
     if (LectureToBeDeleted) {
