@@ -12,6 +12,7 @@ const initialState = {
   monthlySalesRecord: [],
 };
 
+// get the razorpay key stired in the backend
 const getRazorpayApiKey = createAsyncThunk("/razorpay/apiKey", async () => {
   try {
     const response = await axios.get(
@@ -23,6 +24,8 @@ const getRazorpayApiKey = createAsyncThunk("/razorpay/apiKey", async () => {
     return toast.error("failed to load data");
   }
 });
+
+// purchase course bundle
 const purchaseSubcription = createAsyncThunk(
   "/purchaseSubscription",
   async (userId) => {
@@ -39,6 +42,8 @@ const purchaseSubcription = createAsyncThunk(
     }
   }
 );
+
+// handler fun after getting the payment data
 const verifySubscription = createAsyncThunk(
   "/verifysubscription",
   async (data) => {
@@ -56,22 +61,18 @@ const verifySubscription = createAsyncThunk(
     }
   }
 );
+
+// cancel subscription
 const cancelSubscription = createAsyncThunk(
   "/cancelSubscription",
   async (data) => {
-    console.log(data);
-    
     try {
       const response = await axios.post(
         `http://localhost:6070/api/v1/payments/unsubscribe/${data[0]}`,
         data[1]
       );
-      
-
-      return  response;
+      return response;
     } catch (error) {
-      console.log(error.response);
-
       return toast.error("failed to load data");
     }
   }
@@ -94,9 +95,9 @@ const paymentSlice = createSlice({
         state.isPaymentVerified = true;
       })
       .addCase(cancelSubscription.fulfilled, (state, action) => {
-       if(!action?.payload?.success) return;
-       state.subscription_id = null
-      })
+        if (!action?.payload?.success) return;
+        state.subscription_id = null;
+      });
   },
 });
 

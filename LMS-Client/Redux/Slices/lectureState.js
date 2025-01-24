@@ -5,9 +5,9 @@ import axios from "axios";
 
 const initialState = {
   lectures: [],
-
 };
 
+// get all the lectures of a pertiular course by course id
 const getCourseLectures = createAsyncThunk(
   "course/lectures",
   async (courseId) => {
@@ -31,6 +31,7 @@ const getCourseLectures = createAsyncThunk(
   }
 );
 
+// add new lecture to a course args ==> "courseId" and lecture "userInput obj of lecture data"
 const addNewLecture = createAsyncThunk("course/addLecture", async (data) => {
   try {
     const response = axios.post(
@@ -52,25 +53,25 @@ const addNewLecture = createAsyncThunk("course/addLecture", async (data) => {
   }
 });
 
+// delete lecture from a course args ==> "courseId" and "lecture obj"
 const deleteLecture = createAsyncThunk("course/deleteLecture", async (data) => {
- try {
-  const response = axios.delete(
-    `http://localhost:6070/api/v1/course/delete-lecture/${data[0]}/${data[1]}`
-  );
+  try {
+    const response = axios.delete(
+      `http://localhost:6070/api/v1/course/delete-lecture/${data[0]}/${data[1]}`
+    );
 
-  toast.promise(response, {
-    loading: "wait! deleting the lecture from the course",
-    success: (res) => {
-      return res?.data?.message;
-    },
-    error: "failed to delete the lecture",
-  });
+    toast.promise(response, {
+      loading: "wait! deleting the lecture from the course",
+      success: (res) => {
+        return res?.data?.message;
+      },
+      error: "failed to delete the lecture",
+    });
 
-  return (await response).data;
- } catch (error) {
-  console.log(error);
-  
- }
+    return (await response).data;
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 const lectureSlice = createSlice({

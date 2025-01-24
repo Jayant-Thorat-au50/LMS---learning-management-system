@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import HomeLayout from '../../components/HomeLayout';
 import { useSelector } from 'react-redux';
@@ -19,7 +19,7 @@ function CourseDescription() {
             return;
         }
 
-        if(role === "USER" && state.noOfLectures ==0){
+        if (role === "USER" && state.noOfLectures == 0) {
             toast.error('lectures are yet to be added')
             return
         }

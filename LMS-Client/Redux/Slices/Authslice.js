@@ -1,6 +1,10 @@
+
+// lib imports
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "../.././src/Helpers/axiosInstance";
+
+
+// helpers imports
 import toast from "react-hot-toast";
 import axios from "axios";
 
@@ -10,6 +14,7 @@ const initialState = {
   data: JSON.parse(localStorage.getItem("data")) || {},
 };
 
+// register a user in the user collection
 export const register = createAsyncThunk("auth/signUp", async (singnUpData) => {
   try {
     const res = axios.post(
@@ -35,6 +40,8 @@ export const register = createAsyncThunk("auth/signUp", async (singnUpData) => {
     return toast.error(error?.response?.data?.message);
   }
 });
+
+// making the user login and get access to the personal acc and portfolio
 export const loginNow = createAsyncThunk("auth/login", async (loginData) => {
   try {
     const res = axios.post(
@@ -53,6 +60,8 @@ export const loginNow = createAsyncThunk("auth/login", async (loginData) => {
     return toast.error(error?.response?.data?.message);
   }
 });
+
+// making the user log out and delete the data form local storage and cookies in the browser
 export const logout = createAsyncThunk("auth/logout", async () => {
   try {
     const res = axios.get("http://localhost:6070/api/v1/user/logout");
@@ -69,6 +78,8 @@ export const logout = createAsyncThunk("auth/logout", async () => {
     return toast.error(error?.response?.data?.message);
   }
 });
+
+// allow the user update their profile
 export const userUpdate = createAsyncThunk(
   "user/profile/update",
   async (data) => {
@@ -97,6 +108,7 @@ export const userUpdate = createAsyncThunk(
   }
 );
 
+// getting the updated or not updated user data in the state
 export const getUserData = createAsyncThunk("user/me", async (userId) => {
   try {
     const res = await axios.get(

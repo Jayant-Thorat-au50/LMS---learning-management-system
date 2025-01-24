@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "../../src/Helpers/axiosInstance";
+
+// helpers imports
 import toast from "react-hot-toast";
 import axios from "axios";
 
@@ -8,6 +9,7 @@ const initialState = {
 coursesList : []
 };
 
+// get the list all available courses in the db
 export const getcoursesList = createAsyncThunk("Course/getAllCourses", async () => {
   try {
     const res = axios.get(
@@ -27,6 +29,7 @@ export const getcoursesList = createAsyncThunk("Course/getAllCourses", async () 
   }
 });
 
+// add course to the course collection in the db
 export const addCourse = createAsyncThunk("course/create",async (courseData) => {
   try {
 
