@@ -14,13 +14,18 @@ function CourseDescription() {
 
 
     const displayLectures = () => {
-        if (!role === "ADMIN" || courseData.createdby != data.fullName) {
+        if (!role === "ADMIN" && courseData.createdby != data.fullName) {
             toast.error('Admins can only view own courses');
             return;
         }
+
+        if(role === "USER" && state.noOfLectures ==0){
+            toast.error('lectures are yet to be added')
+            return
+        }
+
         navigate("/course/displayLectures", { state: { ...courseData } })
     }
-
 
 
     return (
