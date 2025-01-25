@@ -1,18 +1,23 @@
+
+// lib imports
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 
+// thunck imports
 import { addCourse } from '../../../Redux/Slices/courseSlice';
+
+// components imports
 import HomeLayout from '../../components/HomeLayout';
+
+// icons imports
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 function AddCourse() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate()
-
-
     const [adminInput, setAdminInput] = useState({
         title: "",
         catagory: "",
@@ -24,6 +29,7 @@ function AddCourse() {
 
     });
 
+    // get img preview when selected
     const getImg = (e) => {
         const img = e.target.files[0];
         if (img) {
@@ -48,16 +54,11 @@ function AddCourse() {
     }
 
     const onFormSubmit = async (e) => {
-
-        console.log(adminInput);
-
         e.preventDefault()
-
         if (!adminInput.title || !adminInput.catagory || !adminInput.description || !adminInput.createdby || !adminInput.previewImg || !adminInput.previewImg) {
             toast.error("All fields are mandatory");
             return
         }
-
         const formData = new FormData();
 
         formData.append('title', adminInput.title)

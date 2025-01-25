@@ -16,7 +16,10 @@ const userRoutes = require("./Routes/User.routes.js");
 const paymentRoutes = require("./Routes/PaymentRoutes.js");
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin:"http://localhost:5173",
+  credentials:true
+}));
 const PORT = process.env.PORT;
 dbConnect();
 cloudinary.v2.config({

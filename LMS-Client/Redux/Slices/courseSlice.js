@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 // helpers imports
 import toast from "react-hot-toast";
-import axios from "axios";
+import axiosInstance from "../../src/Helpers/axiosInstance";
 
 const initialState = {
 coursesList : []
@@ -12,8 +12,8 @@ coursesList : []
 // get the list all available courses in the db
 export const getcoursesList = createAsyncThunk("Course/getAllCourses", async () => {
   try {
-    const res = axios.get(
-      "http://localhost:6070/api/v1/course");
+    const res = axiosInstance.get(
+      "/course");
 
     toast.promise(res, {
       loading: "wait! getting the courses",
@@ -33,7 +33,7 @@ export const getcoursesList = createAsyncThunk("Course/getAllCourses", async () 
 export const addCourse = createAsyncThunk("course/create",async (courseData) => {
   try {
 
-    const response = axios.post("http://localhost:6070/api/v1/course/add-course", courseData,
+    const response = axiosInstance.post("/course/add-course", courseData,
      {
       headers: {
         'Content-Type': 'multipart/form-data',

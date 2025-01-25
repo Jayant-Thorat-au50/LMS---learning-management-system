@@ -9,6 +9,7 @@ const {
   resetPassword,
   changePassword,
   userUpdate,
+  getAllUserData,
 } = require("../Controller/user.controller.js");
 const {isLoggedIn} = require("../middlewares/auth.middleware.js");
 const { upload } = require("../middlewares/multer.middleware.js");
@@ -19,6 +20,8 @@ UserRoutes.post("/register", upload.single("Avatar"), signUp);
 UserRoutes.post("/login", login);
 
 UserRoutes.get("/me/:userId", getUser);
+
+UserRoutes.get("/getAllUserData", getAllUserData);
 
 UserRoutes.get("/logout", logout);
 

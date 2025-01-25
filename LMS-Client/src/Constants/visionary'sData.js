@@ -1,3 +1,6 @@
+
+// asssets imports
+
 import apj from "../assets/apj__1_-removebg-preview.png";
 import steve from "../assets/steve jobs.jpg";
 import sunder from "../assets/sunder pichai.jpeg";

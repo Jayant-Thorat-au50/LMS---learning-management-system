@@ -1,9 +1,12 @@
 import React from 'react'
+
+// hook and lib imports
 import { useLocation, useNavigate } from 'react-router-dom'
-import HomeLayout from '../../components/HomeLayout';
 import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 
+// component imports
+import HomeLayout from '../../components/HomeLayout';
 function CourseDescription() {
 
     const { state } = useLocation();
@@ -12,7 +15,7 @@ function CourseDescription() {
 
     const courseData = state
 
-
+    // authentication for admin role and owership of the course
     const displayLectures = () => {
         if (!role === "ADMIN" && courseData.createdby != data.fullName) {
             toast.error('Admins can only view own courses');
@@ -35,7 +38,7 @@ function CourseDescription() {
                     {/* left side of the page */}
                     <div className=' space-y-5  border rounded-md '>
                         <img
-                            className=' w-full h-64  '
+                            className=' w-full h-64'
                             src={state?.thumbnail?.secure_Url}
                             alt="thumbnail" />
 

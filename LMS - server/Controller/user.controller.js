@@ -1,12 +1,19 @@
-const UserModel = require("../Models/UserModel.js")
-const AppError = require("../Utils/AppError.utils.js")
-const emailValidate = require("email-validator");
-const bcrypt = require('bcrypt')
-const cloudinary = require('cloudinary');
-const fs = require('fs/promises')
-const sendEmail = require('../Utils/sendEmail.js')
-const crypto = require('crypto')
 
+// model imports
+const UserModel = require("../Models/UserModel.js");
+
+// lib (pacakge) imports
+const emailValidate = require("email-validator");
+const bcrypt = require("bcrypt");
+const crypto = require("crypto");
+const cloudinary = require("cloudinary");
+
+// utils imports
+const AppError = require("../Utils/AppError.utils.js");
+const sendEmail = require("../Utils/sendEmail.js");
+
+// module imports
+const fs = require("fs/promises");
 
 const cookieOption = {
   maxAge: 24 * 60 * 60 * 1000,
@@ -88,6 +95,9 @@ const signUp = async (req, res, next) => {
         );
       }
     }
+
+    // hiding the password
+    
     // saving the userobj
     await User.save();
 
@@ -115,7 +125,6 @@ const signUp = async (req, res, next) => {
 const login = async (req, res, next) => {
   const { email, password } = req.body;
 
-
   // validaing the extracted fields
   if (!email || !password) {
     return next(new AppError("Every field is required", 400));
@@ -137,6 +146,10 @@ const login = async (req, res, next) => {
     res.cookie("Token", token, cookieOption);
 
     // sending the user data to the client
+
+    // making the passowrd disappear when the user obj is sent to the client
+    user.password= undefined;
+
     res.status(200).json({
       success: true,
       message: "User log in successfully",
@@ -150,7 +163,7 @@ const login = async (req, res, next) => {
 // get user api
 const getUser = async (req, res, next) => {
   // grabbing the id extracted from the token in jwt auth middleware
-  const {userId} = req.params
+  const { userId } = req.params;
 
   try {
     const User = await UserModel.findById(userId);
@@ -325,7 +338,7 @@ const userUpdate = async (req, res, next) => {
   const userTobeUpdated = await UserModel.findById(userId);
 
   if (!userTobeUpdated) {
-    return next(new AppError("Invalid user plaese try again",400));
+    return next(new AppError("Invalid user plaese try again", 400));
   }
 
   userTobeUpdated.fullName = fullName;
@@ -363,7 +376,29 @@ const userUpdate = async (req, res, next) => {
   });
 };
 
+// getting the All user data
 
+const getAllUserData = async (req, res, next) => {
+  try {
+
+  // fetching the entire users collection (array)
+    const allUserCount = await UserModel.find({});
+
+  // filtering the user's array for subscribed users
+    const subscribedUsers = allUserCount.filter(
+      (user) => user.subscription.status === "Active"
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "data of all users fetched successsfully",
+      allUserCount,
+      subscribedUsers,
+    });
+  } catch (error) {
+    return next(new AppError(error.message, 400));
+  }
+};
 
 module.exports = {
   signUp,
@@ -374,4 +409,5 @@ module.exports = {
   resetPassword,
   changePassword,
   userUpdate,
-}
+  getAllUserData,
+};

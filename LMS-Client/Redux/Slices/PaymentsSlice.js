@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../src/Helpers/axiosInstance";
 import toast from "react-hot-toast";
-import axios from "axios";
 
 const initialState = {
   api_key: "",
@@ -15,10 +14,7 @@ const initialState = {
 // get the razorpay key stired in the backend
 const getRazorpayApiKey = createAsyncThunk("/razorpay/apiKey", async () => {
   try {
-    const response = await axios.get(
-      "http://localhost:6070/api/v1/payments/razorpay_ApiKey"
-    );
-
+    const response = await axiosInstance.get("/payments/razorpay_ApiKey");
     return response.data;
   } catch (error) {
     return toast.error("failed to load data");
@@ -30,10 +26,7 @@ const purchaseSubcription = createAsyncThunk(
   "/purchaseSubscription",
   async (userId) => {
     try {
-      const response = await axios.get(
-        `http://localhost:6070/api/v1/payments/subscribe/${userId}`
-      );
-
+      const response = await axiosInstance.get(`/payments/subscribe/${userId}`);
       return response.data;
     } catch (error) {
       console.log(error?.response?.data?.message);
@@ -48,8 +41,8 @@ const verifySubscription = createAsyncThunk(
   "/verifysubscription",
   async (data) => {
     try {
-      const response = await axios.post(
-        `http://localhost:6070/api/v1/payments/verify-subscription/${data[0]}`,
+      const response = await axiosInstance.post(
+        `/payments/verify-subscription/${data[0]}`,
         data[1]
       );
 
@@ -67,8 +60,8 @@ const cancelSubscription = createAsyncThunk(
   "/cancelSubscription",
   async (data) => {
     try {
-      const response = await axios.post(
-        `http://localhost:6070/api/v1/payments/unsubscribe/${data[0]}`,
+      const response = await axiosInstance.post(
+        `/payments/unsubscribe/${data[0]}`,
         data[1]
       );
       return response;

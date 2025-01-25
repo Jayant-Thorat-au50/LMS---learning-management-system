@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../src/Helpers/axiosInstance";
 import toast from "react-hot-toast";
-import axios from "axios";
 
 const initialState = {
   lectures: [],
@@ -12,8 +11,8 @@ const getCourseLectures = createAsyncThunk(
   "course/lectures",
   async (courseId) => {
     try {
-      const response = axios.get(
-        `http://localhost:6070/api/v1/course/get-one-course/${courseId}`
+      const response = axiosInstance.get(
+        `/course/get-one-course/${courseId}`
       );
 
       toast.promise(response, {
@@ -34,8 +33,8 @@ const getCourseLectures = createAsyncThunk(
 // add new lecture to a course args ==> "courseId" and lecture "userInput obj of lecture data"
 const addNewLecture = createAsyncThunk("course/addLecture", async (data) => {
   try {
-    const response = axios.post(
-      `http://localhost:6070/api/v1/course/add-lecture/${data[0]}`,
+    const response = axiosInstance.post(
+      `/course/add-lecture/${data[0]}`,
       data[1]
     );
     toast.promise(response, {
@@ -56,8 +55,8 @@ const addNewLecture = createAsyncThunk("course/addLecture", async (data) => {
 // delete lecture from a course args ==> "courseId" and "lecture obj"
 const deleteLecture = createAsyncThunk("course/deleteLecture", async (data) => {
   try {
-    const response = axios.delete(
-      `http://localhost:6070/api/v1/course/delete-lecture/${data[0]}/${data[1]}`
+    const response = axiosInstance.delete(
+      `/course/delete-lecture/${data[0]}/${data[1]}`
     );
 
     toast.promise(response, {

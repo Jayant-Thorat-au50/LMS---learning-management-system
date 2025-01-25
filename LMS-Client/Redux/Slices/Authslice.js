@@ -1,12 +1,10 @@
-
 // lib imports
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-
 // helpers imports
 import toast from "react-hot-toast";
-import axios from "axios";
+import axiosInstance from "../../src/Helpers/axiosInstance";
 
 const initialState = {
   isLoggedIn: localStorage.getItem("isLoggedIn") || false,
@@ -17,15 +15,11 @@ const initialState = {
 // register a user in the user collection
 export const register = createAsyncThunk("auth/signUp", async (singnUpData) => {
   try {
-    const res = axios.post(
-      "http://localhost:6070/api/v1/user/register",
-      singnUpData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const res = axiosInstance.post("/user/register", singnUpData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     toast.promise(res, {
       loading: "wait! creating your account",
@@ -44,10 +38,7 @@ export const register = createAsyncThunk("auth/signUp", async (singnUpData) => {
 // making the user login and get access to the personal acc and portfolio
 export const loginNow = createAsyncThunk("auth/login", async (loginData) => {
   try {
-    const res = axios.post(
-      "http://localhost:6070/api/v1/user/login",
-      loginData
-    );
+    const res = axiosInstance.post("/user/login", loginData);
     toast.promise(res, {
       loading: "wait! loggin you in",
       success: (response) => {
@@ -64,7 +55,7 @@ export const loginNow = createAsyncThunk("auth/login", async (loginData) => {
 // making the user log out and delete the data form local storage and cookies in the browser
 export const logout = createAsyncThunk("auth/logout", async () => {
   try {
-    const res = axios.get("http://localhost:6070/api/v1/user/logout");
+    const res = axiosInstance.get("/user/logout");
     toast.promise(res, {
       loading: "wait! logging out",
       success: (data) => {
@@ -84,15 +75,11 @@ export const userUpdate = createAsyncThunk(
   "user/profile/update",
   async (data) => {
     try {
-      const res = axios.put(
-        `http://localhost:6070/api/v1/user/user-update/${data[0]}`,
-        data[1],
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const res = axiosInstance.put(`/user/user-update/${data[0]}`, data[1], {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       toast.promise(res, {
         loading: "wait! user update is in progress",
         success: (data) => {
@@ -111,9 +98,7 @@ export const userUpdate = createAsyncThunk(
 // getting the updated or not updated user data in the state
 export const getUserData = createAsyncThunk("user/me", async (userId) => {
   try {
-    const res = await axios.get(
-      `http://localhost:6070/api/v1/user/me/${userId}`
-    );
+    const res = await axiosInstance.get(`/user/me/${userId}`);
     return res.data;
   } catch (error) {
     return toast.error(error?.response?.data?.message);
