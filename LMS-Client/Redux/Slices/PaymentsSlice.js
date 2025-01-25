@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../src/Helpers/axiosInstance";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const initialState = {
   api_key: "",
@@ -94,10 +95,20 @@ const paymentSlice = createSlice({
   },
 });
 
+const getAllpaymentsList = createAsyncThunk('/getAllPaymetsList', async () => {
+
+  const response = await axiosInstance.get('/payments/allPayments');
+
+  console.log(response);
+  return response.data;
+
+})
+
 export default paymentSlice.reducer;
 export {
   getRazorpayApiKey,
   purchaseSubcription,
   verifySubscription,
   cancelSubscription,
+  getAllpaymentsList
 };

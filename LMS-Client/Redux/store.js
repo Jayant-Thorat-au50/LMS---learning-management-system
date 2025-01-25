@@ -12,7 +12,6 @@ const store = configureStore({
      paymentstate:razorpayReducer,
      lectureState:lecturesReducer,
      stat:statReducer
-
     },
     devTools:true
 })

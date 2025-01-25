@@ -12,9 +12,9 @@ const initialState = {
 // getting the user's data
 const getAllUserData = createAsyncThunk("getAllUsersData", async () => {
   try {
-    const response = axiosInstance.get("/user/getAllUserData");
+    const response = await axiosInstance.get("/user/getAllUserData");
 
-    return (await response).data;
+    return response.data
   } catch (error) {
     toast.error(error?.response?.data?.message, 400);
   }

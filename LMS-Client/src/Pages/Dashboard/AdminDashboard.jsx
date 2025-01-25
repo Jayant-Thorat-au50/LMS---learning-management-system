@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 // thunck imports
 import { getAllUserData } from '../../../Redux/Slices/statSlice';
-import axiosInstance from '../../Helpers/axiosInstance';
+import { getAllpaymentsList } from '../../../Redux/Slices/PaymentsSlice';
 
 function AdminDashboard() {
 
@@ -19,9 +19,9 @@ function AdminDashboard() {
 
     const load = async () => {
 
-        const response1 = await axiosInstance.get('/user/get');
-        console.log(response1);
-        
+        const response1 = await dispatch(getAllpaymentsList())
+          console.log(response1);
+          
         const response = await dispatch(getAllUserData())
         console.log(response);
     }

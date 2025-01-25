@@ -13,6 +13,6 @@ paymentRoutes.post("/verify-subscription/:id", verifySubscription);
 
 paymentRoutes.post("/unsubscribe/:id", cancelSubscription);
 
-paymentRoutes.get("/allPayments", (req, res) => res.send('kkkkkk'));
+paymentRoutes.get("/allPayments", getAllPayments);
 
 module.exports = paymentRoutes;
