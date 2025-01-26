@@ -17,7 +17,7 @@ function Profile() {
 
     const handleCancelSubscription = async () => {
         toast.loading('Initiating cancellation')
-     await dispatch(cancelSubscription([userData._id, userData.subscription.id]))
+     await  dispatch(cancelSubscription(userData._id))
       
         const response = await dispatch(getUserData(userData._id))
         console.log(response);
@@ -53,7 +53,10 @@ function Profile() {
                     <div className=' grid grid-rows-3'>
                         <div className=' flex justify-between'>  <p className=' w-[30%]'>Email</p> <span>:</span> <p className=' w-[60%] text-start'>{userData?.email}</p></div>
                         <div className=' flex justify-between'>  <p className=' w-[30%]'>Role</p> <span>:</span> <p className='  w-[60%] text-start'> {userData?.role}</p></div>
+                     {userData.role === "USER"?(
                         <div className=' flex justify-between'>  <p className=' w-[30%]'>Subscription:</p> <span>:</span> <p className='  w-[60%] text-start'> {userData?.subscription.status}</p></div>
+
+                     ):null}
                     </div>
 
                     <div className=' flex items-center justify-between gap-2'>

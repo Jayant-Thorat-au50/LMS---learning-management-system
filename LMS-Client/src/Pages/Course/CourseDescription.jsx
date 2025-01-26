@@ -14,10 +14,12 @@ function CourseDescription() {
     let { role, data } = useSelector(state => state.authstate);
 
     const courseData = state
+    console.log(courseData);
+    
 
     // authentication for admin role and owership of the course
     const displayLectures = () => {
-        if (!role === "ADMIN" && courseData.createdby != data.fullName) {
+        if (role === "ADMIN" && courseData.createdby != data.fullName) {
             toast.error('Admins can only view own courses');
             return;
         }

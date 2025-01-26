@@ -9,30 +9,17 @@ import { useNavigate } from 'react-router-dom';
 
 // thunck imports
 import { getAllUserData } from '../../../Redux/Slices/statSlice';
-import { getAllpaymentsList } from '../../../Redux/Slices/PaymentsSlice';
+import { cancelSubscription, getAllpaymentsList } from '../../../Redux/Slices/PaymentsSlice';
+
 
 function AdminDashboard() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const { allUserCount, subscribedUserCount } = useSelector(state => state?.stat)
+    const { subscriptions } = useSelector(state => state?.paymentstate)
 
-    const load = async () => {
-
-        const response1 = await dispatch(getAllpaymentsList())
-          console.log(response1);
-          
-        const response = await dispatch(getAllUserData())
-        console.log(response);
-    }
-    console.log(allUserCount);
-    console.log(subscribedUserCount);
-    
-
-    useEffect(() => {
-        load()
-    }, [])
-
+   
 
     return (
         <HomeLayout>
@@ -40,6 +27,7 @@ function AdminDashboard() {
 
         </HomeLayout>
     )
+
 }
 
 export default AdminDashboard

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteLecture, getCourseLectures } from '../../../Redux/Slices/lectureState';
 import { FaPlus } from 'react-icons/fa'
 import {MdModeEdit } from 'react-icons/md'
+import { FaPlay } from "react-icons/fa";
 
 function DisplayLectures() {
 
@@ -14,6 +15,7 @@ function DisplayLectures() {
   const lectures = useSelector(state => state?.lectureState?.lectures)
   const { role, data } = useSelector(state => state?.authstate)
   const [currentVideo, setCurrentVideo] = useState(0)
+  const [currentlyPlaying, setCurrentlyPlaying] = useState()
 
   const [edit_lecture_modal_data, setEdit_lecture_modal_data] = useState(" ")
   const [modifiledInput, setModifiledInput] = useState({})
@@ -106,14 +108,18 @@ console.log(edit_lecture_modal_data);
               lectures && lectures.map((lecture, idx) => {
                 return (
                   <li
-                    onClick={() => setCurrentVideo(idx)}
+                    onClick={() =>{ setCurrentVideo(idx)
+                       setCurrentlyPlaying(lecture._id)}}
                     title={lecture.title}
                     key={lecture._id}
-                    className=' flex flex-col items-start w-full gap-4  '
+                    className=' flex  items-center justify-start w-full  '
                   >
-
+                   <div className=' w-[15%] flex justify-center items-center'>
+                   {currentlyPlaying == lecture._id ? (<FaPlay className=''/>):null}
+                   </div>
+                    <div className=' flex flex-col gap-2 w-[80%]'>
                     <p className=' text-xl '>
-                      <span className=' text-xl text-yellow-500'>
+                      <span className=' text-2xl text-yellow-500'>
                         lecture no.{idx + 1} : {" "}
                       </span>
                       {lecture?.title}
@@ -134,7 +140,9 @@ console.log(edit_lecture_modal_data);
                         Edit lecture
                       </button>
                              </div>
-                    )} <hr className=' text-white border-white w-full' />
+                    )}
+                     <hr className=' text-white border-white w-full' />
+                    </div>
                   </li>
                 )
               })

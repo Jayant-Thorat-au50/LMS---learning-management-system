@@ -78,16 +78,15 @@ function EditProfile() {
     
         if (response?.payload?.success) {
             navigate('/user/profile')
-            console.log(response?.payload);
-            console.log(result);
+          
         }
 
-        if(result?.payload?.success){
-            console.log(result.payload);
-            console.log('state updated successfully');
+        // if(result?.payload?.success){
+        //     console.log(result.payload);
+        //     console.log('state updated successfully');
             
             
-        }
+        // }
 
     }
     return (
