@@ -15,7 +15,7 @@ function CourseDescription() {
 
     const courseData = state
     console.log(courseData);
-    
+
 
     // authentication for admin role and owership of the course
     const displayLectures = () => {

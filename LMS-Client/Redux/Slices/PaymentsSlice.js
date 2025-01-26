@@ -10,7 +10,6 @@ const initialState = {
   allPayments: {},
   finalMonth: {},
   monthlySalesRecord: [],
-  subscriptions: [],
 };
 
 // get the razorpay key stired in the backend
@@ -108,8 +107,9 @@ const paymentSlice = createSlice({
       })
       .addCase(getAllpaymentsList.fulfilled, (state, action) => {
         if (!action?.payload?.success) return;
-        state.subscriptions = action.payload.subscriptions;
-        console.log(action);
+        state.allPayments = action?.payload?.subscriptions;
+        state.finalMonth = action?.payload?.finalMonths;
+        state.monthlySalesRecord = action?.payload?.monthlyRecord;
       });
   },
 });

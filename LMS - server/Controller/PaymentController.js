@@ -131,9 +131,6 @@ const cancelSubscription = async (req, res, next) => {
   if (!user) {
     next(new AppError("unauthorized user"));
   }
-  console.log(user);
-  
-
   try {
     // to cancel the subscription we need subscription id of the user
     let subscription_Id = user.subscription.id;
@@ -210,11 +207,14 @@ const getAllPayments = async (req, res, next) => {
       December: 0,
     };
 
+    // let's grab the month names from the binary values
     const monthlyRecord = subscriptions.items.map((sub) => {
       const dates = new Date(sub.start_at * 1000).getMonth();
       return monthNames[dates];
     });
 
+    // if the month exists in subscriptions
+    // the record will be added to the coreesponsding to itself
     monthlyRecord.map((month) => {
       Object.keys(initialMonthlyRecord).forEach((m) => {
         if (m === month) {
@@ -223,15 +223,15 @@ const getAllPayments = async (req, res, next) => {
       });
     });
 
-    console.log(initialMonthlyRecord);
+    const finalMonths = {...initialMonthlyRecord}
 
     return res.status(200).json({
       success: true,
       subscriptions,
       monthlyRecord,
+      finalMonths
     });
   } catch (error) {
-    console.log(error);
 
     return next(new AppError(error.message, 400));
   }
