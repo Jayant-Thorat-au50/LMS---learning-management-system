@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 // thunck imports
 import { getAllUserData } from '../../../Redux/Slices/statSlice';
 import { getAllpaymentsList } from '../../../Redux/Slices/PaymentsSlice';
+import { getcoursesList } from '../../../Redux/Slices/courseSlice';
 
 
 function AdminDashboard() {
@@ -22,11 +23,14 @@ function AdminDashboard() {
 
     const load = async () => {
         const res1 = await dispatch(getAllUserData())
-        const res2 = await dispatch(getAllpaymentsList())
+        const res2 = await dispatch(getAllpaymentsList());
+        await dispatch(getcoursesList())
     }
 
     console.log(allPayments);
     console.log(finalMonth);
+    console.log(allUserCount);
+    console.log(subscribedUserCount);
     console.log(monthlySalesRecord);
 
     useEffect(() => {

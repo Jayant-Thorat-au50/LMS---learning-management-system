@@ -67,8 +67,19 @@ function SignUp() {
             return;
         }
 
+        let finalFullName;
+
+        if(signUpData.fullName){
+            console.log(signUpData);
+            
+                const names = signUpData.fullName.split(" ")
+                
+                names.forEach((n) => n.charAt(0).toUpperCase())
+                 finalFullName = names.toString().replace(',', ' ')
+        }
+
         const formData = new FormData();
-        formData.append("fullName", signUpData.fullName)
+        formData.append("fullName", finalFullName)
         formData.append("Avatar", signUpData.avatar)
         formData.append("email", signUpData.email)
         formData.append("password", signUpData.password)

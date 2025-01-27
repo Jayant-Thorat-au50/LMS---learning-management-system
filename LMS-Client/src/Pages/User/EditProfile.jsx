@@ -14,8 +14,11 @@ function EditProfile() {
     const navigate = useNavigate()
 
     let data = useSelector(state => state?.authstate?.data);
+    const [editing, setEditing] = useState(false)
+    const [isEdited, setIsEdited] = useState(false)
 
-    console.log(data);
+    console.log(isEdited);
+    console.log(editing);
 
 
 
@@ -27,7 +30,7 @@ function EditProfile() {
 
     });
 
-    const [editing, setEditing] = useState(false)
+    
 
     console.log(userInput);
 
@@ -45,6 +48,7 @@ function EditProfile() {
                 ImgPreview: this.result,
                 avatar: uploadedImg
             })
+            setIsEdited(true)
         })
     }
 
@@ -57,6 +61,7 @@ function EditProfile() {
                 ...userInput,
                 [name]: value
             })
+            setIsEdited(true)
         }
     }
 
@@ -67,6 +72,7 @@ function EditProfile() {
             toast.error('name cannot be of less than 5 characters')
             return
         }
+        
 
 
 
@@ -75,18 +81,15 @@ function EditProfile() {
         formData.append("avatar", userInput.avatar)
 
         const response = await dispatch(userUpdate([userInput.userId, formData]));
-    
+
         if (response?.payload?.success) {
             navigate('/user/profile')
-          
+
         }
 
-        // if(result?.payload?.success){
-        //     console.log(result.payload);
-        //     console.log('state updated successfully');
-            
-            
-        // }
+        if(response?.payload?.success){
+            console.log('state updated successfully');
+        }
 
     }
     return (
@@ -126,7 +129,7 @@ function EditProfile() {
 
                     </div>
                     <div type="Submit" className='w-full'>
-                        <button className=' w-full rounded py-1 bg-yellow-600 text-white text-2xl font-semibold hover:bg-yellow-500 hover:text-black transition-all ease-in-out duration-300 '>Save Changes</button>
+                        <button disabled={!editing || !isEdited} className=' w-full rounded py-1 bg-yellow-600 text-white text-2xl font-semibold hover:bg-yellow-500 hover:text-black transition-all ease-in-out duration-300 '>Save Changes</button>
                     </div>
 
                     <div className=' flex items-center w-full justify-center'>

@@ -1,6 +1,7 @@
 
 // model imports
 const UserModel = require("../Models/UserModel.js");
+const CourseModel = require('../Models/CouresModel.js')
 
 // lib (pacakge) imports
 const emailValidate = require("email-validator");
@@ -335,13 +336,30 @@ const userUpdate = async (req, res, next) => {
   const { fullName } = req.body;
   const { userId } = req.params;
 
+
   const userTobeUpdated = await UserModel.findById(userId);
 
   if (!userTobeUpdated) {
     return next(new AppError("Invalid user plaese try again", 400));
   }
 
-  userTobeUpdated.fullName = fullName;
+// if the role is admin
+// let's update the courses created by him
+
+  if(userTobeUpdated.role === "ADMIN"){
+
+        await CourseModel.updateMany(
+          {createdby:userTobeUpdated.fullName} ,
+          {$set:{createdby:fullName}, $inc:{points:1}}
+        )
+         userTobeUpdated.fullName = fullName;
+   
+   
+  }
+
+
+// let's update the file profile stored in cloudinary
+// by deleting the previous one
 
   if (req.file) {
     try {
@@ -367,9 +385,11 @@ const userUpdate = async (req, res, next) => {
     }
   }
 
+  // save the user to be updated
+
   await userTobeUpdated.save();
 
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     data: userTobeUpdated,
     message: "User updated successfully",
