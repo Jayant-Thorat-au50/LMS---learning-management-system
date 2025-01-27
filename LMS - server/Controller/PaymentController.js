@@ -177,39 +177,30 @@ const getAllPayments = async (req, res, next) => {
 
     // list of all available names
     const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
+    'Jan','Feb','Mar', 'Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'
     ];
 
     // initial record for the each month
     let initialMonthlyRecord = {
-      January: 0,
-      February: 0,
-      March: 0,
-      April: 0,
+      Jan: 0,
+      Feb: 0,
+      Mar: 0,
+      Apr: 0,
       May: 0,
-      June: 0,
-      July: 0,
-      August: 0,
-      September: 0,
-      October: 0,
-      November: 0,
-      December: 0,
+      Jun: 0,
+      Jul: 0,
+      Aug: 0,
+      Sep: 0,
+      Oct: 0,
+      Nov: 0,
+      Dec: 0,
     };
 
     // let's grab the month names from the binary values
     const monthlyRecord = subscriptions.items.map((sub) => {
       const dates = new Date(sub.start_at * 1000).getMonth();
+      console.log(monthNames[dates].slice(0,3))
+      
       return monthNames[dates];
     });
 

@@ -78,7 +78,7 @@ const getAllpaymentsList = createAsyncThunk("/getAllPaymetsList", async () => {
   try {
     const response = await axiosInstance.get("/payments/allPayments");
 
-    // console.log(response.data);
+    console.log(response.data);
 
     return response.data;
   } catch (error) {
