@@ -79,6 +79,11 @@ function AdminDashboard() {
 
     }
 
+    const openEditCourseModal = (e) => {
+
+        document.getElementById('my_modal_1').showModal()
+    }
+
     useEffect(() => {
         loadInfo()
     }, [])
@@ -193,7 +198,7 @@ function AdminDashboard() {
                                              <BsTrash className=' text-white hover:scale-110 object-cover transition-all ease-in-out duration-200'/>
                                         </button>
                                         <button
-                                        onClick={() => navigate('/course/displayLectures', {state:{...course}}) }
+                                        onClick={openEditCourseModal }
                                         className=' bg-yellow-500 hover:bg-yellow-600 transition-all ease-in-out duration-300 text-2xl p-2 rounded-md'>
                                              <FaEdit className=' text-white hover:scale-110 object-cover transition-all ease-in-out duration-200'/>
                                         </button>
@@ -209,6 +214,35 @@ function AdminDashboard() {
                 </table>
                 </div>
             </div>
+
+            <dialog id="my_modal_1" className="modal">
+  <div className="modal-box w-11/12 max-w-5xl">
+  <h1 className=' text-4xl text-yellow-500 text-center font-semibold'>Edit course</h1>
+     <div className=' w-[50%] '>
+     <div className=' flex flex-col justify-center items-start   w-full  px-4'>
+        <label htmlFor="" className=' text-2xl text-yellow-500'>title :</label>
+        <input type="text" className='bg-transparent border rounded w-full py-1' />
+      </div>
+      <div className=' flex flex-col justify-center items-start  w-full  px-4'>
+        <label htmlFor="" className=' text-2xl text-yellow-500'>description :</label>
+        <textarea type="text" className=' rounded resize-none h-32 w-full bg-transparent border' />
+      </div>
+     </div>
+    
+  <div className=' flex py-0 w-full items-center justify-end relative'>
+    <button className=' bg-green-500 btn text-black text-2xl absolute bottom-0 right-24'>Save</button>
+  <div className="modal-action">
+      <form method="dialog">
+        {/* if there is a button, it will close the modal */}
+        <button className="btn text-2xl bg-red-500 text-black">Close</button>
+      </form>
+    </div>
+  </div>
+  </div>
+</dialog>
+
+
+
 
         </HomeLayout>
     )

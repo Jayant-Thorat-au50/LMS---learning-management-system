@@ -1,6 +1,6 @@
 
 const express = require ('express')
-const {addCourse, getAllCourses, getOneCourse, updateCourse, deleteCourse, addLecture, deleteLecture} = require('../Controller/courseController.js')
+const {addCourse, getAllCourses, getOneCourse, updateCourse, deleteCourse, addLecture, deleteLecture, edit_lecture} = require('../Controller/courseController.js')
  const {isLoggedIn} = require('../middlewares/auth.middleware.js')
 const {authorizeRoles} = require('../middlewares/auth.middleware.js')
 const {upload} = require('../middlewares/multer.middleware.js');
@@ -15,6 +15,8 @@ courseRoutes.post('/add-course',isLoggedIn, upload.single('thumbnail'), addCours
 courseRoutes.get('/get-one-course/:id', getOneCourse)
 
 courseRoutes.put('/update-course/:id',isLoggedIn,authorizeRoles('ADMIN'), updateCourse)
+
+courseRoutes.put('/edit-lecture/:courseId',isLoggedIn,authorizeRoles('ADMIN'),upload.single('lecture'), edit_lecture)
 
 courseRoutes.delete('/delete-course/:id',isLoggedIn, deleteCourse)
 

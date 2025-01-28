@@ -73,6 +73,25 @@ const deleteLecture = createAsyncThunk("course/deleteLecture", async (data) => {
   }
 });
 
+const editLecture = createAsyncThunk('course/editLecture', async (data) => {
+  try {
+    const response =  axiosInstance.put(`/course/edit-lecture/${data[0]}`, data[1]);
+
+    toast.promise(response, {
+      loading:"wait! updating the lecture",
+      success:(data)=> {
+        return data?.data?.message
+      },
+      error:"failed to update the lecture"
+    })
+
+    return (await response).data
+
+  } catch (error) {
+    return toast.error(error?.response?.data?.message)
+  }
+})
+
 const lectureSlice = createSlice({
   name: "lectures",
   initialState,
@@ -97,4 +116,4 @@ const lectureSlice = createSlice({
 });
 
 export default lectureSlice.reducer;
-export { getCourseLectures, addNewLecture, deleteLecture };
+export { getCourseLectures, addNewLecture, deleteLecture,editLecture };

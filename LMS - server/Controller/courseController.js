@@ -1,3 +1,4 @@
+const { log } = require("console");
 const CourseModel = require("../Models/CouresModel.js");
 const AppError = require("../Utils/AppError.utils.js");
 const cloudinary = require("cloudinary");
@@ -315,6 +316,70 @@ const deleteLecture = async (req, res, next) => {
   }
 };
 
+const edit_lecture = async (req, res, next) => {
+  const { courseId } = req.params;
+
+  const { lecture_id, title, description } = req.body;
+  console.log(lecture_id, title, description);
+
+  try {
+    const course = await CourseModel.findById(courseId);
+
+    const LectureToBeEdited = course.lectures.filter(
+      (l) => l._id == lecture_id
+    );
+
+    if (req.file) {
+      console.log(req.file);
+      try {
+        await cloudinary.v2.uploader.destroy(
+          LectureToBeEdited[0].lectureSrc.public_id
+        );
+
+        const result = await cloudinary.v2.uploader.upload(req.file.path, {
+          folder: "lms-lecture-videos",
+          chunk_size: 500000000,
+          resource_type: "video",
+        });
+
+        if (result) {
+          console.log(result);
+          
+          const update = await CourseModel.updateOne(
+            { _id: courseId, "lectures._id": lecture_id },
+            {
+              $set: {
+                "lectures.$.description": description,
+                "lectures.$.title": title,
+                "lectures.$.lectureSrc.secure_url": result.secure_url,
+                "lectures.$.lectureSrc.public_id": result.public_id,
+              },
+            }
+          );
+          console.log(update);
+        }
+        fs.rm(`./uploads/${req.file.filename}`);
+      } catch (error) {
+        return next(new AppError(error.message, 400));
+      }
+    } else {
+      const update = await CourseModel.updateOne(
+        { _id: courseId, "lectures._id": lecture_id },
+        { $set: { "lectures.$.title": title } },
+        { $set: { "lectures.$.description": description } }
+      );
+      console.log(update);
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "lecture updated successfully",
+    });
+  } catch (error) {
+    return next(new AppError(error.message, 400));
+  }
+};
+
 module.exports = {
   addCourse,
   getAllCourses,
@@ -323,4 +388,5 @@ module.exports = {
   deleteCourse,
   addLecture,
   deleteLecture,
+  edit_lecture,
 };

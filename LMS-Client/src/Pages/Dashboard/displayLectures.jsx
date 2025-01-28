@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import HomeLayout from '../../components/HomeLayout';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteLecture, getCourseLectures } from '../../../Redux/Slices/lectureState';
+import { deleteLecture, editLecture, getCourseLectures } from '../../../Redux/Slices/lectureState';
 import { FaPlus } from 'react-icons/fa'
-import {MdModeEdit } from 'react-icons/md'
 import { FaPlay } from "react-icons/fa";
+import toast from 'react-hot-toast';
 
 function DisplayLectures() {
 
@@ -17,12 +17,8 @@ function DisplayLectures() {
   const [currentVideo, setCurrentVideo] = useState(0)
   
   const [currentlyPlaying, setCurrentlyPlaying] = useState()
-  if(lectures){
-          const firstLec = lectures.filter((l, idx) => {
-            if(idx == 0) return l
-          })
 
-  }
+  console.log(state);
   
 
   const [edit_lecture_modal_data, setEdit_lecture_modal_data] = useState(" ")
@@ -43,6 +39,8 @@ console.log(edit_lecture_modal_data);
 
 
   const editLectureModal = (lec_data) => {
+    console.log(lec_data);
+    
     setEdit_lecture_modal_data(lec_data)
     document.getElementById("edit_lecture_modal").showModal()
   }
@@ -56,9 +54,42 @@ console.log(edit_lecture_modal_data);
       setEdit_lecture_modal_data({
         ...edit_lecture_modal_data,
         lecture : video ,
-        videoSrc:source
+        lectureSrc:{
+          secure_url:source
+        }
       })
     }
+  }
+
+  const onEditLecture = async (e) => {
+
+    e.preventDefault();
+
+    if(!edit_lecture_modal_data.title ||!edit_lecture_modal_data.description){
+      toast.error("Evey field is required");
+      return;
+    }
+
+    const formData = new FormData()
+    formData.append('title', edit_lecture_modal_data.title)
+    formData.append('lecture_id', edit_lecture_modal_data._id)
+    formData.append('description', edit_lecture_modal_data.description)
+    formData.append('lecture', edit_lecture_modal_data.lecture)
+
+    
+    
+    const response = await dispatch(editLecture([state._id, formData]));
+    console.log(response);
+
+    if(response?.payload?.success){
+        toast.success('lecture updated successfully')
+      await dispatch(getCourseLectures(state._id))
+        navigate('/course/displayLectures', {state:{...state}})
+       
+    }
+
+  
+
   }
 
   const onload = async() => {
@@ -184,15 +215,19 @@ onload()
    {
     edit_lecture_modal_data ? (
       <form 
-      className=' grid grid-cols-2 gap-10'
+      onSubmit={onEditLecture}
+      className=' grid grid-cols-2 gap-10 modal-action'
       >
-      { edit_lecture_modal_data?.lectureSrc?.secure_url ? ( <div className=' w-full '>
+               { edit_lecture_modal_data?.lectureSrc?.secure_url ? ( <div className=' w-full '>
          <video 
          controls
          disablePictureInPicture
          className=' w-full h-full nodownloads'
          src={edit_lecture_modal_data?.lectureSrc?.secure_url}></video>
-         <button onClick={() => setEdit_lecture_modal_data({})}  className=' bg-red-600 text-white text-xl px-2 rounded-lg font-semibold '>remove video</button>
+         <button onClick={() => setEdit_lecture_modal_data({...edit_lecture_modal_data, lectureSrc:{
+          secure_url:""
+        }})}  
+        className=' bg-red-600 text-white text-xl px-2 rounded-lg font-semibold '>remove video</button>
        </div>):(
        <div className=' w-full flex justify-center items-center'>
         <label className=' cursor-pointer text-xl text-white w-full border h-full flex justify-center items-center' htmlFor="videoSrc"><p>choose your video :</p></label>
@@ -214,7 +249,9 @@ onload()
          </div>
        
          
-       <button className=' top-[16.2rem] right-24 font-semibold absolute btn btn-success text-xl'>Save</button>
+       <button 
+       type='Submit'
+       className=' top-[16.2rem] right-24 font-semibold absolute btn btn-success text-xl'>Save</button>
        </div>
  
       </form>
