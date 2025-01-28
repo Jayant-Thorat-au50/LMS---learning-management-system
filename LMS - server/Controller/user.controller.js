@@ -213,7 +213,7 @@ const forgotPassword = async (req, res, next) => {
     const user = await UserModel.findOne({ email });
 
     if (!user) {
-      next(new AppError("user with this email does not exist", 400));
+     return next(new AppError("user with this email does not exist", 400));
     }
 
     // generating reset password token inside the user obj as per the userSchema
@@ -224,11 +224,11 @@ const forgotPassword = async (req, res, next) => {
 
     // to send the email with reset link to the user
     // here is the link generated with frontend url
-    const resetUrl = `http://localhost:6070/reset-password/${resetToken}`;
+    const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
 
     // sendemail utility args
     const subject = "reset password";
-    const message = `click here <a href=${resetUrl}> to reset your password`;
+    const message = `<a href=${resetUrl}>Click Here</a>`;
     // sending email to email entered
     await sendEmail(email, subject, message);
 
@@ -239,11 +239,17 @@ const forgotPassword = async (req, res, next) => {
     });
   } catch (error) {
     // if error occurs the token set to the user obj will be disabled
-    user.forgetPasswordToken = undefined;
-    user.forgetPasswordExpiry = undefined;
+    const user = await UserModel.findOne({ email });
+    if(user){
 
-    await user.save();
-    next(new AppError(error.message, 400));
+      user.forgetPasswordToken = undefined;
+      user.forgetPasswordExpiry = undefined;
+      await user.save();
+    }
+    console.log(error);
+    
+
+   return next(new AppError(error.message, 400));
   }
 };
 

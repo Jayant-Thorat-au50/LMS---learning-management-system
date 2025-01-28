@@ -89,7 +89,7 @@ function Login() {
                     </div>
 
                     <div className='my-0'>
-                        <p className='text-lg text-blue-500 bg-transparent'>forget your password?  <span onClick={() => navigate('/login')} className=' text-white' ><u>reset now</u></span></p>
+                        <p className='text-lg text-blue-500 bg-transparent'>forget your password?  <span onClick={() => navigate('/forgotPassword')} className=' text-white' ><u>reset now</u></span></p>
                     </div>
                     <div className='my-2'>
                         <p className='text-lg text-white bg-transparent'>Do not have an acc? <span onClick={() => navigate('/signUp')} className=' text-yellow-500' >register</span></p>

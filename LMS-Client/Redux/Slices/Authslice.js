@@ -98,6 +98,15 @@ export const userUpdate = createAsyncThunk(
   }
 );
 
+export const forgetPassword = createAsyncThunk("user/forgetPassword", async (data) => {
+  try {
+    const res = await axiosInstance.post('/user/forgotPassword/', data);
+    return res.data;
+  } catch (error) {
+    return toast.error(error?.response?.data?.message);
+  }
+});
+
 // getting the updated or not updated user data in the state
 export const getUserData = createAsyncThunk("user/me", async (userId) => {
   try {

@@ -16,7 +16,7 @@ courseRoutes.get('/get-one-course/:id', getOneCourse)
 
 courseRoutes.put('/update-course/:id',isLoggedIn,authorizeRoles('ADMIN'), updateCourse)
 
-courseRoutes.delete('/delete-course/:id',isLoggedIn,authorizeRoles('ADMIN'), deleteCourse)
+courseRoutes.delete('/delete-course/:id',isLoggedIn, deleteCourse)
 
 courseRoutes.post('/add-lecture/:id',upload.single('lecture') , addLecture)
 

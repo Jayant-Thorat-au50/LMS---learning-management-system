@@ -25,6 +25,9 @@ import PaymentSuccess from "./Pages/Payment/paymentSuccess.jsx";
 import DisplayLectures from "./Pages/Dashboard/displayLectures.jsx";
 import AddNewLecture from "./Pages/Dashboard/addNewLecture.jsx";
 import AdminDashboard from "./Pages/Dashboard/AdminDashboard.jsx";
+import ForgetPassword from "./Pages/User/forgetPassword.jsx";
+import ResetPassword from "./Pages/User/resetPassword.jsx";
+
 
 
 function App() {
@@ -34,6 +37,9 @@ function App() {
       <Route path="/about" element={<AboutUs />} />
       <Route path="/signUp" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/reset-password" element={<Login />} />
+      <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
+      <Route path="/forgotPassword" element={< ForgetPassword />} />
       <Route path="/courses" element={<CourseList />} />
       <Route path="/contact-us" element={<ContactUs />} />
       <Route path="/denied" element={<Denied />} />

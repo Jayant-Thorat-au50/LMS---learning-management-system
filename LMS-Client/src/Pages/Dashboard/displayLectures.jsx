@@ -15,7 +15,15 @@ function DisplayLectures() {
   const lectures = useSelector(state => state?.lectureState?.lectures)
   const { role, data } = useSelector(state => state?.authstate)
   const [currentVideo, setCurrentVideo] = useState(0)
+  
   const [currentlyPlaying, setCurrentlyPlaying] = useState()
+  if(lectures){
+          const firstLec = lectures.filter((l, idx) => {
+            if(idx == 0) return l
+          })
+
+  }
+  
 
   const [edit_lecture_modal_data, setEdit_lecture_modal_data] = useState(" ")
   const [modifiledInput, setModifiledInput] = useState({})
@@ -53,9 +61,14 @@ console.log(edit_lecture_modal_data);
     }
   }
 
-  useEffect(() => {
+  const onload = async() => {
     if (!state) navigate("/courses");
-    dispatch(getCourseLectures(state._id)) 
+      await dispatch(getCourseLectures(state._id))
+  }
+
+  useEffect(() => {
+   
+onload()
   }, [])
 
   return (

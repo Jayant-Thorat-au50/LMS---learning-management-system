@@ -38,9 +38,9 @@ function CourseDescription() {
             <div className=' w-full min-h-[90vh] flex justify-center items-center flex-col pt-12 px-28 text-white'>
                 <div className=' grid grid-cols-2 gap-10  py-10 relative'>
                     {/* left side of the page */}
-                    <div className=' space-y-5  border rounded-md '>
+                    <div className=' space-y-5 overflow-hidden  border rounded-md '>
                         <img
-                            className=' w-full h-64'
+                            className=' w-full h-64 hover:scale-110 object-cover transition-all ease-in-out duration-200'
                             src={state?.thumbnail?.secure_Url}
                             alt="thumbnail" />
 
