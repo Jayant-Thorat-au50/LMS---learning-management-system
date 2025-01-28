@@ -10,7 +10,7 @@ const courseRoutes = express.Router();
 
 courseRoutes.get('/', getAllCourses)
 
-courseRoutes.post('/add-course', upload.single('thumbnail'), addCourse)
+courseRoutes.post('/add-course',isLoggedIn, upload.single('thumbnail'), addCourse)
 
 courseRoutes.get('/get-one-course/:id', getOneCourse)
 
@@ -18,9 +18,9 @@ courseRoutes.put('/update-course/:id',isLoggedIn,authorizeRoles('ADMIN'), update
 
 courseRoutes.delete('/delete-course/:id',isLoggedIn, deleteCourse)
 
-courseRoutes.post('/add-lecture/:id',upload.single('lecture') , addLecture)
+courseRoutes.post('/add-lecture/:id',isLoggedIn, upload.single('lecture') , addLecture)
 
-courseRoutes.delete('/delete-lecture/:Course_id/:Lecture_id', deleteLecture)
+courseRoutes.delete('/delete-lecture/:Course_id/:Lecture_id',isLoggedIn, deleteLecture)
 
 
 

@@ -133,6 +133,40 @@ export const resetPassword = createAsyncThunk('user/resetPassword', async (data)
   }
 })
 
+export const changePassword = createAsyncThunk('user/changetPassword', async (data) => {
+ 
+  try {
+
+    const response = await axiosInstance.post(`/user/change-password/${data[0]}`, data[1])
+
+    console.log(response.data);
+    
+    return response.data
+    
+  } catch (error) {
+    return toast.error(error?.response?.data?.message)
+  }
+})
+
+export const deleteUser = createAsyncThunk('user/remove-user', async (userId) => {
+  try {
+  const response = axiosInstance.delete(`/user/remove-user/${userId}`)
+    
+   toast.promise(response, {
+    loading:"deleting the user",
+    success:(res) => {
+      return res?.data?.message
+    },
+    error:"failed to delete the user"
+   })
+
+   return (await response).data
+  } catch (error) {
+    return toast.error(error?.response?.data?.message)
+  }
+           
+} )
+
 const AuthSlice = createSlice({
   name: "Auth",
   initialState,

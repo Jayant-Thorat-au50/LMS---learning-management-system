@@ -67,6 +67,11 @@ function HomeLayout({ children }) {
                 <Link to={"/admin/dashboard"}>Admin dashboard</Link>
               </li>
             )}
+            {isLoggedIn && role === "SUPER ADMIN" && (
+              <li>
+                <Link to={"/superadmin/dashboard"}>Super Admin Dashboard</Link>
+              </li>
+            )}
             <li>
               <Link to={"/courses"}>All courses</Link>
             </li>

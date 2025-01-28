@@ -55,7 +55,7 @@ function CourseDescription() {
                             </p>
                         </div>
 
-                        {role === "ADMIN" || data?.subscription?.status === "Active" ? (
+                        {role === "ADMIN" || role === "SUPER ADMIN" || data?.subscription?.status === "Active" ? (
                             <button
                                 onClick={displayLectures}
                                 className=' bg-yellow-600 text-xl rounded-md px-5 py-3 font-bold hover:bg-yellow-500 transition-all ease-in-out duration-150 hover:text-black w-full tracking-widest'>Watch Lectures</button>

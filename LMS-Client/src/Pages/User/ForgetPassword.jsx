@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import HomeLayout from '../../components/HomeLayout';
 import { forgetPassword } from '../../../Redux/Slices/Authslice';
 

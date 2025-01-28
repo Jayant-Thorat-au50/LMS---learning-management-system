@@ -7,6 +7,7 @@ import axiosInstance from "../../src/Helpers/axiosInstance";
 const initialState = {
   allUserCount: "",
   subscribedUserCount: "",
+  allUsers:[]
 };
 
 // getting the user's data
@@ -28,6 +29,7 @@ const statSlice = createSlice({
     builder.addCase(getAllUserData.fulfilled, (state, action) => {
       if (!action?.payload?.success) return;
       state.allUserCount = action?.payload?.allUserCount?.length;
+      state.allUsers = action?.payload?.allUserCount
       state.subscribedUserCount = action?.payload?.subscribedUsers?.length;
     });
   },

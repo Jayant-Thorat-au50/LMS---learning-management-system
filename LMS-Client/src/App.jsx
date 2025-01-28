@@ -27,6 +27,9 @@ import AddNewLecture from "./Pages/Dashboard/addNewLecture.jsx";
 import AdminDashboard from "./Pages/Dashboard/AdminDashboard.jsx";
 import ForgetPassword from "./Pages/User/forgetPassword.jsx";
 import ResetPassword from "./Pages/User/resetPassword.jsx";
+import ChangePassword from "./Pages/User/changePassword.jsx";
+import SuperAdmin from "./Pages/Dashboard/SuperAdmin.jsx";
+import AllUsersData from "./Pages/User/allUsersData.jsx";
 
 
 
@@ -50,13 +53,19 @@ function App() {
         <Route path="/course/add-lecture" element={<AddNewLecture />} />
         <Route path="/admin/dashboard" element={< AdminDashboard />} />
       </Route>
-      <Route element={<RequireAuth allowedRoles={['ADMIN', 'USER']} />}>
+      <Route element={<RequireAuth allowedRoles={['ADMIN', 'USER','SUPER ADMIN']} />}>
         <Route path="/user/profile" element={<Profile />} />
+      <Route path="/changepassword" element={< ChangePassword />} />
         <Route path="/checkout" element={<Cheackout />} />
         <Route path="/payment/success" element={< PaymentSuccess />} />
         <Route path="/payment/failure" element={<PaymentsFailure />} />
         <Route path="/user/editprofile" element={<EditProfile />} />
         <Route path="/course/displayLectures" element={<DisplayLectures />} />
+      </Route>
+      <Route element={<RequireAuth allowedRoles={[ 'SUPER ADMIN']} />}>
+      <Route path="/superadmin/dashboard" element={<SuperAdmin/>}/>
+      <Route path="/user/allUsers" element={<AllUsersData/>}/>
+      <Route path="/superadmin/dashboard" element={<SuperAdmin/>}/>
       </Route>
 
 

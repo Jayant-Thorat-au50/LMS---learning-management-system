@@ -4,6 +4,7 @@ import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { loginNow } from '../../Redux/Slices/Authslice';
+import {FaEye, FaEyeSlash} from 'react-icons/fa'
 
 
 function Login() {
@@ -16,6 +17,8 @@ function Login() {
         email: "",
         password: "",
     })
+
+    const [showPassword, setShowPassword] = useState(false)
 
     const handleUserInput = (e) => {
         const { name, value } = e.target;
@@ -77,11 +80,18 @@ function Login() {
 
                     <div className=' flex flex-col items-start w-full px-10 space-y-2'>
                         <label htmlFor="email" className=' font-semibold text-white text-xl'>Email</label>
-                        <input type="email" id='email' placeholder="Enter your email...." onChange={handleUserInput} value={loginData.email} className='px-5 py-1 bg-transparent border w-full' required name='email' />
+                        <input type="email" id='email' placeholder="Enter your email...." onChange={handleUserInput} value={loginData.email} className='px-5 py-2 bg-transparent border w-full' required name='email' />
                     </div>
-                    <div className=' flex flex-col items-start w-full px-10 space-y-2'>
+                    <div className=' flex flex-col items-start w-full px-10 relative space-y-2'>
                         <label htmlFor="password" className=' font-semibold  text-white text-xl' >Password</label>
-                        <input type="password" placeholder="Enter your password...." onChange={handleUserInput} value={loginData.password} id='password' className='border bg-transparent px-5 text-white py-1 w-full borderbg-transparent' required name='password' />
+                        <input type={showPassword?'text':"password"} placeholder="Enter your password...." onChange={handleUserInput} value={loginData.password} id='password' className='border bg-transparent px-5 py-2 text-white w-full borderbg-transparent' required name='password' />
+                        {
+                            showPassword?(
+                               <FaEye className='absolute bottom-1 right-11 text-4xl p-2 hover:bg-black transition-all ease-in-out duration-300  rounded-sm' onClick={() => setShowPassword(!showPassword)}/>
+                            ):(
+                                <FaEyeSlash className=' absolute bottom-1 right-11 text-4xl p-2 hover:bg-black transition-all ease-in-out duration-300  rounded-sm' onClick={() => setShowPassword(!showPassword)}/>
+                            )
+                        }
                     </div>
 
                     <div className=' px-10  w-full flex justify-center items-center my-1'>

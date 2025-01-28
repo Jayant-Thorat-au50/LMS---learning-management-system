@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../../Redux/Slices/Authslice';
 import { isEmail, isPassword } from '../Helpers/regexMatcher.js';
+import {FaEye, FaEyeSlash} from 'react-icons/fa'
 
 function SignUp() {
 
@@ -19,6 +20,9 @@ function SignUp() {
         password: "",
         avatar: ""
     })
+
+     const [showPassword, setShowPassword] = useState(false)
+    
 
     const getImg = (e) => {
         e.preventDefault()
@@ -130,10 +134,18 @@ function SignUp() {
                         <label htmlFor="email" className=' font-semibold  text-yellow-500 text-xl'>Email</label>
                         <input type="email" id='email' placeholder="Enter your email...." onChange={handleUserInput} value={signUpData.email} className='px-5 py-1 bg-transparent border w-full' required name='email' />
                     </div>
-                    <div className=' flex flex-col items-start w-full px-10 space-y-2'>
+                    <div className=' flex flex-col items-start w-full px-10 space-y-2 relative '>
                         <label htmlFor="password" className=' font-semibold  text-yellow-500 text-xl' >Password</label>
-                        <input type="password" placeholder="Enter your password...." onChange={handleUserInput} value={signUpData.password} id='password' className='border bg-transparent px-5 text-white py-1 w-full borderbg-transparent' required name='password' />
-                    </div>
+                        <input type={showPassword?'text':'password'} placeholder="Enter your password...." onChange={handleUserInput} value={signUpData.password} id='password' className='border bg-transparent px-5 text-white py-1 w-full borderbg-transparent' required name='password' />
+
+                         {
+                           showPassword?(
+                                <FaEye className=' absolute top-7 right-11 text-4xl p-2 hover:bg-black transition-all ease-in-out duration-300  rounded-full' onClick={() => setShowPassword(!showPassword)}/>
+                             ):(
+                                 <FaEyeSlash className=' absolute top-7 right-11 text-4xl p-2 hover:bg-black transition-all ease-in-out duration-300  rounded-full' onClick={() => setShowPassword(!showPassword)}/>
+                             )
+                            }                   
+                            </div>
 
                     <div className=' px-10  w-full flex justify-center items-center mt-2 mb-0'>
                         <button type='submit' className=' bg-yellow-500 w-full font-bold text-2xl py-1 rounded text-black hover:bg-yellow-800'>Create Account</button>

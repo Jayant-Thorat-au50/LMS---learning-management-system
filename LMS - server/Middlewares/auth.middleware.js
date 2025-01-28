@@ -5,15 +5,15 @@ const UserModel = require('../Models/UserModel.js')
 
  const isLoggedIn = async (req, _res, next) => {
   // extracting token from the cookies
-  const { token } = req.cookies;
-
+  const { Token } = req.cookies;
+    
   // If no token send unauthorized message
-  if (!token) {
+  if (!Token) {
     return next(new AppError("Unauthorized, please login to continue", 401));
   }
 
   // Decoding the token using jwt package verify method
-  const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+  const decoded = await jwt.verify(Token, process.env.JWT_SECRET);
 
   // If no decode send the message unauthorized
   if (!decoded) {
@@ -25,7 +25,7 @@ const UserModel = require('../Models/UserModel.js')
 
   // Do not forget to call the next other wise the flow of execution will not be passed further
   next();
-};
+}
 
 // Middleware to check if user is admin or not
  const authorizeRoles = (...roles) =>

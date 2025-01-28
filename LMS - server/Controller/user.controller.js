@@ -166,6 +166,9 @@ const getUser = async (req, res, next) => {
   // grabbing the id extracted from the token in jwt auth middleware
   const { userId } = req.params;
 
+  console.log(req.user);
+  
+
   try {
     const User = await UserModel.findById(userId);
 
@@ -190,7 +193,7 @@ const logout = (req, res) => {
     });
 
     // sending the response message
-    res.status(200).json({
+   return res.status(200).json({
       success: true,
       message: "User logged out successfully",
     });
@@ -305,28 +308,28 @@ const resetPassword = async (req, res, next) => {
 const changePassword = async (req, res, next) => {
   const { oldPassword, newPassword } = req.body;
 
+  console.log(req.user);
+  
+
   // validating extracted fields
   if (!oldPassword || !newPassword) {
     next(new AppError("please enter both old password and new password"), 400);
   }
 
   // getting user id from jwt auth
-  const userId = req.user.id;
+  const {userId} = req.params
 
   try {
     const user = await UserModel.findById(userId).select("+password");
 
     // validating the the old password with the user obj
     if (!(await bcrypt.compare(oldPassword, user.password))) {
-      next(new AppError("invalid old password", 400));
+      next(new AppError("Invalid old password", 400));
     }
 
     // assigning the new password to the user obj
     user.password = newPassword;
     await user.save();
-
-    // removing the password from  server's user instance
-    user.password = undefined;
 
     // sending the response message
     res.status(200).json({
@@ -425,6 +428,22 @@ const getAllUserData = async (req, res, next) => {
     return next(new AppError(error.message, 400));
   }
 };
+const deleteUser = async (req,res, next) => {
+
+  const {userId} = req.params;
+
+  try {
+    const user = await UserModel.findByIdAndDelete(userId);
+
+    return res.status(200).json({
+      success:true,
+      message:'user deleted successfully',
+      
+    })
+  } catch (error) {
+    return next(new AppError(error.message), 400)
+  }
+}
 
 module.exports = {
   signUp,
@@ -436,4 +455,5 @@ module.exports = {
   changePassword,
   userUpdate,
   getAllUserData,
+  deleteUser
 };
