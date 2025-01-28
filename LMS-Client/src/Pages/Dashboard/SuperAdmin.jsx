@@ -27,12 +27,12 @@ function SuperAdmin() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate()
-    const { allUserCount, subscribedUserCount } = useSelector(state => state?.stat)
+    const { allUserCount, subscribedUserCount, allUsers } = useSelector(state => state?.stat)
     const { allPayments, finalMonth, monthlySalesRecord } = useSelector(state => state?.paymentstate)
     let { coursesList } = useSelector(state => state?.courseState)
     let { data } = useSelector(state => state?.authstate)
 
-    console.log(coursesList);
+    console.log(allUsers);
     
 
     const loadInfo = async () => {
@@ -97,7 +97,7 @@ function SuperAdmin() {
                         </div>
                         <div className=' grid grid-cols-2 gap-2'>
                             <div
-                            onClick={() => navigate('/user/allUsers')}
+                            onClick={() => navigate('/user/allUsers', {state:allUsers})}
                             className=' flex hover:bg-gray-800  items-center justify-center gap-5  px-2 rounded cursor-pointer'>
                                 <div className=' flex justify-center flex-col items-center text-white text-2xl'>
                                     <h3>Registered Users</h3>

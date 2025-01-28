@@ -5,15 +5,16 @@ import { getAllUserData } from '../../../Redux/Slices/statSlice'
 import { BsCollectionPlayFill, BsTrash } from 'react-icons/bs'
 import { FaEdit } from 'react-icons/fa'
 import { deleteUser } from '../../../Redux/Slices/Authslice'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 function AllUsersData() {
 
     const {allUsers} = useSelector(state => state?.stat)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const {state} = useLocation();
 
-    console.log(allUsers);
+    console.log(state);
 
     const load = async () => {
         const response = await dispatch(getAllUserData())
@@ -56,7 +57,7 @@ function AllUsersData() {
                                 </thead>
             
                                 <tbody>
-                                    {allUsers.map((user, idx) => {
+                                    {state.map((user, idx) => {
                                         return (
                                             <tr key={user._id} className=' text-xl text-gray-400'>
                                                 <td>{idx + 1}</td>
@@ -67,11 +68,7 @@ function AllUsersData() {
                                                 <td>{user.subscription.status}</td>
                                             
     <td className=' flex items-center justify-center gap-5'>
-                                          <button
-                                     
-                                          className=' bg-green-500 hover:bg-green-600 transition-all ease-in-out duration-300 text-2xl p-2 rounded-md'>
-                                               <BsCollectionPlayFill className=' text-white hover:scale-110 object-cover transition-all ease-in-out duration-200'/>
-                                          </button>
+                                          
                                           <button
                                             onClick={() => handleUserDelete(user._id)}
                                           className=' bg-red-500 hover:bg-red-700 transition-all ease-in-out duration-300 text-2xl p-2 rounded-md'>

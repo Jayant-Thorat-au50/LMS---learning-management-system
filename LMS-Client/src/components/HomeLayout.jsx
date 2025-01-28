@@ -109,7 +109,19 @@ function HomeLayout({ children }) {
             )}
           </ul>
         </div>
+     
       </div>
+
+      <header className=" border h-[10vh] w-full hidden lg:block">
+          <nav className=" flex  h-full w-full justify-center items-center">
+            <ul className=" px-20 flex w-full justify-between items-center text-2xl text-white">
+              <li>home</li>
+              <li>category</li>
+              <li>about us</li>
+              <li>login/signup</li>
+            </ul>
+          </nav>
+        </header>
 
       {children}
 
