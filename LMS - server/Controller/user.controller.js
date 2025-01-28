@@ -290,9 +290,9 @@ const resetPassword = async (req, res, next) => {
     user.forgetPasswordExpiry = undefined;
 
     // saving the user obj
-    user.save();
+   await user.save();
 
-    res.status(200).json({
+     return res.status(200).json({
       success: true,
       message: "password updated successfully",
     });

@@ -49,7 +49,7 @@ function ForgetPassword() {
 
         if (response?.payload?.success) {
             console.log(response?.payload?.success);
-
+            toast.success("an email with password reset link is sent to registered email address")
             navigate(`/`)
             setUserInput({
                 email: ""
@@ -64,7 +64,7 @@ function ForgetPassword() {
         <HomeLayout>
 
             <div className=' w-full h-screen flex justify-center items-center'>
-                
+
                 <form action="" onSubmit={sendLink} encType='multipart/form-data' noValidate className='shadow-[0_0_10px_black] w-96 flex  flex-col gap-2 items-center'>
                     <h1 className=' text-center capitalize font-bold text-3xl my-2 text-yellow-400'>reset password</h1>
 
@@ -73,7 +73,7 @@ function ForgetPassword() {
                         <input type="email" id='email' placeholder="Enter your email...." onChange={handleUserInput} value={userInput.email} className=' text-white px-5 py-1 bg-transparent border w-full' required name='email' />
                     </div>
                     <p className='px-10 text-red-500'>please enter the email registered with your account</p>
-                  
+
 
                     <div className=' px-10  w-full flex justify-center items-center my-1'>
                         <button type='submit' className=' bg-yellow-500 w-full font-bold text-2xl py-1 rounded text-black hover:bg-yellow-800'>reset password</button>
