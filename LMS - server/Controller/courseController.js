@@ -1,4 +1,4 @@
-const { log } = require("console");
+
 const CourseModel = require("../Models/CouresModel.js");
 const AppError = require("../Utils/AppError.utils.js");
 const cloudinary = require("cloudinary");
@@ -122,6 +122,49 @@ const updateCourse = async (req, res, next) => {
   const { id } = req.params;
 
   try {
+
+  const course = await CourseModel.findById(id);
+   if(!course){
+    return next(new AppError('course does not exists', 400))
+   }
+
+  if(req.file){
+    try {
+      await cloudinary.v2.uploader.destroy(course.thumbnail.public_id)
+
+      const result = await cloudinary.v2.uploader.upload(req.file.path , {
+        folder: "lms",
+
+      })
+
+      const newThumb = {
+        secure_Url:result.secure_url,
+        public_id:result.public_id,
+      }
+
+      req.body.thumbnail = newThumb
+      console.log(req.body);
+      
+
+      if(result){
+        const course = await CourseModel.findByIdAndUpdate(
+          id,
+          {
+            $set: req.body,
+          },
+          {
+            runValidators: true,
+          }
+        );
+        console.log(course);
+        } 
+
+        
+      }
+        catch (error) {
+          return next(new AppError(error.message, 400));
+        }
+  }else{
     const course = await CourseModel.findByIdAndUpdate(
       id,
       {
@@ -131,6 +174,10 @@ const updateCourse = async (req, res, next) => {
         runValidators: true,
       }
     );
+  }
+
+  
+  
 
     if (!course) {
       return next(
@@ -138,10 +185,12 @@ const updateCourse = async (req, res, next) => {
       );
     }
 
+    const updatedCourse = await CourseModel.findById(id)
+
     return res.status(200).json({
       success: true,
       message: "course updated successfully",
-      course,
+      updatedCourse,
     });
   } catch (error) {
     return next(new AppError(error.message, 400));

@@ -14,7 +14,7 @@ courseRoutes.post('/add-course',isLoggedIn, upload.single('thumbnail'), addCours
 
 courseRoutes.get('/get-one-course/:id', getOneCourse)
 
-courseRoutes.put('/update-course/:id',isLoggedIn,authorizeRoles('ADMIN'), updateCourse)
+courseRoutes.put('/update-course/:id',isLoggedIn,authorizeRoles('ADMIN'),upload.single('newThumbnail'), updateCourse)
 
 courseRoutes.put('/edit-lecture/:courseId',isLoggedIn,authorizeRoles('ADMIN'),upload.single('lecture'), edit_lecture)
 

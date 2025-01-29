@@ -57,7 +57,7 @@ function AllUsersData() {
                                 </thead>
             
                                 <tbody>
-                                    {state.map((user, idx) => {
+                                    {allUsers.map((user, idx) => {
                                         return (
                                             <tr key={user._id} className=' text-xl text-gray-400'>
                                                 <td>{idx + 1}</td>

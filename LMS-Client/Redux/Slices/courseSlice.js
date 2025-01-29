@@ -54,6 +54,7 @@ export const addCourse = createAsyncThunk("course/create",async (courseData) => 
   }
 })
 
+// delete a course from the db
 export const deleteCourse = createAsyncThunk('course/delete', async (courseId) => {
   console.log(courseId);
   
@@ -76,10 +77,11 @@ export const deleteCourse = createAsyncThunk('course/delete', async (courseId) =
   }
 })
 
-export const editCourse = createAsyncThunk('course//update-course/', async (data) => {
+// edit a course
+export const editCourse = createAsyncThunk('course/updateCourse', async (data) => {
 
   try {
-    const response = await axiosInstance.put(`/course/edit-course/${data[0]}`, data[1]);
+    const response = await axiosInstance.put(`/course/update-course/${data[0]}`, data[1]);
 
     console.log(response);
 
@@ -91,6 +93,22 @@ export const editCourse = createAsyncThunk('course//update-course/', async (data
   }
 })
 
+export const getOneCourse = createAsyncThunk('course/getCourse', async (cid) => {
+
+  try {
+    const response = await axiosInstance.put(`/course/get-one-course/${cid}`);
+
+    console.log(response);
+
+    return response.data;
+    
+    
+  } catch (error) {
+    return toast.error(error?.response?.data?.message)
+  }
+})
+
+
 const courseSlice = createSlice({
   name: "Course",
   initialState,
@@ -100,6 +118,7 @@ const courseSlice = createSlice({
   .addCase(getcoursesList.fulfilled, (state, action) => {
     state.coursesList = (action?.payload?.coursesList)
   })
+
   },
 });
 
