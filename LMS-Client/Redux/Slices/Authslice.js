@@ -74,9 +74,6 @@ export const logout = createAsyncThunk("auth/logout", async () => {
 export const userUpdate = createAsyncThunk(
   "user/profile/update",
   async (data) => {
-
-    console.log(data);
-    
     try {
       const res = axiosInstance.put(`/user/user-update/${data[0]}`, data[1], {
         headers: {
@@ -115,6 +112,7 @@ export const getUserData = createAsyncThunk("user/me", async (userId) => {
   try {
     const res = await axiosInstance.get(`/user/me/${userId}`);
     return res.data;
+    
   } catch (error) {
     return toast.error(error?.response?.data?.message);
   }
@@ -209,7 +207,7 @@ const AuthSlice = createSlice({
           state.isLoggedIn = true;
         }
       });
-  },
+  }
 });
 
 export default AuthSlice.reducer;

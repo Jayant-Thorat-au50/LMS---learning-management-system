@@ -25,13 +25,18 @@ function Profile() {
         toast.dismiss()
         toast.success('subscription cancelled successfully')
         if (response?.pyaload?.success) {
+            
             navigate('/user/profile')
         }
 
     }
 
     const load = async () => {
-        await dispatch(getUserData(userData._id))
+        console.log('logged');
+        
+      const res =  await dispatch(getUserData(userData._id));
+      console.log(res.pyaload);
+
     }
 
     useEffect(() => {

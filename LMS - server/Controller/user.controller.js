@@ -362,8 +362,8 @@ const userUpdate = async (req, res, next) => {
           {$set:{createdby:fullName}, $inc:{points:1}}
         )
          userTobeUpdated.fullName = fullName;
-   
-   
+  }else{
+    userTobeUpdated.fullName = fullName
   }
 
 

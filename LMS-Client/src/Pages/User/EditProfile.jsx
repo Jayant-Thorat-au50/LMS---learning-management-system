@@ -1,26 +1,22 @@
+
 import React, { useState } from 'react'
 import HomeLayout from '../../components/HomeLayout'
-import { useDispatch, useSelector } from 'react-redux';
-import { BsPersonCircle } from 'react-icons/bs';
 import { CiEdit } from "react-icons/ci";
-import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
+
+import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+
+import { useDispatch, useSelector } from 'react-redux';
 import { userUpdate } from '../../../Redux/Slices/Authslice';
 
 function EditProfile() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
     let data = useSelector(state => state?.authstate?.data);
     const [editing, setEditing] = useState(false)
     const [isEdited, setIsEdited] = useState(false)
-
-    console.log(isEdited);
-    console.log(editing);
-
-
 
     const [userInput, setUserInput] = useState({
         fullName: data?.fullName,
@@ -30,11 +26,7 @@ function EditProfile() {
 
     });
 
-    
-
-    console.log(userInput);
-
-    const handleImgUpload = (e) => {
+        const handleImgUpload = (e) => {
 
         e.preventDefault();
 
@@ -72,10 +64,6 @@ function EditProfile() {
             toast.error('name cannot be of less than 5 characters')
             return
         }
-        
-
-
-
         const formData = new FormData()
         formData.append("fullName", userInput.fullName)
         formData.append("avatar", userInput.avatar)
