@@ -406,7 +406,6 @@ const userUpdate = async (req, res, next) => {
 };
 
 // getting the All user data
-
 const getAllUserData = async (req, res, next) => {
   try {
 
@@ -428,6 +427,8 @@ const getAllUserData = async (req, res, next) => {
     return next(new AppError(error.message, 400));
   }
 };
+
+// delete the user by id
 const deleteUser = async (req,res, next) => {
 
   const {userId} = req.params;
@@ -445,6 +446,26 @@ const deleteUser = async (req,res, next) => {
   }
 }
 
+//filter users by role abd subscription status
+const filterUsers = async (req, res, next) => {
+
+  try {
+    console.log(req.body);
+    
+    const users = await UserModel.find(req.body)
+    
+    console.log(users);
+    
+
+     return res.status(200).json({
+          success:true,
+          users
+      })
+    } catch (error) {
+      next(new AppError(error.message, 400))
+    }
+}
+
 module.exports = {
   signUp,
   login,
@@ -455,5 +476,6 @@ module.exports = {
   changePassword,
   userUpdate,
   getAllUserData,
-  deleteUser
+  deleteUser,
+  filterUsers
 };

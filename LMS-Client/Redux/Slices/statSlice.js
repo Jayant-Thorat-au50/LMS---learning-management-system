@@ -21,6 +21,20 @@ const getAllUserData = createAsyncThunk("getAllUsersData", async () => {
   }
 });
 
+//filtering the users
+const filterUsers = createAsyncThunk('user/filter', async (obj) => {
+try {
+  const response = await axiosInstance.post('/user/filter-users', obj);
+  console.log(response);
+  return response.data
+} catch (error) {
+  return toast.error(error?.response?.data?.message)
+}
+
+
+
+})
+
 const statSlice = createSlice({
   name: "stat",
   initialState,
@@ -36,4 +50,4 @@ const statSlice = createSlice({
 });
 
 export default statSlice.reducer;
-export { getAllUserData };
+export { getAllUserData, filterUsers };

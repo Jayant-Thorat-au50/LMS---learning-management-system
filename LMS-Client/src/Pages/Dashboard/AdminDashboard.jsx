@@ -78,6 +78,7 @@ function AdminDashboard() {
             if (response?.payload?.success) {
                 
                 await dispatch(getcoursesList())
+                
             }
         }
 
@@ -142,6 +143,7 @@ function AdminDashboard() {
         if(response?.payload?.success){
             console.log('course updated successfully');
             setEditCourseModalData({})
+        window.location.reload()
             
         }
 
@@ -160,7 +162,7 @@ function AdminDashboard() {
                  {/* stats data of the user and subscriptions */}
                 <ChartData/>
 
-               <UserList/>
+               <UserList openModal={openEditCourseModal} deletecourse={onCourseDelete}/>
             </div>
 
             <dialog id="my_modal_1" className="modal bg-transparent">

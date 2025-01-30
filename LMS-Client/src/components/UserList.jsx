@@ -2,11 +2,18 @@ import React from 'react'
 import { BsCollectionPlayFill, BsTrash } from 'react-icons/bs'
 import { FaEdit, FaPlus } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
+import { CiFilter } from "react-icons/ci";
+import { useNavigate } from 'react-router-dom';
 
-function UserList() {
-
+function UserList({openModal,deletecourse}) {
+    const navigate = useNavigate()
     let { coursesList } = useSelector(state => state?.courseState)
     const {role, data} = useSelector(state => state?.authstate)
+
+    const deleteC = (course) => {
+        deletecourse(course._id)
+        window.location.reload()
+    }
 
 
     return (
@@ -54,12 +61,12 @@ function UserList() {
                                                      <BsCollectionPlayFill className=' text-white hover:scale-110 object-cover transition-all ease-in-out duration-200'/>
                                                 </button>
                                                 <button
-                                                onClick={() => onCourseDelete(course._id)}
+                                                onClick={() => deleteC(course)}
                                                 className=' bg-red-500 hover:bg-red-700 transition-all ease-in-out duration-300 text-2xl p-2 rounded-md'>
                                                      <BsTrash className=' text-white hover:scale-110 object-cover transition-all ease-in-out duration-200'/>
                                                 </button>
                                                 <button
-                                                onClick={() => openEditCourseModal(course) }
+                                                onClick={() => openModal(course) }
                                                 className=' bg-yellow-500 hover:bg-yellow-600 transition-all ease-in-out duration-300 text-2xl p-2 rounded-md'>
                                                      <FaEdit className=' text-white hover:scale-110 object-cover transition-all ease-in-out duration-200'/>
                                                 </button>

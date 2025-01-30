@@ -11,6 +11,7 @@ const {
   userUpdate,
   getAllUserData,
   deleteUser,
+  filterUsers,
 } = require("../Controller/user.controller.js");
 const {isLoggedIn} = require("../middlewares/auth.middleware.js");
 const { upload } = require("../middlewares/multer.middleware.js");
@@ -37,5 +38,7 @@ UserRoutes.post("/change-password/:userId", isLoggedIn, changePassword);
 UserRoutes.put("/user-update/:userId",isLoggedIn, upload.single("avatar"), userUpdate);
 
 UserRoutes.delete("/remove-user/:userId",isLoggedIn, deleteUser);
+
+UserRoutes.post("/filter-users",isLoggedIn, filterUsers);
 
 module.exports = UserRoutes;
