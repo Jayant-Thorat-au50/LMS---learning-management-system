@@ -48,10 +48,6 @@ const addCourse = async (req, res, next) => {
       try {
         const response = await cloudinary.v2.uploader.upload(req.file.path, {
           folder: "lms",
-          width: 250,
-          height: 250,
-          // gravity: "faces",
-          // crop: "fill",
         });
 
         if (response) {
@@ -175,9 +171,6 @@ const updateCourse = async (req, res, next) => {
       }
     );
   }
-
-  
-  
 
     if (!course) {
       return next(

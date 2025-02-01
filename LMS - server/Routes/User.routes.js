@@ -25,7 +25,7 @@ UserRoutes.get("/me/:userId",isLoggedIn, getUser);
 
 UserRoutes.get("/getAllUserData",isLoggedIn, getAllUserData);
 
-UserRoutes.get("/logout", logout);
+UserRoutes.get("/logout/:userId", logout);
 
 UserRoutes.get("/get", (req, res) => res.send("ok"));
 

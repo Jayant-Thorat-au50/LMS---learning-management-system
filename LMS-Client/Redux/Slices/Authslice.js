@@ -53,9 +53,9 @@ export const loginNow = createAsyncThunk("auth/login", async (loginData) => {
 });
 
 // making the user log out and delete the data form local storage and cookies in the browser
-export const logout = createAsyncThunk("auth/logout", async () => {
+export const logout = createAsyncThunk("auth/logout", async (userId) => {
   try {
-    const res = axiosInstance.get("/user/logout");
+    const res = axiosInstance.get(`/user/logout/${userId}`);
     toast.promise(res, {
       loading: "wait! logging out",
       success: (data) => {

@@ -53,6 +53,10 @@ function App() {
         <Route path="/course/add-lecture" element={<AddNewLecture />} />
         <Route path="/admin/dashboard" element={< AdminDashboard />} />
       </Route>
+      <Route element={<RequireAuth allowedRoles={['SUPER ADMIN']} />}>
+       <Route path="/super-admin/dashboard" element={<SuperAdmin/>}/>
+      </Route>
+      
       <Route element={<RequireAuth allowedRoles={['ADMIN', 'USER','SUPER ADMIN']} />}>
         <Route path="/user/profile" element={<Profile />} />
       <Route path="/changepassword" element={< ChangePassword />} />

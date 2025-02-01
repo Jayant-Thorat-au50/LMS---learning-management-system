@@ -1,13 +1,15 @@
 
+// lib imports
 import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+// component imports
 import HomeLayout from '../../components/HomeLayout'
 import { CiEdit } from "react-icons/ci";
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 
-import { Link, useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
-
-import { useDispatch, useSelector } from 'react-redux';
+// thunck imports
 import { userUpdate } from '../../../Redux/Slices/Authslice';
 
 function EditProfile() {

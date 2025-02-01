@@ -141,16 +141,21 @@ const login = async (req, res, next) => {
     }
 
     // setting token created in the userSchema method
-    const token = user.JwtToken();
-
+    const token = await user.JwtToken();
+    
     // setting cookies in the client side through the response
     res.cookie("Token", token, cookieOption);
 
-    // sending the user data to the client
+    //saving authtoken in the db
+    user.authToken = token;
+     
+    //saving the user
+    await user.save();
 
     // making the passowrd disappear when the user obj is sent to the client
     user.password= undefined;
 
+    // sending the user data to the client
     res.status(200).json({
       success: true,
       message: "User log in successfully",
@@ -183,14 +188,30 @@ const getUser = async (req, res, next) => {
 };
 
 // user logout
-const logout = (req, res) => {
+const logout = async (req, res, next) => {
   try {
+
+    const {userId} = req.params;
+
+    const user = await UserModel.findById(userId)
+
+    if(!user){
+       return res.status(200).json({
+        success: true,
+        message: "User logged out successfully",
+      });
+    }
+
     // deactivating the token existing at the client side
     res.cookie("Token", null, {
       maxAge: 0,
       secure: true,
       httpOnly: true,
     });
+
+    // disable the cookie in the db
+    user.authToken = undefined
+    await user.save();
 
     // sending the response message
    return res.status(200).json({

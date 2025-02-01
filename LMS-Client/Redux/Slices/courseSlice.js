@@ -6,7 +6,8 @@ import toast from "react-hot-toast";
 import axiosInstance from "../../src/Helpers/axiosInstance";
 
 const initialState = {
-coursesList : []
+coursesList : [],
+catagoryList:[]
 };
 
 // get the list all available courses in the db
@@ -117,6 +118,8 @@ const courseSlice = createSlice({
     builder
   .addCase(getcoursesList.fulfilled, (state, action) => {
     state.coursesList = (action?.payload?.coursesList)
+    state.catagoryList = [...new Set(action?.payload?.coursesList.map(c => c.catagory))]
+    
   })
 
   },

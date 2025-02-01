@@ -2,7 +2,7 @@
 // lib imports
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 
 // thunck imports
@@ -13,21 +13,26 @@ import HomeLayout from '../../components/HomeLayout';
 
 // icons imports
 import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { IoCloudUploadOutline } from "react-icons/io5";
 
 function AddCourse() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate()
+    const {data} = useSelector(state => state?.authstate)
+    const {categoryList} = useSelector(state => state?.courseState)
     const [adminInput, setAdminInput] = useState({
         title: "",
         catagory: "",
         description: "",
         thumbnail: null,
         price: "",
-        createdby: "",
+        createdby: data.fullName,
         previewImg: ""
 
     });
+
+    const [showSpinner, setShowSpinner] = useState(false)
 
     // get img preview when selected
     const getImg = (e) => {
@@ -56,9 +61,10 @@ function AddCourse() {
     const onFormSubmit = async (e) => {
         e.preventDefault()
         if (!adminInput.title || !adminInput.catagory || !adminInput.description || !adminInput.createdby || !adminInput.previewImg || !adminInput.previewImg) {
-            toast.error("All fields are mandatory");
+            toast.error("All fields are mandatoryk");
             return
         }
+        setShowSpinner(!showSpinner)
         const formData = new FormData();
 
         formData.append('title', adminInput.title)
@@ -82,14 +88,20 @@ function AddCourse() {
             })
             navigate('/courses')
 
+        }else{
+            setShowSpinner(!showSpinner)
         }
     }
+
+   console.log(adminInput);
+   
+
     return (
         <HomeLayout>
-            <div className=' flex justify-center items-center h-[100vh]'>
+            <div className=' flex justify-center items-center h-[100vh] bg-blue-100'>
 
                 <form noValidate
-                    className=' flex flex-col justify-center gap-4 rounded-lg p-4 text-white w-[700px] my-10 shadow-[0_0_10px_black] relative '
+                    className=' flex flex-col justify-center gap-4 rounded-lg p-4 text-white w-[700px] my-10 bg-white shadow-[0_0_10px_black] relative '
                     onSubmit={onFormSubmit}
                     action="">
 
@@ -104,8 +116,9 @@ function AddCourse() {
                                     {adminInput.previewImg ? (
                                         <img src={adminInput.previewImg} alt='thumbnail' className=' w-full h-44 m-auto border' />
                                     ) : (
-                                        <div className=' w-full h-44 m-auto flex justify-center items-center border'>
-                                            <h1 className=' text-lg font-bold'>Upload your course thumbnail</h1>
+                                        <div className=' w-full h-44 m-auto flex justify-center items-center border-2 border-black rounded-md flex-col gap-5' >
+                                            <h1 className=' text-lg text-blue-300 font-bold'>Upload your course thumbnail</h1>
+                                            <div className=" text-black text-5xl border-2 border-black"> <IoCloudUploadOutline /> </div>
                                         </div>
                                     )}
                                 </label>
@@ -121,26 +134,27 @@ function AddCourse() {
                                     onChange={handleUserInput}
                                     placeholder='Enter your title'
                                     id='title'
-                                    className=' bg-transparent px-2 py-1 w-full border'
+                                    className=' bg-transparent px-2 py-1 w-full border-2 border-black rounded-md text-black'
                                 />
                             </div>
                         </div>
 
-                        <div className=' flex flex-col gap-2 pb-1'>
+                        <div className=' flex flex-col pb-1 gap-2'>
                             <div className=' flex flex-col gap-1'>
-                                <label htmlFor="createdby" className=' font-semibold text-lg'>Course Instructor</label>
+                                <label htmlFor="createdby" className=' font-semibold text-lg text-black'>Course Instructor :</label>
                                 <input type="text"
                                     required
                                     name='createdby'
-                                    value={adminInput.createdby}
+                                    value={data.fullName}
                                     onChange={handleUserInput}
                                     placeholder='Enter course instructor'
                                     id='createdby'
-                                    className=' bg-transparent px-2 py-1 w-full border'
+                                    className=' text-black bg-transparent px-2 py-1 w-full border-2 border-black rounded-md'
                                 />
                             </div>
-                            <div className=' flex flex-col gap-1'>
-                                <label htmlFor="catagory" className=' font-semibold text-lg'>Course catagory</label>
+                           
+                             <div className=' flex flex-col gap-1'>
+                                <label htmlFor="catagory" className=' font-semibold text-lg text-black'>Course catagory :</label>
                                 <input type="text"
                                     required
                                     name='catagory'
@@ -148,11 +162,11 @@ function AddCourse() {
                                     onChange={handleUserInput}
                                     placeholder='Enter course catagory'
                                     id='catagory'
-                                    className=' bg-transparent px-2 py-1 w-full border'
+                                    className='border-2 border-black bg-transparent px-2 text-black py-1 w-full rounded-md '
                                 />
-                            </div>
+                            </div> 
                             <div className=' flex flex-col gap-1'>
-                                <label htmlFor="description" className=' font-semibold text-lg'>Course description</label>
+                                <label htmlFor="description" className=' font-semibold text-lg text-black'>Course description :</label>
                                 <textarea type="text"
                                     required
                                     name='description'
@@ -160,7 +174,7 @@ function AddCourse() {
                                     onChange={handleUserInput}
                                     placeholder='Enter course description'
                                     id='description'
-                                    className=' bg-transparent px-2 py-1 w-full border h-24 overflow-y-scroll resize-none'
+                                    className=' bg-transparent px-2 py-1 w-full border-2 h-24 overflow-y-scroll border-black rounded-md resize-none text-black'
                                 />
                             </div>
 
@@ -169,10 +183,22 @@ function AddCourse() {
 
                     </div>
 
-                    <div className=' flex justify-center w-full'>
+                    <div className=' flex justify-center w-full items-center flex-col'>
 
-                        <button type='submit' className=' w-full text-center font-bold text-white text-2xl bg-yellow-600 py-1 rounded-sm hover:bg-yellow-500 hover:text-black transition-all ease-in-out duration-300'>Create course</button>
+                        { !showSpinner ?(
+                            <button type='Submit' className=' w-full flex justify-center text-center font-bold text-white text-2xl bg-yellow-500 py-1 rounded-sm hover:bg-yellow-600 hover:text-black transition-all ease-in-out duration-300'>
+                     
+                      
+                        <span>Create course</span>
+                        </button>
+                        ):(
+
+                            <span className=' text-center h-6 rounded-full border-t-yellow-500 w-6 border-4 animate-spin border-yellow'>
+
+                       </span>)}
+                        
                     </div>
+               
                 </form>
             </div>
         </HomeLayout>

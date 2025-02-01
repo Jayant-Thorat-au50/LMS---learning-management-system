@@ -7,6 +7,7 @@ import sunder from "../assets/sunder pichai.jpeg";
 import bill from "../assets/bill gates.jpg";
 import satya from '../assets/satya nadela.jpeg'
 
+
 export const visionaries = [
   {
     id: "1",

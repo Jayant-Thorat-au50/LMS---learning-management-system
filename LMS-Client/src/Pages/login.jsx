@@ -73,8 +73,8 @@ function Login() {
 
     return (
         <HomeLayout>
-
-            <div className=' w-full h-screen flex justify-center items-center'>
+{/* 
+            <div className=' w-full border-2 border-black h-screen flex justify-center items-center'>
                 <form action="" onSubmit={login} encType='multipart/form-data' noValidate className='shadow-[0_0_10px_black] w-96 flex  flex-col gap-2 items-center'>
                     <h1 className=' text-center capitalize font-bold text-3xl my-2 text-yellow-400'>registration page</h1>
 
@@ -108,6 +108,47 @@ function Login() {
 
                 </form>
 
+            </div> */}
+
+            <div className=' w-full flex justify-center border-2 border-black items-center h-[88vh] px-10'>
+               <div className=' bg-blue-200 w-1/2 h-full flex justify-center items-center  border'>
+               <form action="" onSubmit={login}  noValidate className='shadow-[0_0_10px_black] w-[25rem]  h-fit flex  flex-col gap-2 items-center'>
+                    <h1 className=' text-center capitalize font-bold text-3xl my-2 text-yellow-400'>registration page</h1>
+
+                    <div className=' flex flex-col items-start w-full px-10 space-y-2'>
+                        <label htmlFor="email" className=' font-semibold text-white text-xl'>Email</label>
+                        <input type="email" id='email' placeholder="Enter your email...." onChange={handleUserInput} value={loginData.email} className='px-5 py-2 bg-transparent border w-full' required name='email' />
+                    </div>
+                    <div className=' flex flex-col items-start w-full px-10 relative space-y-2'>
+                        <label htmlFor="password" className=' font-semibold  text-white text-xl' >Password</label>
+                        <input type={showPassword?'text':"password"} placeholder="Enter your password...." onChange={handleUserInput} value={loginData.password} id='password' className='border bg-transparent px-5 py-2 text-white w-full borderbg-transparent' required name='password' />
+                        {
+                            showPassword?(
+                               <FaEye className='absolute bottom-1 right-11 text-4xl p-2 hover:bg-black transition-all ease-in-out duration-300  rounded-sm' onClick={() => setShowPassword(!showPassword)}/>
+                            ):(
+                                <FaEyeSlash className=' absolute bottom-1 right-11 text-4xl p-2 hover:bg-black transition-all ease-in-out duration-300  rounded-sm' onClick={() => setShowPassword(!showPassword)}/>
+                            )
+                        }
+                    </div>
+
+                    <div className=' px-10  w-full flex justify-center items-center my-1'>
+                        <button type='submit' className=' bg-yellow-500 w-full font-bold text-2xl py-1 rounded text-black hover:bg-yellow-800'>login</button>
+                    </div>
+
+                    <div className='my-0'>
+                        <p className='text-lg text-blue-500 bg-transparent'>forget your password?  <span onClick={() => navigate('/forgotPassword')} className=' text-white' ><u>reset now</u></span></p>
+                    </div>
+                    <div className='my-2'>
+                        <p className='text-lg text-white bg-transparent'>Do not have an acc? <span onClick={() => navigate('/signUp')} className=' text-yellow-500' >register</span></p>
+                    </div>
+
+
+                </form>
+
+               </div>
+               <div className=' bg-white w-1/2 h-full'>
+
+               </div>
             </div>
 
         </HomeLayout>

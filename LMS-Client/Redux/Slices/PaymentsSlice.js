@@ -12,7 +12,7 @@ const initialState = {
   monthlySalesRecord: [],
 };
 
-// get the razorpay key stired in the backend
+// get the razorpay key started in the backend
 const getRazorpayApiKey = createAsyncThunk("/razorpay/apiKey", async () => {
   try {
     const response = await axiosInstance.get("/payments/razorpay_ApiKey");
