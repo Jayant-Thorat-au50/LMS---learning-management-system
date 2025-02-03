@@ -17,7 +17,8 @@ function UserList({openModal,deletecourse}) {
 
 
     return (
-                  <div className=' w-[98%] py-2 px-3 flex justify-center mb-5 flex-col gap-5 items-center self-center  shadow-[0_0_7px_black]'>
+        <div>
+            <div className=' w-[98%] py-2 px-3 flex justify-center mb-5 flex-col gap-5 items-center self-center  shadow-[0_0_7px_black]'>
                             <div className=' w-full flex justify-between items-center'>
                          <h1 className=' text-4xl text-yellow-500 font-semibold'>Course Overview</h1>
                      
@@ -70,9 +71,6 @@ function UserList({openModal,deletecourse}) {
                                                 className=' bg-yellow-500 hover:bg-yellow-600 transition-all ease-in-out duration-300 text-2xl p-2 rounded-md'>
                                                      <FaEdit className=' text-white hover:scale-110 object-cover transition-all ease-in-out duration-200'/>
                                                 </button>
-                                                {/* <button className=' bg-green-500 hover:bg-green-600 transition-all ease-in-out duration-300 text-2xl p-2 rounded-md'>
-                                                     <BsCollectionPlayFill className=' text-white'/>
-                                                </button> */}
                                             </td>
                                         </tr>
                                     )
@@ -81,6 +79,11 @@ function UserList({openModal,deletecourse}) {
         
                         </table>
                         </div>
+
+                        
+                        
+        </div>
+                        
     )
 }
 

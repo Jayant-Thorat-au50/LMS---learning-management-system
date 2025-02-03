@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
 // component imports
-import HomeLayout from '../../components/HomeLayout'
-import { FaPlus } from 'react-icons/fa'
+import { FaPlus } from 'react-icons/fa';
+import HomeLayout from '../../components/HomeLayout';
 
 
 // hooks and lib imports
-import { useDispatch, useSelector } from 'react-redux'
+import { ArcElement, BarElement, CategoryScale, Chart as ChartJs, Legend, LinearScale, Title, Tooltip } from 'chart.js';
+import { Bar, Pie } from 'react-chartjs-2';
+import { FaEdit, FaUsers } from 'react-icons/fa';
+import { FcSalesPerformance } from 'react-icons/fc';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Chart as ChartJs, ArcElement, Tooltip, Legend, Title, CategoryScale, LinearScale, BarElement } from 'chart.js'
-import { Bar, Pie } from 'react-chartjs-2'
-import { FaUsers, FaEdit } from 'react-icons/fa'
-import { FcSalesPerformance } from 'react-icons/fc'
 
 
 // thunck imports
-import { getAllUserData } from '../../../Redux/Slices/statSlice';
-import { getAllpaymentsList } from '../../../Redux/Slices/PaymentsSlice';
-import { deleteCourse, editCourse, getcoursesList } from '../../../Redux/Slices/courseSlice';
-import { BsCollectionPlayFill, BsPlayFill, BsTrash } from 'react-icons/bs';
 import toast from 'react-hot-toast';
+import { BsCollectionPlayFill, BsPlayFill, BsTrash } from 'react-icons/bs';
+import { deleteCourse, editCourse, getcoursesList } from '../../../Redux/Slices/courseSlice';
+import { getAllpaymentsList } from '../../../Redux/Slices/PaymentsSlice';
+import { getAllUserData } from '../../../Redux/Slices/statSlice';
 import ChartData from '../../components/chartData';
-import UserList from '../../components/UserList';
+import UserList from '../../components/CourseListForAdmin';
 
 ChartJs.register(ArcElement, BarElement, Tooltip, Legend, Title, CategoryScale, LinearScale)
 

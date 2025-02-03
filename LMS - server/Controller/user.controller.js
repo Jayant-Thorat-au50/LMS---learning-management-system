@@ -110,7 +110,7 @@ const signUp = async (req, res, next) => {
 
     // setting cookies in the client side through the response
     // before sending the data to client
-    res.cookie("token", token, cookieOption);
+    res.cookie("Token", token, cookieOption);
 
     // sending the saved user obj to the client
     return res.status(200).json({
