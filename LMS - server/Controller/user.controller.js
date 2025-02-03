@@ -135,6 +135,10 @@ const login = async (req, res, next) => {
     // validaing the user's existence in the db
     const user = await UserModel.findOne({ email }).select("+password");
 
+    if(!user){
+      return next(new AppError("cannot find a user registered with email entered",500))
+    }
+
     // validaing the password with the user
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return next(new AppError("Invalid email or password", 400));
@@ -147,7 +151,6 @@ const login = async (req, res, next) => {
     res.cookie("Token", token, cookieOption);
 
     //saving authtoken in the db
-    user.authToken = token;
      
     //saving the user
     await user.save();
@@ -366,7 +369,7 @@ const userUpdate = async (req, res, next) => {
   const { fullName } = req.body;
   const { userId } = req.params;
 
-
+ 
   const userTobeUpdated = await UserModel.findById(userId);
 
   if (!userTobeUpdated) {
@@ -392,6 +395,8 @@ const userUpdate = async (req, res, next) => {
 // by deleting the previous one
 
   if (req.file) {
+    console.log(req.file);
+    
     try {
       await cloudinary.v2.uploader.destroy(userTobeUpdated.avatar.publicid);
 

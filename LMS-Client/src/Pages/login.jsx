@@ -60,7 +60,7 @@ function Login() {
         if (response?.payload?.success) {
             console.log(response?.payload?.success);
 
-            navigate(`/`)
+            navigate('/')
             setLoginData({
                 email: "",
                 password: "",

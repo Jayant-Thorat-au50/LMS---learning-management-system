@@ -21,12 +21,7 @@ const UserModel = require('../Models/UserModel.js')
   if (!decoded) {
     return next(new AppError("Unauthorized, please login to continue", 401));
   }
-
-   const user = await UserModel.findById(decoded.id);
-
-   if(Token != user.authToken){
-    return next(new AppError("Unauthorized user, please login to continue", 400));
-   }
+   
 
   // If all good store the id in req object, here we are modifying the request object and adding a custom field user in it
   req.user = decoded;

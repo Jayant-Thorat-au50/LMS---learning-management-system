@@ -36,10 +36,10 @@ import AllUsersData from "./Pages/User/allUsersData.jsx";
 function App() {
   return (
     <Routes>
+      <Route path="/login" element={<Login />} />
       <Route path="/" element={<HomePage />} />
       <Route path="/about" element={<AboutUs />} />
       <Route path="/signUp" element={<SignUp />} />
-      <Route path="/login" element={<Login />} />
       <Route path="/reset-password" element={<Login />} />
       <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
       <Route path="/forgotPassword" element={< ForgetPassword />} />
@@ -48,29 +48,27 @@ function App() {
       <Route path="/denied" element={<Denied />} />
       <Route path="/course/description" element={<CourseDescription />} />
       <Route path="/*" element={<NotFound />} />
+    
       <Route element={<RequireAuth allowedRoles={['ADMIN']} />}>
+        <Route path="/admin/dashboard" element={< AdminDashboard />} />
         <Route path="/course/create" element={<AddCourse />} />
         <Route path="/course/add-lecture" element={<AddNewLecture />} />
-        <Route path="/admin/dashboard" element={< AdminDashboard />} />
       </Route>
       <Route element={<RequireAuth allowedRoles={['SUPER ADMIN']} />}>
-       <Route path="/super-admin/dashboard" element={<SuperAdmin/>}/>
+        <Route path="/super-admin/dashboard" element={<SuperAdmin />} />
+        <Route path="/user/allUsers" element={<AllUsersData />} />
       </Route>
-      
-      <Route element={<RequireAuth allowedRoles={['ADMIN', 'USER','SUPER ADMIN']} />}>
+
+      <Route element={<RequireAuth allowedRoles={['ADMIN', 'USER', 'SUPER ADMIN']} />}>
         <Route path="/user/profile" element={<Profile />} />
-      <Route path="/changepassword" element={< ChangePassword />} />
+        <Route path="/changepassword" element={< ChangePassword />} />
         <Route path="/checkout" element={<Cheackout />} />
         <Route path="/payment/success" element={< PaymentSuccess />} />
         <Route path="/payment/failure" element={<PaymentsFailure />} />
         <Route path="/user/editprofile" element={<EditProfile />} />
         <Route path="/course/displayLectures" element={<DisplayLectures />} />
       </Route>
-      <Route element={<RequireAuth allowedRoles={[ 'SUPER ADMIN']} />}>
-      <Route path="/superadmin/dashboard" element={<SuperAdmin/>}/>
-      <Route path="/user/allUsers" element={<AllUsersData/>}/>
-      <Route path="/superadmin/dashboard" element={<SuperAdmin/>}/>
-      </Route>
+
 
 
 
