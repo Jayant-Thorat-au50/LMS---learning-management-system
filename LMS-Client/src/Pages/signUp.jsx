@@ -113,7 +113,7 @@ function SignUp() {
 
             <div className=' w-full h-[90vh] flex  bg-[#F2F2FD] justify-center items-center'>
                 <div className=' w-full grid grid-cols-2 px-20'>
-                    <form action="" onSubmit={createAccount} encType='multipart/form-data' noValidate className='shadow-[0_0_2px_black] bg-white w-96 flex flex-col gap-1 items-start mx-auto'>
+                    <form action="" onSubmit={createAccount} encType='multipart/form-data' noValidate className='shadow-[0_0_2px_black] bg-white w-96 flex flex-col gap-2 items-start mx-auto'>
                         <h1 className=' text-center px-10 capitalize font-semibold text-xl my-2 text-blue-400'>Begin your journy with us!</h1>
 
                         <div className=' flex justify-center items-center w-full flex-col px-10'>
@@ -126,17 +126,17 @@ function SignUp() {
                             <input type="file" id='Avatar' hidden required name='Avatar' onChange={getImg} />
                         </div>
 
-                        <div className=' flex flex-col items-start w-full px-10 space-y-0'>
+                        <div className=' flex flex-col  items-start w-full px-10 space-y-0'>
                             <label htmlFor="fullName" className=' font-semibold text-black text-lg'>Full Name</label>
-                            <input type="text" id='fullName' className=' px-5 rounded-md text-black font-semibold py-1 bg-[#F3F4F6] w-full' placeholder="Enter your name...." required name='fullName' onChange={handleUserInput} value={signUpData.fullName} />
+                            <input type="text" id='fullName' className=' px-5 rounded-md text-black font-semibold py-1 bg-[#F3F4F6] w-full border border-black' placeholder="Enter your name...." required name='fullName' onChange={handleUserInput} value={signUpData.fullName} />
                         </div>
                         <div className=' flex flex-col items-start w-full px-10 space-y-0'>
                             <label htmlFor="email" className=' font-semibold  text-black text-lg'>Email</label>
-                            <input type="email" id='email' placeholder="Enter your email...." onChange={handleUserInput} value={signUpData.email} className='px-5 font-semibold py-1 bg-[#F3F4F6] rounded-md w-full text-black ' required name='email' />
+                            <input type="email" id='email' placeholder="Enter your email...." onChange={handleUserInput} value={signUpData.email} className='px-5 font-semibold py-1 bg-[#F3F4F6] rounded-md border border-black w-full text-black ' required name='email' />
                         </div>
                         <div className=' flex flex-col items-start w-full px-10 space-y-0 relative '>
                             <label htmlFor="password" className=' font-semibold  text-black text-xl' >Password</label>
-                            <input type={showPassword ? 'text' : 'password'} placeholder="Enter your password...." onChange={handleUserInput} value={signUpData.password} id='password' className='font-semibold bg-[#F3F4F6] px-5 text-black py-1 w-full ' required name='password' />
+                            <input type={showPassword ? 'text' : 'password'} placeholder="Enter your password...." onChange={handleUserInput} value={signUpData.password} id='password' className='font-semibold bg-[#F3F4F6] px-5 text-black border border-black py-1 w-full ' required name='password' />
 
                             {
                                 showPassword ? (
@@ -153,7 +153,7 @@ function SignUp() {
 
 
                         <div className='mb-3 text-center mx-auto'>
-                            <p className='text-lg text-black text-center'>Already have an acc? <span onClick={() => navigate('/login')} className=' text-blue-500' >login</span></p>
+                            <p className='text-lg text-black text-center'>Already have an acc? <span onClick={() => navigate('/login')} className=' text-blue-500 font-semibold' >login</span></p>
                         </div>
 
 

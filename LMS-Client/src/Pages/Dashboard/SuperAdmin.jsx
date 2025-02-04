@@ -97,8 +97,8 @@ function SuperAdmin() {
 
     return (
         <HomeLayout>
-            <div className=' min-h-[90vh] flex flex-col flex-wrap pt-5 gap-10 px-24'>
-                <h1 className=' text-center  text-3xl text-yellow-500 font-semibold'>Admin Dashboard</h1>
+            <div className=' min-h-[90vh] bg-white flex flex-col flex-wrap pt-5 gap-10 px-24'>
+                <h1 className=' text-center  text-3xl text-blue-500 font-semibold'>Admin Dashboard</h1>
 
                 {/* stats data of the user and subscriptions */}
 

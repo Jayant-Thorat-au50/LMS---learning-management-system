@@ -89,7 +89,7 @@ function EditProfile() {
     }
     return (
         <HomeLayout>
-            <div className=' flex justify-center items-center min-h-[100vh] w-full '>
+            {/* <div className=' flex justify-center items-center min-h-[100vh] w-full '>
                 <form
                     onSubmit={onFormSubmit}
                     noValidate
@@ -136,7 +136,7 @@ function EditProfile() {
                     </div>
                 </form>
             </div>
-            <button className="btn" onClick={() => document.getElementById('my_modal_4').showModal()}>open modal</button>
+            <button className="btn" onClick={() => document.getElementById('my_modal_4').showModal()}>open modal</button> */}
 
             <div className=' min-h-[90vh] flex justify-center items-center flex-col w-full'>
                 {/* You can open the modal using document.getElementById('ID').showModal() method */}

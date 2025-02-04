@@ -111,29 +111,29 @@ function Login() {
 
             </div> */}
 
-            <div className=' w-full flex justify-center border-2 border-black items-center h-[88vh] px-10'>
+            <div className=' w-full flex justify-center items-center h-[88vh] px-10'>
 
             <div className=' w-1/2 h-full '>
-               <div className=' flex relative w-full'>
-               <div className=' absolute top-5 left-5'>
-                    <img src={loginPageImg} alt="" className=' rounded-tr-3xl h-60 w-52' />
+               <div className=' flex relative w-full ms-14 my-9'>
+               <div className=' absolute top-1 left-5'>
+                    <img src={loginPageImg} alt="" className=' rounded-tr-3xl h-52 w-48' />
                 </div>
-               <div className=' absolute top-16 right-7'>
-                    <img src={loginPageImg2} alt="" className=' rounded-tr-3xl h-72 w-72' />
+               <div className=' absolute top-16 right-40'>
+                    <img src={loginPageImg2} alt="" className=' rounded-2xl h-40 w-68' />
                 </div>
-                 {/*  <div>
-                    <img src={loginPageImg3} alt="" className=' h-72 w-52' />
-                </div> */}
+                  <div className=' absolute top-60 left-5'>
+                    <img src={loginPageImg3} alt="" className=' h-52 w-72 rounded-r-2xl' />
+                </div>
                </div>
              </div>
 
                <div className=' bg-blue-200 w-1/2 h-full flex justify-center items-center  border'>
                <form action="" onSubmit={login}  noValidate className='shadow-[0_0_10px_black] w-[25rem] bg-white  h-fit flex  flex-col gap-3 items-center'>
-                    <h1 className=' text-center capitalize font-bold text-xl my-2 text-blue-400'>Registration page</h1>
+                    <h1 className=' text-center capitalize font-semibold text-2xl my-2 text-blue-600'>Registration page</h1>
 
                     <div className=' flex flex-col items-start w-full px-10 space-y-1'>
                         <label htmlFor="email" className=' font-semibold text-black text-xl'>Email</label>
-                        <input type="email" id='email' placeholder="Enter your email...." onChange={handleUserInput} value={loginData.email} className='px-5 rounded border-black py-2  border bg-[#F3F4F6] w-full' required name='email' />
+                        <input type="email" id='email' placeholder="Enter your email...." onChange={handleUserInput} value={loginData.email} className='px-5 rounded text-black border-black py-2  border bg-[#F3F4F6] w-full' required name='email' />
                     </div>
                     <div className=' flex flex-col items-start w-full px-10 relative space-y-1'>
                         <label htmlFor="password" className=' font-semibold  text-black text-xl' >Password</label>
@@ -151,11 +151,11 @@ function Login() {
                         <button type='submit' className=' bg-blue-400 w-full font-bold text-2xl py-1 rounded text-black hover:bg-blue-300'>login</button>
                     </div>
 
-                    <div className='my-0'>
-                        <p className='text-lg text-blue-500 bg-transparent'>forget your password?  <span onClick={() => navigate('/forgotPassword')} className=' text-black' ><u>reset now</u></span></p>
+                    <div>
+                        <p className='text-lg text-blue-600 font-semibold'>forget your password?  <span onClick={() => navigate('/forgotPassword')} className=' text-black' ><u>reset now</u></span></p>
                     </div>
                     <div className='my-2'>
-                        <p className='text-lg text-black bg-transparent'>Do not have an acc? <span onClick={() => navigate('/signUp')} className=' text-yellow-500' >register</span></p>
+                        <p className='text-lg text-black bg-transparent'>Do not have an acc? <span onClick={() => navigate('/signUp')} className=' text-blue-600 font-semibold' >register</span></p>
                     </div>
 
 

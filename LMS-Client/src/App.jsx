@@ -30,6 +30,7 @@ import ResetPassword from "./Pages/User/resetPassword.jsx";
 import ChangePassword from "./Pages/User/changePassword.jsx";
 import SuperAdmin from "./Pages/Dashboard/SuperAdmin.jsx";
 import AllUsersData from "./Pages/User/allUsersData.jsx";
+import AllCoursesInCat from "./Pages/Course/AllCoursesInCat.jsx";
 
 
 
@@ -47,6 +48,7 @@ function App() {
       <Route path="/contact-us" element={<ContactUs />} />
       <Route path="/denied" element={<Denied />} />
       <Route path="/course/description" element={<CourseDescription />} />
+      <Route path="/course/:catagory" element={<AllCoursesInCat />} />
       <Route path="/*" element={<NotFound />} />
     
       <Route element={<RequireAuth allowedRoles={['ADMIN']} />}>

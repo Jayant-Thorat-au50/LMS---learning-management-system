@@ -156,8 +156,8 @@ function AdminDashboard() {
 
     return (
         <HomeLayout>
-            <div className=' min-h-[90vh] flex flex-col flex-wrap pl-5 pt-5 gap-10'>
-                <h1 className=' text-center  text-5xl text-yellow-500 font-semibold'>Admin Dashboard</h1>
+            <div className=' min-h-[90vh] bg-white flex flex-col flex-wrap pl-5 pt-5 gap-10'>
+                <h1 className=' text-center  text-5xl text-blue-500 font-semibold'>Admin Dashboard</h1>
 
                  {/* stats data of the user and subscriptions */}
                 <ChartData/>
