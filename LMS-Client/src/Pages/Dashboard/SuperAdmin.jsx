@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // component imports
 import { FaPlus } from 'react-icons/fa'
@@ -20,6 +20,8 @@ import { BsCollectionPlayFill, BsPlayFill, BsTrash } from 'react-icons/bs'
 import { getAllpaymentsList } from '../../../Redux/Slices/PaymentsSlice'
 import { deleteCourse, getcoursesList } from '../../../Redux/Slices/courseSlice'
 import { getAllUserData } from '../../../Redux/Slices/statSlice'
+import { authorizeAdmin, getRequestList, getUserData } from '../../../Redux/Slices/Authslice'
+import toast from 'react-hot-toast'
 
 
 ChartJs.register(ArcElement, BarElement, Tooltip, Legend, Title, CategoryScale, LinearScale)
@@ -33,21 +35,23 @@ function SuperAdmin() {
     const { allPayments, finalMonth, monthlySalesRecord } = useSelector(state => state?.paymentstate)
     let { coursesList } = useSelector(state => state?.courseState)
     let { data } = useSelector(state => state?.authstate)
+    let { SAdminReqList } = useSelector(state => state?.authstate)
 
-    console.log(allUsers);
+      SAdminReqList = SAdminReqList.filter(reqUser => reqUser.role != "SUPER ADMIN")
+
 
 
     const loadInfo = async () => {
+        const res = await dispatch(getRequestList())
         const res1 = await dispatch(getAllUserData())
         const res2 = await dispatch(getAllpaymentsList());
         await dispatch(getcoursesList())
     }
 
-
     const openEditCourseModal = (courseData) => {
         setEditCourseModalData(courseData)
 
-        if(editCourseModalData){
+        if (editCourseModalData) {
 
             document.getElementById('my_modal_1').showModal()
         }
@@ -90,24 +94,62 @@ function SuperAdmin() {
 
     }
 
+    const onAuthorizeAdmin = async (reqUser) => {
+         console.log('clicked');
+         
+        const response = await dispatch(authorizeAdmin(reqUser))
+        if(response.payload.success){
+            toast.success('request accepted successfully')
+        }
+    }
+    
+
     useEffect(() => {
-        loadInfo()
+        loadInfo();
+
+
     }, [])
+
+
 
 
     return (
         <HomeLayout>
             <div className=' min-h-[90vh] bg-white flex flex-col flex-wrap pt-5 gap-10 px-24'>
-                <h1 className=' text-center  text-3xl text-blue-500 font-semibold'>Admin Dashboard</h1>
+                <h1 className=' text-center  text-3xl text-blue-500 font-semibold'>Super Admin Dashboard</h1>
+
 
                 {/* stats data of the user and subscriptions */}
 
-               
+
                 <ChartData />
-             
+
                 {/* list of users */}
                 {/* <UserList openModal={openEditCourseModal} deletecourse={onCourseDelete} /> */}
-
+             
+                <div
+                    tabIndex={0}
+                    className="bg-gray-300 w-full  focus:bg-gray-200 focus:text-secondary-content collapse">
+                    <div className="collapse-title"><p className=' text-black text-xl font-semibold'>Requests to become admin</p></div>
+                    <div className="collapse-content">
+                       <ul className=' w-full'>
+                        {SAdminReqList && SAdminReqList.map(reqUser => <li>
+                            <div className=' border-b-2 my-4 border-gray-400 w-full flex justify-between items-center px-5 '>
+                       <div className=' flex justify-center items-center gap-4'>
+                       <img src={reqUser.avatar.secureUrl} alt="" className=' h-16 w-16 rounded-lg' />
+                       <h3 className=' text-lg capitalize'>{reqUser.fullName}</h3>
+                       </div>
+                       <div className=' space-x-5'>
+                       <span
+                       onClick={() => onAuthorizeAdmin(reqUser)}
+                       className='px-2 py-1 font-semibold text-black bg-green-500 rounded-md transition-all ease-in-out duration-200 hover:bg-green-700'>Aproove</span>
+                       <span className=' px-2 py-1 font-semibold text-black bg-red-600 rounded-md transition-all ease-in-out duration-200 hover:bg-red-700'>Reject</span>
+                       </div>
+                            </div>
+                        </li>)}
+                       </ul>
+                    </div>
+                </div>
 
 
                 <div className="overflow-x-auto bg-blue-200 my-5 px-6 ">
@@ -146,7 +188,7 @@ function SuperAdmin() {
                                                 className=' bg-red-500 hover:bg-red-700 transition-all ease-in-out duration-300 text-2xl p-2 rounded-md'>
                                                 <BsTrash className=' text-white hover:scale-110 object-cover transition-all ease-in-out duration-200' />
                                             </button>
-                                         
+
                                         </td>
                                     </tr>
                                 )

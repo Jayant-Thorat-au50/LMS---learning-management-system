@@ -13,6 +13,7 @@ import hero9 from '../assets/pexels-photo-1462630-removebg-preview_waifu2x_photo
 import hero7 from '../assets/pexels-photo-1462630-removebg-preview_waifu2x_photo_noise3_scale_waifu2x_photo_noise3_scale.png'
 import hero8 from '../assets/images.jpeg'
 import CourseListByCat from '../components/courseListByCat'
+import axios from 'axios'
 
 
 
@@ -22,14 +23,30 @@ function HomePage() {
     const { coursesList } = useSelector(state => state?.courseState);
     const catagoryList = [...new Set(coursesList.map(c => c.catagory))]
 
+    // const newList = async () => {
+
+    //     const res = await fetch("https://newsapi.org/v2/everything?q=Apple&from=2025-02-04&sortBy=popularity&apiKey=5e8f55254a7b4d28b784b0fcde20d6b0",{
+    //         method:'Get'
+    //     });
+
+    //     const result = await res.json();
+    //     console.log(result);
+        
+        
+    // }
+
+    // useEffect(() => {
+    //     newList()
+    // })
+
     return (
         <HomeLayout>
 
-            <div className=' pt-20 text-white bg-[rgb(255,255,255)] flex flex-col px-14 gap-16   min-h-[90vh]'>
+            <div className=' pt-10 text-white bg-[rgb(255,255,255)] flex flex-col px-14 gap-12    min-h-[90vh]'>
 
                 <div className='  flex '>
 
-                    <div className='rounded-lg w-full bg-blue-200 h-[28rem] lg:w-[57%] space-y-6 flex flex-col justify-center items-start px-10 '>
+                    <div className='rounded-lg  w-[60%]    bg-blue-100 h-[26rem] lg:w-[57%] space-y-6 flex flex-col justify-between pt-20 items-start px-10 '>
 
                         <h1 className=' text-2xl  lg:text-5xl text-black font-semibold '>
                             Find out best
@@ -37,7 +54,7 @@ function HomePage() {
                                 Online Course
                             </span>
                         </h1>
-                        <p className='  text-xl text-black '>
+                        <p className='  text-lg font-semibold text-black '>
                             We have large library of courses taught by highly skilled and qualified faculties at affordable cost
                         </p>
                         <div className=' space-x-6'>
@@ -55,12 +72,12 @@ function HomePage() {
                         </div>
                     </div>
 
-                    <div className='  w-[40%] flex h-[28rem] items-center  flex-col justify-center relative '>
+                    <div className='   w-[40%] ms-3 flex h-[28rem] items-center  flex-col justify-center relative '>
                         <div className=' flex'>
                             <img alt="" className='  absolute left-20  top-9  w-48 h-40 rounded-3xl' src={hero8} />
                             <img alt="" className=' bg-blue-100 absolute right-5 -top-2  w-48 h-48 rounded-3xl' src={hero9} />
                         </div>
-                        <img alt="" className='  absolute right-9 bottom-0 mt-3 w-72 h-60 rounded-3xl' src={hero5} />
+                        <img alt="" className='  absolute right-9 bottom-8 mt-3 w-64 h-52 rounded-3xl' src={hero5} />
                     </div>
 
                 </div>

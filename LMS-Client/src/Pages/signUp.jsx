@@ -10,8 +10,6 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { FcAlarmClock } from "react-icons/fc";
 
 function SignUp() {
-
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [previewImg, setPreviewImg] = useState('')
@@ -113,13 +111,14 @@ function SignUp() {
 
             <div className=' w-full h-[90vh] flex  bg-[#F2F2FD] justify-center items-center'>
                 <div className=' w-full grid grid-cols-2 px-20'>
-                    <form action="" onSubmit={createAccount} encType='multipart/form-data' noValidate className='shadow-[0_0_2px_black] bg-white w-96 flex flex-col gap-2 items-start mx-auto'>
-                        <h1 className=' text-center px-10 capitalize font-semibold text-xl my-2 text-blue-400'>Begin your journy with us!</h1>
+                    <form action="" onSubmit={createAccount} encType='multipart/form-data' noValidate className='shadow-[0_0_7px_gray
+                    ] bg-white w-96 flex flex-col gap-2 items-start mx-auto'>
+                        <h1 className=' text-center px-10 capitalize font-bold text-xl my-2 text-blue-500'>Begin your journy with us!</h1>
 
                         <div className=' flex justify-center items-center w-full flex-col px-10'>
                             <label htmlFor="Avatar" className=' cursor-pointer'>
                                 {previewImg ? (<img src={previewImg} alt="" className='w-20 h-20 border-2 border-gray-300  m-auto rounded-full' />) : (<BsPersonCircle
-                                    className=' w-16 h-16 rounded-full m-auto'
+                                    className=' w-16 h-16 text-blue-300 rounded-full m-auto'
                                 />)}
                                 <p className=' text-black bg-[#F3F4F6] px-2 mt-2'>Upload Avatar</p>
                             </label>
@@ -148,12 +147,12 @@ function SignUp() {
                         </div>
 
                         <div className=' px-10 my-3 w-full flex justify-center items-center mt-2 mb-0'>
-                            <button type='submit' className=' bg-blue-400 w-full font-semibold text-xl py-1 rounded text-black hover:bg-blue-300'>Create Account</button>
+                            <button type='submit' className=' bg-blue-500 w-full font-semibold text-xl py-1 rounded text-black hover:bg-blue-900'>Create Account</button>
                         </div>
 
 
                         <div className='mb-3 text-center mx-auto'>
-                            <p className='text-lg text-black text-center'>Already have an acc? <span onClick={() => navigate('/login')} className=' text-blue-500 font-semibold' >login</span></p>
+                            <p className='text-lg text-black text-center'>Already have an acc? <span onClick={() => navigate('/login')} className=' text-blue-500 font-bold' >login</span></p>
                         </div>
 
 
@@ -162,17 +161,17 @@ function SignUp() {
                     <div className=' w-3/4 flex flex-col items-start justify-center gap-10 '>
                         <h1 className=' text-3xl font-semibold text-black'>come join us</h1>
                         <div className=' w-full flex flex-col justify-center items-start gap-5'>
-                        <div className=' text-black text-xl gap-7 flex justify-between items-center'>
-                            <i className="ri-search-2-fill text-blue-400 text-4xl"></i>
-                            <p>Explore articles, tutorials, and guides on diverse subjects</p>
-                        </div>
-                        <div className='  text-black text-xl gap-7 flex justify-between items-center'>
-                            <FcAlarmClock className=' text-6xl' />
-                            <p className=' ms-1'>Learn at your own pace and access educational resources anytime</p>
-                        </div>
-                        <div className='  text-black text-xl gap-7 flex justify-between items-center'>
-                            <i className='ri-global-line text-4xl text-red-500'></i>                        <p>Engage with a community of learners and share insights</p>
-                        </div>
+                            <div className=' text-black text-xl gap-7 flex justify-between items-center'>
+                                <i className="ri-search-2-fill text-blue-400 text-4xl"></i>
+                                <p>Explore articles, tutorials, and guides on diverse subjects</p>
+                            </div>
+                            <div className='  text-black text-xl gap-7 flex justify-between items-center'>
+                                <FcAlarmClock className=' text-6xl' />
+                                <p className=' ms-1'>Learn at your own pace and access educational resources anytime</p>
+                            </div>
+                            <div className='  text-black text-xl gap-7 flex justify-between items-center'>
+                                <i className='ri-global-line text-4xl text-red-500'></i>                        <p>Engage with a community of learners and share insights</p>
+                            </div>
                         </div>
                     </div>
 

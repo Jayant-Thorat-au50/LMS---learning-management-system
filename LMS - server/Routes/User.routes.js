@@ -12,6 +12,9 @@ const {
   getAllUserData,
   deleteUser,
   filterUsers,
+  becomeAdmin,
+  requestList,
+  aprooveAdmin,
 } = require("../Controller/user.controller.js");
 const {isLoggedIn} = require("../middlewares/auth.middleware.js");
 const { upload } = require("../middlewares/multer.middleware.js");
@@ -40,5 +43,11 @@ UserRoutes.put("/user-update/:userId",isLoggedIn, upload.single("avatar"), userU
 UserRoutes.delete("/remove-user/:userId",isLoggedIn, deleteUser);
 
 UserRoutes.post("/filter-users",isLoggedIn, filterUsers);
+
+UserRoutes.get("/become-admin/:userId",isLoggedIn, becomeAdmin);
+
+UserRoutes.get("/requestList",isLoggedIn, requestList);
+
+UserRoutes.post("/aprooveAdmin",isLoggedIn, aprooveAdmin);
 
 module.exports = UserRoutes;

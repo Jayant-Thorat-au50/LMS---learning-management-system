@@ -10,6 +10,7 @@ const initialState = {
   isLoggedIn: localStorage.getItem("isLoggedIn") || false,
   role: localStorage.getItem("role") || " ",
   data: JSON.parse(localStorage.getItem("data")) || {},
+  SAdminReqList: []
 };
 
 // register a user in the user collection
@@ -95,75 +96,124 @@ export const userUpdate = createAsyncThunk(
   }
 );
 
-export const forgetPassword = createAsyncThunk("user/forgetPassword", async (data) => {
+export const forgetPassword = createAsyncThunk(
+  "user/forgetPassword",
+  async (data) => {
+    console.log(data);
 
-  console.log(data);
-  
-  try {
-    const res = await axiosInstance.post('/user/forgotPassword/', data);
-    return res.data;
-  } catch (error) {
-    return toast.error(error?.response?.data?.message);
+    try {
+      const res = await axiosInstance.post("/user/forgotPassword/", data);
+      return res.data;
+    } catch (error) {
+      return toast.error(error?.response?.data?.message);
+    }
   }
-});
+);
 
 // getting the updated or not updated user data in the state
 export const getUserData = createAsyncThunk("user/me", async (userId) => {
   try {
     const res = await axiosInstance.get(`/user/me/${userId}`);
     return res.data;
-    
   } catch (error) {
     return toast.error(error?.response?.data?.message);
   }
 });
 
-export const resetPassword = createAsyncThunk('user/resetPassword', async (data) => {
-    
-  try {
+export const resetPassword = createAsyncThunk(
+  "user/resetPassword",
+  async (data) => {
+    try {
+      const response = await axiosInstance.post(
+        `/user/reset-password/${data[0]}`,
+        data[1]
+      );
 
-    const response = await axiosInstance.post(`/user/reset-password/${data[0]}`, data[1]);
-    
-    return response.data;
-    
+      return response.data;
+    } catch (error) {
+      return toast.error(error?.response?.data?.message);
+    }
+  }
+);
+
+export const changePassword = createAsyncThunk(
+  "user/changetPassword",
+  async (data) => {
+    try {
+      const response = await axiosInstance.post(
+        `/user/change-password/${data[0]}`,
+        data[1]
+      );
+
+      console.log(response.data);
+
+      return response.data;
+    } catch (error) {
+      return toast.error(error?.response?.data?.message);
+    }
+  }
+);
+
+export const deleteUser = createAsyncThunk(
+  "user/remove-user",
+  async (userId) => {
+    try {
+      const response = axiosInstance.delete(`/user/remove-user/${userId}`);
+
+      toast.promise(response, {
+        loading: "deleting the user",
+        success: (res) => {
+          return res?.data?.message;
+        },
+        error: "failed to delete the user",
+      });
+
+      return (await response).data;
+    } catch (error) {
+      return toast.error(error?.response?.data?.message);
+    }
+  }
+);
+
+export const becomeAdminNow = createAsyncThunk(
+  "/user/requestAdmin",
+  async (userId) => {
+
+try {
+  
+  const response = await axiosInstance.get(`/user/become-admin/${userId}`);
+
+  console.log(response.data);
+  
+  return response.data
+} catch (error) {
+  return toast.error(error.response.data.message)
+}
+
+  }
+);
+
+export const getRequestList = createAsyncThunk('/user/getRequestsList', async () => {
+
+  try {
+    const response = await axiosInstance.get(`/user/requestList`);
+
+     return response.data;
   } catch (error) {
-    return toast.error(error?.response?.data?.message)
+     return toast.error.response.data.message
   }
 })
 
-export const changePassword = createAsyncThunk('user/changetPassword', async (data) => {
- 
+export const authorizeAdmin = createAsyncThunk('/user/aprooveAdmin', async (Data) => {
+
   try {
-
-    const response = await axiosInstance.post(`/user/change-password/${data[0]}`, data[1])
-
-    console.log(response.data);
-    
+    const response = await axiosInstance.post('/user/aprooveAdmin', Data);
     return response.data
-    
   } catch (error) {
-    return toast.error(error?.response?.data?.message)
+    return toast.error(error.response.data.message)
   }
+
 })
-
-export const deleteUser = createAsyncThunk('user/remove-user', async (userId) => {
-  try {
-  const response = axiosInstance.delete(`/user/remove-user/${userId}`)
-    
-   toast.promise(response, {
-    loading:"deleting the user",
-    success:(res) => {
-      return res?.data?.message
-    },
-    error:"failed to delete the user"
-   })
-
-   return (await response).data
-  } catch (error) {
-    return toast.error(error?.response?.data?.message)
-  }
-           
-} )
 
 const AuthSlice = createSlice({
   name: "Auth",
@@ -206,8 +256,14 @@ const AuthSlice = createSlice({
           state.role = action?.payload?.User?.role;
           state.isLoggedIn = true;
         }
-      });
-  }
+      })
+      .addCase(getRequestList.fulfilled, (state, action) => {
+        if (action?.payload?.success) {
+          state.SAdminReqList = action?.payload?.requestingUsers
+        }
+      })
+    
+  },
 });
 
 export default AuthSlice.reducer;

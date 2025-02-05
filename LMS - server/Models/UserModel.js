@@ -53,6 +53,7 @@ const userSchema = new mongoose.Schema(
     forgetPasswordToken: { type: String },
     forgetPasswordExpiry: Date,
     authToken:{type:String},
+    requestForAdmin:{type:String}
   },
   {
     timestamps: true,

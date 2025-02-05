@@ -105,13 +105,13 @@ onload()
   return (
     <HomeLayout>
       {lectures?.length > 0 ? (
-      <div className=' flex flex-col gap-10 items-center justify-center min-h-[90vh] py-10 text-white'>
+      <div className=' flex flex-col gap-5 items-center justify-center min-h-[100vh] bg-[#F3F4F6] w-full py-5 text-white'>
         <div className=' text-center font-semibold text-2xl text-yellow-500'>
-          Course name : <span className=' text-white capitalize'>{state.title}</span>
+          Course name : <span className=' text-black capitalize'>{state.title}</span>
         </div>
-        <div className=' flex justify-center items-start gap-5 w-full'>
+        <div className='w-full flex justify-center items-start gap-5 h-[85vh]'>
           {/* left section for playing videos */}
-          <div className=' space-y-5 w-[50rem] rounded-lg shadow-[0_0_10px_black]'>
+          <div className=' space-y-5 w-[55rem] rounded-lg shadow-[0_0_10px_black]'>
             <video
               src={lectures && lectures[currentVideo]?.lectureSrc?.secure_url}
               controls
@@ -136,35 +136,37 @@ onload()
           </div>
 
           {/* right section of the page for displaying list of the lectures*/}
-          <ul className=' w-[30rem] shadow-[0_0_10px_black] px-2 gap-3 flex flex-col items-center'>
-            <li className=' flex w-full justify-center items-center'>
+          <ul className=' w-[25rem] overflow-y-scroll h-full shadow-[0_0_10px_black] px-2 gap-3 flex flex-col items-center'>
+            <li className=' flex w-full mt-2  items-center'>
               {role === "ADMIN" ? (
-                <div className=' flex justify-between  w-full relative'>
-                  <p className=' text-2xl'>Lectures list</p>
+                <div className=' flex justify-between ps-4 w-full relative'>
+                  <p className=' text-2xl text-black'>Lectures list</p>
                   <button
                     onClick={() => navigate("/course/add-lecture", { state: { ...state } })}
-                    className=' flex items-center gap-5 text-xl text-white hover:text-gray-300  transition-all ease-in-out duration-200 font-bold bg-purple-700 px-2
-                           rounded-lg'> <FaPlus /> <p> Add new lecture</p></button>
+                    className=' flex items-center gap-2 px-2 text-xl text-white hover:text-gray-300  transition-all ease-in-out duration-200 font-bold bg-purple-700 
+                           rounded-lg'> <FaPlus /> <p> Add</p></button>
                 </ div>
               ) : null}
+              
             </li>
+            <li className=' flex justify-center items-center flex-col w-full'>
             {
               lectures && lectures.map((lecture, idx) => {
                 return (
-                  <li
+                  <div
                     onClick={() =>{ setCurrentVideo(idx)
                        setCurrentlyPlaying(lecture._id)}}
-                    title={lecture.title}
+                    // title={lecture.title}
                     key={lecture._id}
-                    className=' flex  items-center justify-start w-full  '
+                    className=' flex h-24 border-b-2 border-black items-center justify-start w-full  '
                   >
-                   <div className=' w-[15%] flex justify-center items-center'>
-                   {currentlyPlaying == lecture._id ? (<FaPlay className=''/>):null}
+                   <div className=' w-[12%] flex justify-center items-center'>
+                   {currentlyPlaying == lecture._id ? (<FaPlay className=' text-blue-300 text-2xl'/>):null}
                    </div>
-                    <div className=' flex flex-col gap-2 w-[80%]'>
-                    <p className=' text-xl '>
-                      <span className=' text-2xl text-yellow-500'>
-                        lecture no.{idx + 1} : {" "}
+                    <div className=' flex flex-col  gap-2 w-[88%]'>
+                    <p className={role === 'ADMIN'? ( ' text-xl text-black font-semibold line-clamp-1 '):(' text-xl text-black font-semibold line-clamp-2')}>
+                      <span className=' text-2xl text-black'>
+                        {idx + 1} : {" "}
                       </span>
                       {lecture?.title}
                     </p>
@@ -173,24 +175,24 @@ onload()
 
                       <button
                       onClick={() => dispatch(deleteLecture([state._id,lecture._id])) }
-                      className=' text-xl text-black hover:text-black transition-all ease-in-out duration-200 font-bold bg-red-700 px-2
-                           rounded-lg'>
+                      className=' text-xl text-black hover:text-black transition-all ease-in-out duration-200 font-bol px-2
+                           rounded-lg  bg-red-500'>
                         Delete lecture
                       </button>
                       <button
                       onClick={() => editLectureModal(lecture) }
-                      className=' text-xl text-black hover:text-black transition-all ease-in-out duration-200 font-bold bg-yellow-500 px-2
-                      rounded-lg'>
+                      className=' text-xl text-black hover:text-black transition-all ease-in-out duration-200   px-2
+                      rounded-lg bg-blue-300'>
                         Edit lecture
                       </button>
                              </div>
                     )}
-                     <hr className=' text-white border-white w-full' />
                     </div>
-                  </li>
+                  </div>
                 )
               })
             }
+            </li>
 
 
           </ul>

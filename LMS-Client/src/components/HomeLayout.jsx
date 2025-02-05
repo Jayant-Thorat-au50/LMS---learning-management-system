@@ -10,11 +10,13 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import Footer from "./Footer";
 import logo from '../assets/download-removebg-preview (1).png'
 import { CiSearch } from "react-icons/ci";
+import { BsDatabaseFillCheck } from "react-icons/bs";
 
 // thunck imports
 import { logout } from "../../Redux/Slices/Authslice";
 import { getcoursesList } from "../../Redux/Slices/courseSlice";
 
+// images imports
 function HomeLayout({ children }) {
 
   const dispatch = useDispatch()
@@ -46,6 +48,7 @@ function HomeLayout({ children }) {
     setList(prev => prev.slice(0, 3))
   }
 
+  const catagoryData = [{catagory:'web development',thumb:'' }]
 
   const changeWidth = () => {
     const drawerside = document.getElementsByClassName("drawer-side");
@@ -167,6 +170,7 @@ function HomeLayout({ children }) {
                     {catagoryList.map(c => <div onMouseEnter={() =>{ coursesBycatagory(c)
                        setViewAllVal(c)}} key={c} className=" hover:bg-gray-300 transition-all ease-in-out duration-200 flex justify-center items-center  border-2 border-t-0 ">
                       <p className=" underline capitalize font-semibold text-black">{c}</p>
+                      <img src={webDev} alt="" className=" h-24 w-24" />
                     </div>)}
                   </div>
                   <div className=" h-full w-[73%] relative ">

@@ -2,6 +2,7 @@
 // model imports
 const UserModel = require("../Models/UserModel.js");
 const CourseModel = require('../Models/CouresModel.js')
+const RequestModel = require('../Models/RequestsModel.js')
 
 // lib (pacakge) imports
 const emailValidate = require("email-validator");
@@ -97,7 +98,6 @@ const signUp = async (req, res, next) => {
       }
     }
 
-    // hiding the password
     
     // saving the userobj
     await User.save();
@@ -492,6 +492,81 @@ const filterUsers = async (req, res, next) => {
     }
 }
 
+const becomeAdmin = async (req,res,next) => {
+
+  const {userId} = req.params;
+
+  try {
+    const user = await UserModel.findById(userId);
+
+    if(!user){
+      return new AppError('user does not exists')
+    }
+
+    user.requestForAdmin = 'Pending'
+    await user.save()
+  
+
+    return res.status(200).json({
+      success:true,
+      message:"Requested successfully",
+      user
+    })
+
+  } catch (error) {
+    console.log(error);
+    
+    return next(new AppError(error.message, 400))
+  }
+}
+
+const requestList = async (req,res,next) => {
+
+  try {
+    const requestingUsers = await UserModel.find({requestForAdmin:'Pending'})
+
+    if(!requestingUsers){
+      return next(new AppError('failed to get the list', 500))
+    }
+    console.log(requestingUsers);
+    
+
+   return res.status(200).json({
+       success:true,
+       message:'list fetched successfully',
+       requestingUsers
+    })
+  } catch (error) {
+    return next(new AppError(error.message, 400))
+  }
+}
+
+const aprooveAdmin = async (req,res,next) => {
+
+  const {_id} = req.body;
+  console.log(req.body);
+  
+  
+  try {
+     const user = await UserModel.findById(_id)
+
+     if(!user || user.requestForAdmin != 'Pending'){
+      return next(new AppError('authorization failed please try again', 500)) 
+     }
+
+     user.role = "ADMIN"
+     user.requestForAdmin = ' '
+     await user.save();
+
+     return res.status(200).json({
+      success:true,
+      message:"congrats you are admin now"
+     })
+
+  } catch (error) {
+    return next(new AppError(error.message, 400))
+  }
+}
 module.exports = {
   signUp,
   login,
@@ -503,5 +578,8 @@ module.exports = {
   userUpdate,
   getAllUserData,
   deleteUser,
-  filterUsers
+  filterUsers,
+  becomeAdmin,
+  requestList,
+  aprooveAdmin
 };
