@@ -37,7 +37,7 @@ function SuperAdmin() {
     let { data } = useSelector(state => state?.authstate)
     let { SAdminReqList } = useSelector(state => state?.authstate)
 
-      SAdminReqList = SAdminReqList.filter(reqUser => reqUser.role != "SUPER ADMIN")
+    SAdminReqList = SAdminReqList.filter(reqUser => reqUser.role != "SUPER ADMIN")
 
 
 
@@ -95,14 +95,14 @@ function SuperAdmin() {
     }
 
     const onAuthorizeAdmin = async (reqUser) => {
-         console.log('clicked');
-         
+        console.log('clicked');
+
         const response = await dispatch(authorizeAdmin(reqUser))
-        if(response.payload.success){
+        if (response.payload.success) {
             toast.success('request accepted successfully')
         }
     }
-    
+
 
     useEffect(() => {
         loadInfo();
@@ -126,28 +126,31 @@ function SuperAdmin() {
 
                 {/* list of users */}
                 {/* <UserList openModal={openEditCourseModal} deletecourse={onCourseDelete} /> */}
-             
+
                 <div
                     tabIndex={0}
                     className="bg-gray-300 w-full  focus:bg-gray-200 focus:text-secondary-content collapse">
-                    <div className="collapse-title"><p className=' text-black text-xl font-semibold'>Requests to become admin</p></div>
+                    <div className="collapse-title flex justify-between items-center">
+                        <p className=' text-black text-xl font-semibold'>Requests to become admin</p>
+                        <p className=' text-white bg-green-500 p-2 h-12 w-12 text-xl text-center font-bold rounded-full'>{SAdminReqList.length}</p>
+                        </div>
                     <div className="collapse-content">
-                       <ul className=' w-full'>
-                        {SAdminReqList && SAdminReqList.map(reqUser => <li>
-                            <div className=' border-b-2 my-4 border-gray-400 w-full flex justify-between items-center px-5 '>
-                       <div className=' flex justify-center items-center gap-4'>
-                       <img src={reqUser.avatar.secureUrl} alt="" className=' h-16 w-16 rounded-lg' />
-                       <h3 className=' text-lg capitalize'>{reqUser.fullName}</h3>
-                       </div>
-                       <div className=' space-x-5'>
-                       <span
-                       onClick={() => onAuthorizeAdmin(reqUser)}
-                       className='px-2 py-1 font-semibold text-black bg-green-500 rounded-md transition-all ease-in-out duration-200 hover:bg-green-700'>Aproove</span>
-                       <span className=' px-2 py-1 font-semibold text-black bg-red-600 rounded-md transition-all ease-in-out duration-200 hover:bg-red-700'>Reject</span>
-                       </div>
-                            </div>
-                        </li>)}
-                       </ul>
+                        <ul className=' w-full'>
+                            {SAdminReqList && SAdminReqList.map(reqUser => <li>
+                                <div className=' border-b-2 my-4 border-gray-400 w-full flex justify-between items-center px-5 '>
+                                    <div className=' flex justify-center items-center gap-4'>
+                                        <img src={reqUser.avatar.secureUrl} alt="" className=' h-16 w-16 rounded-lg' />
+                                        <h3 className=' text-lg capitalize'>{reqUser.fullName}</h3>
+                                    </div>
+                                    <div className=' space-x-5'>
+                                        <span
+                                            onClick={() => onAuthorizeAdmin(reqUser)}
+                                            className='px-2 py-1 font-semibold text-black bg-green-500 rounded-md transition-all ease-in-out duration-200 hover:bg-green-700'>Aproove</span>
+                                        <span className=' px-2 py-1 font-semibold text-black bg-red-600 rounded-md transition-all ease-in-out duration-200 hover:bg-red-700'>Reject</span>
+                                    </div>
+                                </div>
+                            </li>)}
+                        </ul>
                     </div>
                 </div>
 

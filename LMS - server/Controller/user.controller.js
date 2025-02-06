@@ -1,8 +1,7 @@
-
 // model imports
 const UserModel = require("../Models/UserModel.js");
-const CourseModel = require('../Models/CouresModel.js')
-const RequestModel = require('../Models/RequestsModel.js')
+const CourseModel = require("../Models/CouresModel.js");
+const RequestModel = require("../Models/RequestsModel.js");
 
 // lib (pacakge) imports
 const emailValidate = require("email-validator");
@@ -98,7 +97,6 @@ const signUp = async (req, res, next) => {
       }
     }
 
-    
     // saving the userobj
     await User.save();
 
@@ -135,8 +133,10 @@ const login = async (req, res, next) => {
     // validaing the user's existence in the db
     const user = await UserModel.findOne({ email }).select("+password");
 
-    if(!user){
-      return next(new AppError("cannot find a user registered with email entered",500))
+    if (!user) {
+      return next(
+        new AppError("cannot find a user registered with email entered", 500)
+      );
     }
 
     // validaing the password with the user
@@ -146,17 +146,17 @@ const login = async (req, res, next) => {
 
     // setting token created in the userSchema method
     const token = await user.JwtToken();
-    
+
     // setting cookies in the client side through the response
     res.cookie("Token", token, cookieOption);
 
     //saving authtoken in the db
-     
+
     //saving the user
     await user.save();
 
     // making the passowrd disappear when the user obj is sent to the client
-    user.password= undefined;
+    user.password = undefined;
 
     // sending the user data to the client
     res.status(200).json({
@@ -175,7 +175,6 @@ const getUser = async (req, res, next) => {
   const { userId } = req.params;
 
   console.log(req.user);
-  
 
   try {
     const User = await UserModel.findById(userId);
@@ -193,13 +192,12 @@ const getUser = async (req, res, next) => {
 // user logout
 const logout = async (req, res, next) => {
   try {
+    const { userId } = req.params;
 
-    const {userId} = req.params;
+    const user = await UserModel.findById(userId);
 
-    const user = await UserModel.findById(userId)
-
-    if(!user){
-       return res.status(200).json({
+    if (!user) {
+      return res.status(200).json({
         success: true,
         message: "User logged out successfully",
       });
@@ -213,11 +211,11 @@ const logout = async (req, res, next) => {
     });
 
     // disable the cookie in the db
-    user.authToken = undefined
+    user.authToken = undefined;
     await user.save();
 
     // sending the response message
-   return res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "User logged out successfully",
     });
@@ -240,7 +238,7 @@ const forgotPassword = async (req, res, next) => {
     const user = await UserModel.findOne({ email });
 
     if (!user) {
-     return next(new AppError("user with this email does not exist", 400));
+      return next(new AppError("user with this email does not exist", 400));
     }
 
     // generating reset password token inside the user obj as per the userSchema
@@ -267,16 +265,14 @@ const forgotPassword = async (req, res, next) => {
   } catch (error) {
     // if error occurs the token set to the user obj will be disabled
     const user = await UserModel.findOne({ email });
-    if(user){
-
+    if (user) {
       user.forgetPasswordToken = undefined;
       user.forgetPasswordExpiry = undefined;
       await user.save();
     }
     console.log(error);
-    
 
-   return next(new AppError(error.message, 400));
+    return next(new AppError(error.message, 400));
   }
 };
 
@@ -317,9 +313,9 @@ const resetPassword = async (req, res, next) => {
     user.forgetPasswordExpiry = undefined;
 
     // saving the user obj
-   await user.save();
+    await user.save();
 
-     return res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "password updated successfully",
     });
@@ -333,7 +329,6 @@ const changePassword = async (req, res, next) => {
   const { oldPassword, newPassword } = req.body;
 
   console.log(req.user);
-  
 
   // validating extracted fields
   if (!oldPassword || !newPassword) {
@@ -341,7 +336,7 @@ const changePassword = async (req, res, next) => {
   }
 
   // getting user id from jwt auth
-  const {userId} = req.params
+  const { userId } = req.params;
 
   try {
     const user = await UserModel.findById(userId).select("+password");
@@ -369,34 +364,31 @@ const userUpdate = async (req, res, next) => {
   const { fullName } = req.body;
   const { userId } = req.params;
 
- 
   const userTobeUpdated = await UserModel.findById(userId);
 
   if (!userTobeUpdated) {
     return next(new AppError("Invalid user plaese try again", 400));
   }
 
-// if the role is admin
-// let's update the courses created by him
+  // if the role is admin
+  // let's update the courses created by him
 
-  if(userTobeUpdated.role === "ADMIN"){
-
-        await CourseModel.updateMany(
-          {createdby:userTobeUpdated.fullName} ,
-          {$set:{createdby:fullName}, $inc:{points:1}}
-        )
-         userTobeUpdated.fullName = fullName;
-  }else{
-    userTobeUpdated.fullName = fullName
+  if (userTobeUpdated.role === "ADMIN") {
+    await CourseModel.updateMany(
+      { createdby: userTobeUpdated.fullName },
+      { $set: { createdby: fullName }, $inc: { points: 1 } }
+    );
+    userTobeUpdated.fullName = fullName;
+  } else {
+    userTobeUpdated.fullName = fullName;
   }
 
-
-// let's update the file profile stored in cloudinary
-// by deleting the previous one
+  // let's update the file profile stored in cloudinary
+  // by deleting the previous one
 
   if (req.file) {
     console.log(req.file);
-    
+
     try {
       await cloudinary.v2.uploader.destroy(userTobeUpdated.avatar.publicid);
 
@@ -434,11 +426,10 @@ const userUpdate = async (req, res, next) => {
 // getting the All user data
 const getAllUserData = async (req, res, next) => {
   try {
-
-  // fetching the entire users collection (array)
+    // fetching the entire users collection (array)
     const allUserCount = await UserModel.find({});
 
-  // filtering the user's array for subscribed users
+    // filtering the user's array for subscribed users
     const subscribedUsers = allUserCount.filter(
       (user) => user.subscription.status === "Active"
     );
@@ -455,118 +446,108 @@ const getAllUserData = async (req, res, next) => {
 };
 
 // delete the user by id
-const deleteUser = async (req,res, next) => {
-
-  const {userId} = req.params;
+const deleteUser = async (req, res, next) => {
+  const { userId } = req.params;
 
   try {
     const user = await UserModel.findByIdAndDelete(userId);
 
     return res.status(200).json({
-      success:true,
-      message:'user deleted successfully',
-      
-    })
+      success: true,
+      message: "user deleted successfully",
+    });
   } catch (error) {
-    return next(new AppError(error.message), 400)
+    return next(new AppError(error.message), 400);
   }
-}
+};
 
 //filter users by role abd subscription status
 const filterUsers = async (req, res, next) => {
-
   try {
     console.log(req.body);
-    
-    const users = await UserModel.find(req.body)
-    
+
+    const users = await UserModel.find(req.body);
+
     console.log(users);
-    
 
-     return res.status(200).json({
-          success:true,
-          users
-      })
-    } catch (error) {
-      next(new AppError(error.message, 400))
-    }
-}
+    return res.status(200).json({
+      success: true,
+      users,
+    });
+  } catch (error) {
+    next(new AppError(error.message, 400));
+  }
+};
 
-const becomeAdmin = async (req,res,next) => {
-
-  const {userId} = req.params;
+const becomeAdmin = async (req, res, next) => {
+  const { userId } = req.params;
 
   try {
     const user = await UserModel.findById(userId);
 
-    if(!user){
-      return new AppError('user does not exists')
+    if (!user) {
+      return new AppError("user does not exists");
     }
 
-    user.requestForAdmin = 'Pending'
-    await user.save()
-  
+    user.requestForAdmin = "Pending";
+    await user.save();
 
     return res.status(200).json({
-      success:true,
-      message:"Requested successfully",
-      user
-    })
-
+      success: true,
+      message: "Requested successfully",
+      user,
+    });
   } catch (error) {
     console.log(error);
-    
-    return next(new AppError(error.message, 400))
+
+    return next(new AppError(error.message, 400));
   }
-}
+};
 
-const requestList = async (req,res,next) => {
-
+const requestList = async (req, res, next) => {
   try {
-    const requestingUsers = await UserModel.find({requestForAdmin:'Pending'})
+    const requestingUsers = await UserModel.find({
+      requestForAdmin: "Pending",
+    });
 
-    if(!requestingUsers){
-      return next(new AppError('failed to get the list', 500))
+    if (!requestingUsers) {
+      return next(new AppError("failed to get the list", 500));
     }
     console.log(requestingUsers);
-    
 
-   return res.status(200).json({
-       success:true,
-       message:'list fetched successfully',
-       requestingUsers
-    })
+    return res.status(200).json({
+      success: true,
+      message: "list fetched successfully",
+      requestingUsers,
+    });
   } catch (error) {
-    return next(new AppError(error.message, 400))
+    return next(new AppError(error.message, 400));
   }
-}
+};
 
-const aprooveAdmin = async (req,res,next) => {
-
-  const {_id} = req.body;
+const aprooveAdmin = async (req, res, next) => {
+  const { _id } = req.body;
   console.log(req.body);
-  
-  
+
   try {
-     const user = await UserModel.findById(_id)
+    const user = await UserModel.findById(_id);
 
-     if(!user || user.requestForAdmin != 'Pending'){
-      return next(new AppError('authorization failed please try again', 500)) 
-     }
+    if (!user || user.requestForAdmin != "Pending") {
+      return next(new AppError("authorization failed please try again", 500));
+    }
 
-     user.role = "ADMIN"
-     user.requestForAdmin = ' '
-     await user.save();
+    user.role = "ADMIN";
+    user.requestForAdmin = " ";
+    await user.save();
 
-     return res.status(200).json({
-      success:true,
-      message:"congrats you are admin now"
-     })
-
+    return res.status(200).json({
+      success: true,
+      message: "congrats you are admin now",
+    });
   } catch (error) {
-    return next(new AppError(error.message, 400))
+    return next(new AppError(error.message, 400));
   }
-}
+};
 module.exports = {
   signUp,
   login,
@@ -581,5 +562,5 @@ module.exports = {
   filterUsers,
   becomeAdmin,
   requestList,
-  aprooveAdmin
+  aprooveAdmin,
 };

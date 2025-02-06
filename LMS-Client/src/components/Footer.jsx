@@ -2,30 +2,35 @@ import React from "react";
 // icon imports
 import { BsFacebook, BsInstagram, BsLinkedin, BsTwitter } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom'
 import { becomeAdminNow, getUserData } from "../../Redux/Slices/Authslice";
 
 function Footer() {
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const { data } = useSelector(state => state?.authstate);
   const { isLoggedIn } = useSelector(state => state?.authstate);
-  const { requestedAd } = useSelector(state => state?.authstate);
   const { role } = useSelector(state => state?.authstate);
 
 
-  
+
 
   const sendAdminRequest = async () => {
-     if(window.confirm('Once you become admin you can add your own courses')){
-      
-   const response = await dispatch(becomeAdminNow(data._id))
-         if(response.payload.success){
-         const res = await dispatch(getUserData(data._id));
-         console.log(res);
-         
-         }
-      
-     }
+    if (!isLoggedIn) {
+      navigate('/login')
+    }
+    if (window.confirm('Once you become admin you can add your own courses')) {
+
+      const response = await dispatch(becomeAdminNow(data._id))
+
+      if (response.payload.success) {
+        const res = await dispatch(getUserData(data._id));
+        console.log(res);
+
+      }
+
+    }
   }
 
   // getting the year by inbuild js method
@@ -38,20 +43,20 @@ function Footer() {
 
 
       <section className=" flex justify-between gap-5 items-center">
-        {(isLoggedIn && role === 'USER' && data.requestForAdmin === "Pending" )? (<div>
-          <p 
+        {(isLoggedIn && role === 'USER' && data.requestForAdmin === "Pending") ? (<div>
+          <p
             onClick={sendAdminRequest}
             className=" text-white text-lg">Already requested for admin</p>
-        </div>): (isLoggedIn && role === 'USER' && data.requestForAdmin === "Rejected" ) ? (<div>
-          <p 
+        </div>) : (isLoggedIn && role === 'USER' && data.requestForAdmin === "Rejected") ? (<div>
+          <p
             onClick={sendAdminRequest}
             className=" text-white text-lg">Request again for admin</p>
-        </div>): (!isLoggedIn || !role === 'ADMIN' )? (<div>
-          <p 
+        </div>) : (!isLoggedIn || !role === 'ADMIN') ? (<div>
+          <p
             onClick={sendAdminRequest}
             className=" text-white text-lg">Become a admin</p>
-        </div>):null}
-       
+        </div>) : null}
+
         <nav className=" flex gap-5 text-2xl items-center justify-center text-white">
           <a
             href=""

@@ -8,13 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { FiMenu } from "react-icons/fi";
 import { AiFillCloseCircle } from "react-icons/ai";
 import Footer from "./Footer";
-import logo from '../assets/download-removebg-preview (1).png'
-import { CiSearch } from "react-icons/ci";
-import { BsDatabaseFillCheck } from "react-icons/bs";
+
 
 // thunck imports
 import { logout } from "../../Redux/Slices/Authslice";
 import { getcoursesList } from "../../Redux/Slices/courseSlice";
+import Header from "./Header.jsx";
 
 // images imports
 function HomeLayout({ children }) {
@@ -24,22 +23,14 @@ function HomeLayout({ children }) {
 
   const isLoggedIn = useSelector((state) => state?.authstate?.isLoggedIn);
   const role = useSelector((state) => state?.authstate?.role);
-  const { data } = useSelector((state) => state?.authstate);
   let { coursesList } = useSelector((state) => state?.courseState);
 
   const catagoryList = [...new Set(coursesList.map(c => c.catagory))]
-  const [showMenuOptions, setShowMenuOptions] = useState(false)
   const [showCourseCatagoryList, setShowCourseCatagoryList] = useState(false)
   let [list, setList] = useState(coursesList.map(c => c.catagory == catagoryList[0]))
 
 
-  const handleLogout = async () => {
-    const response = await dispatch(logout(data._id));
-    if (response?.payload?.success) {
-      setShowMenuOptions(false)
-      navigate('/')
-    }
-  };
+
 
   const [viewAllval, setViewAllVal] = useState("")
 
@@ -48,7 +39,7 @@ function HomeLayout({ children }) {
     setList(prev => prev.slice(0, 3))
   }
 
-  const catagoryData = [{catagory:'web development',thumb:'' }]
+  
 
   const changeWidth = () => {
     const drawerside = document.getElementsByClassName("drawer-side");
@@ -71,7 +62,7 @@ function HomeLayout({ children }) {
     getCourses()
   }, [])
   return (
-    <div className=" min-h-[90vh] bg-gray-200  ">
+    <div className=" min-h-[90vh]  bg-gradient-to-b from-blue-200 via-cyan-100 to-slate-50  ">
       <div className="absolute left-0 z-50 w-fit">
         <input type="checkbox" className="drawer-toggle" id="my-drawer" />
         <div className="drawer-content">
@@ -147,113 +138,7 @@ function HomeLayout({ children }) {
       </div>
 
 
-      <header className=" z-50 sticky  shadow-[0_0_5px_gray] bg-white h-[11.5vh] w-full hidden lg:block ">
-        <nav className=" flex  h-full w-full justify-center items-center">
-          <div className="  h-full px-16 flex w-full justify-between items-center text-2xl text-white">
-            <ul className=" flex justify-center  h-full items-center gap-7 relative ">
-              <li
-                onClick={() => navigate('/')}
-                className=" h-14 w-20  flex items-center rounded-md">
-                <img src={logo} alt="" />
-              </li>
-              <li
-                onMouseEnter={() => setShowCourseCatagoryList(true)}
-                onMouseLeave={() => setShowCourseCatagoryList(false)}
-                className=" border-2  border-gray-400 rounded w-48  text-lg py-0.5 bg-white shadow-xl">
-                <select name="" id="" className=" border-1 rounded text-center h-full  w-full bg-white text-black font-semibold">
-                  <option onClick={() => navigate('/courses')} value="" className=" tracking-wide text-xl"> Courses</option>
-                </select>
-
-                {/* absolute component of the catagory wise course list in the header */}
-                {showCourseCatagoryList ? (<div className=" absolute w-[940px] h-[22rem] top-12 left-[6.9rem]  shadow-[0_0_5px_gray] my-1 rounded flex bg-white">
-                  <div className={`w-[27%] border-black h-full grid-rows-${catagoryList.length} grid`}>
-                    {catagoryList.map(c => <div onMouseEnter={() =>{ coursesBycatagory(c)
-                       setViewAllVal(c)}} key={c} className=" hover:bg-gray-300 transition-all ease-in-out duration-200 flex justify-center items-center  border-2 border-t-0 ">
-                      <p className=" underline capitalize font-semibold text-black">{c}</p>
-                      <img src={webDev} alt="" className=" h-24 w-24" />
-                    </div>)}
-                  </div>
-                  <div className=" h-full w-[73%] relative ">
-                    <div className="w-[90%] grid grid-cols-2 pt-10">
-
-                      {
-                        list.map(course =>
-                          <div
-                            onClick={() => navigate('/course/description', { state: { ...course } })}
-                            key={course._id} className=" text-black h-16 flex items-center justify-start gap-4 font-semibold   m-4  border border-gray-200 bg-[#F3F4F6] rounded">
-                            <img src={course?.thumbnail?.secure_Url} className=" w-16 h-16  rounded" alt="" />
-                            <p className="capitalize">{course.title}</p>
-                          </div>)
-                      }
-
-                    </div>
-                    <div className=" absolute bottom-16 right-24">
-                      <button
-                        onClick={() => navigate(`/course/${viewAllval}`)}
-                        className=" text-black font-semibold bg-[#cfcfd7] py-2 rounded-md px-3 text-lg">View All &gt;&gt;</button>
-                    </div>
-                  </div>
-                </div>) : null}
-              </li>
-              <li onClick={() => navigate('about')}>
-                <p className=" text-black text-lg font-semibold">About Us</p>
-              </li>
-            </ul>
-
-
-            <ul className=" flex h-full items-center  text-black ">
-              <li className=" bg-gray-100 rounded-md relative text-end border   overflow-hidden w-64">
-                <CiSearch className=" absolute left-2 text-3xl top-1  text-gray-500" />
-                <input type="text" className=" focus:outline-none text-lg py-1 w-[80%] bg-gray-100" placeholder="Enter course name..." />
-              </li>
-              <li className=" relative">
-                {isLoggedIn ? (
-                  <div
-                    onMouseEnter={() => setShowMenuOptions(!showMenuOptions)}
-                    onMouseLeave={() => setShowMenuOptions(false)}
-                    className="  w-24 flex justify-end"
-                  >
-
-                    <img
-                      onClick={() => setShowMenuOptions(!showMenuOptions)}
-                      src={data.avatar.secureUrl} alt="" className=" h-11 w-11 hover:border-black hover:border-2 rounded-full" />
-                    {showMenuOptions ? (<div className=" absolute top-12 w-48 bg-white shadow-[0_0_10px_gray]  justify-center  rounded-md right-0 flex flex-col items-start text-gray-500 text-[17px]">
-                      <li className="py-2 bg-gray-200 rounded-md text-center w-full capitalize text-blue-500 font-semibold flex justify-center gap-2">
-                        <p className=" text-red-400">hey,</p> {data.fullName}</li>
-                      <div className=" flex flex-col px-3 border w-full py-2">
-                        <li
-                          onClick={() => navigate('/user/profile')}
-                          className=" hover:text-xl transition-all ease-linear hover:text-black duration-200 font-semibold">my profile</li>
-                        {role === "ADMIN" ? (
-                          <li onClick={() => navigate('/admin/dashboard')} className="font-semibold" >Admin Dashboard</li>
-                        ) : null}
-                        {role === "SUPER ADMIN" ? (
-                          <li onClick={() => navigate('/super-admin/dashboard')} className="hover:text-xl transition-all ease-linear  hover:text-black  duration-200 font-semibold">Super Admin Panel</li>
-                        ) : null}
-                        <li className=" hover:text-xl transition-all ease-linear  hover:text-black  duration-200 font-semibold">subscription info</li>
-                        <li
-                          onClick={() => navigate('/contact-us')}
-                          className=" hover:text-xl transition-all ease-linear  hover:text-black  duration-200 font-semibold">support</li>
-                        <li
-                          onClick={handleLogout}
-                          className=" hover:text-xl transition-all ease-linear  hover:text-black  duration-200 font-semibold">logout</li>
-                      </div>
-                    </div>) : null}
-                  </div>
-                ) : (
-
-                  <div className=" ms-3 border-2 border-green-300 bg-gray-100 font-bold hover:bg-gray-300 rounded-md px-2 py-1">
-                    <p onClick={() => navigate('/login')} className="  text-green-400 text-lg ">Login / register</p>
-                  </div>
-                )}
-
-
-
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </header>
+   <Header/>
 
       {children}
 

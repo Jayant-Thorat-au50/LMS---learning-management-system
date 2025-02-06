@@ -11,7 +11,7 @@ function Carousel({ id, thumb, name, Toatalslides, description }) {
                 <h2 className=' text-2xl font-semibold capitalize'>{name}</h2>
                 <div className=' absolute flex justify-between -translate-y-1/2 transform top-1/2 left-0 right-0'>
                     <a href={Number(id) == 1 ? `#slide${Toatalslides}` : `#slide${Number(id) - 1}`} className='btn btn-circle'>❮</a>
-                    <a href={id == Toatalslides ? `#slide${1}` : `#slide${Number(id) + 1}`} className='btn btn-circle'>❯</a>
+                    <a type='button' href={id == Toatalslides ? `#slide${1}` : `#slide${Number(id) + 1}`} className='btn btn-circle'>❯</a>
                 </div>
             </div>
         </div>

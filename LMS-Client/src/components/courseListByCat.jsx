@@ -13,8 +13,8 @@ function CourseListByCat({ catagory }) {
     return (
         <div className=' flex flex-col items-start  justify-start w-full flex-wrap border-black'>
 
-            <div className=' flex justify-between w-full border p-2 bg-blue-100 rounded-md '>
-                <h1 className=' text-3xl ms-7 text-black font-bold'>{catagory}</h1>
+            <div className=' flex justify-between w-full border p-2 bg-gray-100 rounded-md '>
+                <h1 className=' text-3xl ms-7 capitalize text-black font-bold'>{catagory}</h1>
                 {role === "ADMIN" ? (
                     <div className=' flex gap-1'>
                         <button className=' rounded-md text-gray-400  font-bold px-1 py-1 bg-white'>View all &gt;&gt;</button>
@@ -30,7 +30,7 @@ function CourseListByCat({ catagory }) {
             </div>
 
 
-            <div className=' flex  flex-wrap justify-between  '>
+            <div className=' flex  flex-wrap justify-center gap-12  '>
                 {
                     list.map(course => {
                         if (course.catagory === catagory) {
