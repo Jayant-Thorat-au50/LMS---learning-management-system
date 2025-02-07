@@ -539,10 +539,34 @@ const aprooveAdmin = async (req, res, next) => {
     user.role = "ADMIN";
     user.requestForAdmin = " ";
     await user.save();
+    sendEmail(user.email, 'Admin request aprooval', 'congrats you are a admin now, you can add your own courses')
 
     return res.status(200).json({
       success: true,
       message: "congrats you are admin now",
+    });
+  } catch (error) {
+    return next(new AppError(error.message, 400));
+  }
+};
+const rejectAdminReq = async (req, res, next) => {
+  const { _id } = req.body;
+  console.log(req.body);
+
+  try {
+    const user = await UserModel.findById(_id);
+
+    if (!user || user.requestForAdmin != "Pending") {
+      return next(new AppError("authorization failed please try again", 500));
+    }
+
+    user.requestForAdmin = "Rejected";
+    await user.save();
+    sendEmail(user.email, 'Admin request rejected', ' your admin req has been rejected, you can still send a requset again')
+
+    return res.status(200).json({
+      success: true,
+      message: "admin requset rejected",
     });
   } catch (error) {
     return next(new AppError(error.message, 400));
@@ -563,4 +587,5 @@ module.exports = {
   becomeAdmin,
   requestList,
   aprooveAdmin,
+  rejectAdminReq
 };

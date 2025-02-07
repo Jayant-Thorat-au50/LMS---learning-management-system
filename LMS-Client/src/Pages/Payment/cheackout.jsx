@@ -77,9 +77,9 @@ function Cheackout() {
                     <h1 className=' w-full text-center bg-yellow-500 text-white text-2xl font-bold py-4 absolute top-0 rounded-tl-lg rounded-tr-lg'>Subscription bundle</h1>
 
                     <div className='  text-start px-4 mt-2 w-full'>
-                        <p className='text-[17px] w-full flex flex-col justify-center items-center'>
+                        <p className='text-[17px] w-full flex flex-col justify-center items-center text-black'>
                             With this purchase, you will get access to all of our platform's courses for a full year. {" "} <br />
-                            <span className='  mt-5 text-yellow-500 text-2xl font-bold w-full text-center'>A period of one year.</span>
+                            <span className='  mt-5 text-black text-2xl font-bold w-full text-center'>A period of one year.</span>
                             <br />
                             All of the courses, both new and old, will be accessible.
                         </p>
@@ -88,7 +88,7 @@ function Cheackout() {
                             <BiRupee className=' text-2xl' /> <span>Price : 499 </span> &nbsp;only
                         </p>
 
-                        <div className=' flex flex-col items-center justify-center w-full text-gray-200'>
+                        <div className=' text-gray-500 flex flex-col items-center justify-center w-full '>
                             <p>100% refund on cancellation</p>
                             <p>*Terms and conditions apply*</p>
                         </div>

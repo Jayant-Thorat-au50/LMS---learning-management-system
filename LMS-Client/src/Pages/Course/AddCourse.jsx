@@ -64,7 +64,7 @@ function AddCourse() {
             toast.error("All fields are mandatoryk");
             return
         }
-        setShowSpinner(!showSpinner)
+        
         const formData = new FormData();
 
         formData.append('title', adminInput.title)
@@ -77,6 +77,7 @@ function AddCourse() {
         const response = await dispatch(addCourse(formData))
 
         if (response?.payload?.success) {
+            setShowSpinner(!showSpinner)
             setAdminInput({
                 title: "",
                 catagory: "",

@@ -63,14 +63,14 @@ function ForgetPassword() {
     return (
         <HomeLayout>
 
-            <div className=' w-full h-screen flex justify-center items-center'>
+            <div className=' w-full h-[90vh] flex justify-center items-center'>
 
-                <form action="" onSubmit={sendLink} encType='multipart/form-data' noValidate className='shadow-[0_0_10px_black] w-96 flex  flex-col gap-2 items-center'>
-                    <h1 className=' text-center capitalize font-bold text-3xl my-2 text-yellow-400'>reset password</h1>
+                <form action="" onSubmit={sendLink} encType='multipart/form-data' noValidate className='shadow-[0_0_10px_black] bg-white w-96 flex  flex-col gap-2 items-center py-5'>
+                    <h1 className=' text-center capitalize font-bold text-3xl my-2  text-black'>reset password</h1>
 
                     <div className=' flex flex-col items-start w-full px-10 space-y-2'>
-                        <label htmlFor="email" className=' font-semibold text-white text-xl'>Email</label>
-                        <input type="email" id='email' placeholder="Enter your email...." onChange={handleUserInput} value={userInput.email} className=' text-white px-5 py-1 bg-transparent border w-full' required name='email' />
+                        <label htmlFor="email" className=' font-semibold text-black text-xl '>Email</label>
+                        <input type="email" id='email' placeholder="Enter your email...." onChange={handleUserInput} value={userInput.email} className=' text-black px-5 py-1 bg-transparent border-2 w-full border-gray-400 rounded-md' required name='email' />
                     </div>
                     <p className='px-10 text-red-500'>please enter the email registered with your account</p>
 

@@ -17,14 +17,18 @@ function CourseListByCat({ catagory }) {
                 <h1 className=' text-3xl ms-7 capitalize text-black font-bold'>{catagory}</h1>
                 {role === "ADMIN" ? (
                     <div className=' flex gap-1'>
-                        <button className=' rounded-md text-gray-400  font-bold px-1 py-1 bg-white'>View all &gt;&gt;</button>
+                        <button
+                        onClick={() =>  navigate(`/course/${catagory}`)}
+                        className=' rounded-md text-gray-400  font-bold px-1 py-1 bg-white'>View all &gt;&gt;</button>
                         <button
                             onClick={() => navigate('courses/create')}
                             className=' text-black font-bold rounded-md bg-yellow-500 px-1 py-1'>Add Course</button>
                     </div>
                 ) : (
                     <div>
-                        <button className=' font-semibold text-lg text-black px-2 rounded-md py-1 hover:bg-gray-300 h-full '><p>View all &gt;&gt;</p></button>
+                        <button
+                         onClick={() =>  navigate(`/course/${catagory}`)}
+                        className=' font-semibold text-lg text-black px-2 rounded-md py-1 hover:bg-gray-300 h-full '><p>View all &gt;&gt;</p></button>
                     </div>
                 )}
             </div>

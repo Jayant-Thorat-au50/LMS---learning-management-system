@@ -50,8 +50,8 @@ function Footer() {
         </div>) : (isLoggedIn && role === 'USER' && data.requestForAdmin === "Rejected") ? (<div>
           <p
             onClick={sendAdminRequest}
-            className=" text-white text-lg">Request again for admin</p>
-        </div>) : (!isLoggedIn || !role === 'ADMIN') ? (<div>
+            className=" text-white text-lg">Request again for admin <p className=" text-blue-500">send agian</p></p>
+        </div>) : (!isLoggedIn || role === 'USER') ? (<div>
           <p
             onClick={sendAdminRequest}
             className=" text-white text-lg">Become a admin</p>

@@ -65,29 +65,31 @@ function CourseDescription() {
 
     return (
         <HomeLayout>
-            <div className=' w-full min-h-[90vh] flex justify-center items-center flex-col pt-12 px-28 text-white relative'>
+            <div className=' w-full min-h-[90vh] flex justify-center items-center flex-col px-28 text-white  relative'>
                 {role === "ADMIN" && courseObj.createdby == data.fullName ? (
-                    <div className=' w-fit z-50   absolute right-24 top-10 cursor-pointer '>
+                    <div className=' w-fit z-50    absolute right-24 top-10 cursor-pointer '>
                         <button
                          onClick={openEditCourseModal}
                         className=' btn bg-yellow-500 hover:bg-yellow-600  px-2 py-1 transition-all ease-in-out duration-200 rounded-md text-2xl font-semibold text-black'>Edit Course</button>
                     </div>
                 ):null}
-                <div className=' grid grid-cols-2 gap-10  py-10 relative'>
+                <div className=' flex justify-evenly items-start gap-10  py-10 relative'>
                     {/* left side of the page */}
-                    <div className=' space-y-5 overflow-hidden  border rounded-md '>
+                    <div className=' w-6/12   bg-white  shadow-[0_0_10px_gray]  space-y-5 overflow-hidden rounded-md '>
                         <img
-                            className=' w-full h-64 hover:scale-110 object-cover transition-all ease-in-out duration-200'
+                            className=' w-full h-48 hover:scale-110 object-cover transition-all ease-in-out duration-200'
                             src={courseObj?.thumbnail?.secure_Url}
                             alt="thumbnail" />
+                                                 <p className=' text-start px-4 font-semibold text-black text-2xl'>{courseObj.title}</p>
+
 
                         <div className=' w-full px-3 gap-2 flex flex-col justify-between items-start text-xl'>
-                            <p className=' font-semibold'>
-                                <span className=" text-yellow-400 font-bold">Total lectures : {" "}</span>
+                            <p className=' font-semibold text-black'>
+                                <span className=" text-blue-400 font-bold">Total lectures : {" "}</span>
                                 {courseObj?.noOfLectures}
                             </p>
-                            <p className=' font-semibold'>
-                                <span className=" text-yellow-400 font-bold">Instructor : {" "}</span>
+                            <p className=' font-semibold text-black'>
+                                <span className=" text-blue-400 font-bold">Instructor : {" "}</span>
                                 {courseObj?.createdby}
                             </p>
                         </div>
@@ -97,20 +99,20 @@ function CourseDescription() {
                                 onClick={displayLectures}
                                 className=' bg-yellow-600 text-xl rounded-md px-5 py-3 font-bold hover:bg-yellow-500 transition-all ease-in-out duration-150 hover:text-black w-full tracking-widest'>Watch Lectures</button>
                         ) : (
-                            <button className=' bg-yellow-600 text-xl rounded-md px-5 py-3 font-bold hover:bg-yellow-500 transition-all ease-in-out duration-300 hover:text-black w-full tracking-widest'
+                            <button className=' bg-blue-600 text-xl rounded-md px-5 py-3 font-bold hover:bg-blue-500 transition-all ease-in-out duration-300 hover:text-black w-full tracking-widest'
                                 onClick={() => navigate('/checkout')}
-                            >Subscribe</button>
+                            >Subscribe Bundle</button>
                         )}
 
                     </div>
 
-                    <div className=' space-y-2 text-xl flex flex-col items-start  '>
-                        <h1 className=' text-3xl font-bold text-yellow-500 mb-5 text-center'>
+                    <div className=' space-y-2 text-xl flex flex-col justify-start items-start  '>
+                        <h1 className=' text-3xl font-semibold text-black mb-5 text-start'>
                             {courseObj.title}
                         </h1>
 
-                        <p className=' text-yellow-500 text-xl font-semibold'>Course Description :</p>
-                        <p>{courseObj?.description}</p>
+                        <p className=' text-blue-500 text-xl font-semibold'>Course Description :</p>
+                        <p className=' text-black'>{courseObj?.description}</p>
                     </div>
 
                 </div>

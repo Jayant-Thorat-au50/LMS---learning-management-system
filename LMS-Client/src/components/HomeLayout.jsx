@@ -62,7 +62,7 @@ function HomeLayout({ children }) {
     getCourses()
   }, [])
   return (
-    <div className=" min-h-[90vh]  bg-gradient-to-b from-blue-200 via-cyan-100 to-slate-50  ">
+    <div className=" h-[100vh]  bg-gradient-to-b from-blue-200 via-cyan-100 to-slate-50  ">
       <div className="absolute left-0 z-50 w-fit">
         <input type="checkbox" className="drawer-toggle" id="my-drawer" />
         <div className="drawer-content">

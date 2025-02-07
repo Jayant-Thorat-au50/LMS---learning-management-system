@@ -214,6 +214,16 @@ export const authorizeAdmin = createAsyncThunk('/user/aprooveAdmin', async (Data
   }
 
 })
+export const rejectAdminreq = createAsyncThunk('/user/rejectAdmin', async (Data) => {
+
+  try {
+    const response = await axiosInstance.post('/user/rejectAdminReq', Data);
+    return response.data
+  } catch (error) {
+    return toast.error(error.response.data.message)
+  }
+
+})
 
 const AuthSlice = createSlice({
   name: "Auth",

@@ -15,6 +15,7 @@ const {
   becomeAdmin,
   requestList,
   aprooveAdmin,
+  rejectAdminReq,
 } = require("../Controller/user.controller.js");
 const {isLoggedIn} = require("../middlewares/auth.middleware.js");
 const { upload } = require("../middlewares/multer.middleware.js");
@@ -49,5 +50,7 @@ UserRoutes.get("/become-admin/:userId",isLoggedIn, becomeAdmin);
 UserRoutes.get("/requestList",isLoggedIn, requestList);
 
 UserRoutes.post("/aprooveAdmin",isLoggedIn, aprooveAdmin);
+
+UserRoutes.post("/rejectAdminReq",isLoggedIn, rejectAdminReq);
 
 module.exports = UserRoutes;

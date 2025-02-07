@@ -51,7 +51,7 @@ function ResetPassword() {
                     <h2 className=' text-3xl self-center text-white font-bold '>Enter new password</h2>
                     <div className='  w-full flex  justify-center items-start flex-col gap-3'>
                         <label htmlFor="" className=' text-yellow-500 text-2xl font-semibold '>New password</label>
-                        <input type="text" className=' bg-transparent border px-2 py-1 rounded-sm w-full' placeholder="Enter your new password" value={userInput.newPassword} onChange={(e) => setUserInput({ newPassword: e.target.value })} />
+                        <input type="text" className=' bg-transparent  border px-2 py-1 rounded-sm w-full' placeholder="Enter your new password" value={userInput.newPassword} onChange={(e) => setUserInput({ newPassword: e.target.value })} />
                     </div>
 
                     <button

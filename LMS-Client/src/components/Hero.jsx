@@ -22,14 +22,14 @@ function Hero() {
                        {/* left part */}
             <div className='rounded-lg  w-[60%]    h-[26rem] lg:w-[57%] space-y-6 flex flex-col justify-between items-start ps-10 '>
 
-<h1 className=' text-2xl  lg:text-5xl text-black font-semibold '>
+<h1 className=' text-2xl  lg:text-4xl text-black font-semibold '>
     Empower your future with the
     courses designed to <span className=' text-blue-800'>fit your choice</span>.
 </h1>
-<p className='  text-lg font-semibold text-gray-500 '>
+<p className='  text-lg font-semibold text-gray-700 '>
     We have large library of courses taught by highly skilled and qualified faculties at affordable cost
 </p>
-<p className='  text-lg font-semibold text-gray-500 '>
+<p className='  text-lg font-semibold text-gray-700 '>
     In order to assist you in reaching your personal and professional objectives,
     <br /> we bring together top-notch teachers, engaging material, and a helpful community.
 </p>
@@ -51,7 +51,7 @@ function Hero() {
 <div className='   w-[40%] ms-3   flex h-[28rem] items-center  flex-col justify-center relative '>
 <div className=' flex'>
     <img alt="" className='  absolute left-20  top-9  w-48 h-40 rounded-3xl' src={hero8} />
-    <img alt="" className=' bg-white absolute right-5 -top-2  w-48 h-48 rounded-3xl' src={hero9} />
+    <img alt="" className=' bg-blue-200 absolute right-5 -top-2  w-48 h-48 rounded-3xl' src={hero9} />
 </div>
 <img alt="" className='  absolute right-9 bottom-8 mt-3 w-64 h-52 rounded-3xl' src={hero5} />
 </div>
@@ -68,17 +68,7 @@ function Hero() {
                     </div>
                 </div>
 
-            {/* <h1 className=' text-black text-5xl font-semibold text-center'>Empower your future with the 
-        courses designed to <span className=' text-blue-800'>fit your choice</span></h1>
-        <p className=' text-lg text-gray-500 '>
-        In order to assist you in reaching your personal and professional objectives,
-        <br /> we bring together top-notch teachers, engaging material, and a helpful community.
-        </p>
-
-        <div className=' flex justify-center items-center'>
-        <input type="text" className=" focus:outline-none text-lg py-1 w-[80%] bg-white text-black" placeholder="Enter course name..." />
-            <button className=' bg-blue-500 px-2 py-1 text-black'>Search</button>
-        </div> */}
+      
 
         </div>
 

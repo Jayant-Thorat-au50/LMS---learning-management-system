@@ -20,7 +20,7 @@ import { BsCollectionPlayFill, BsPlayFill, BsTrash } from 'react-icons/bs'
 import { getAllpaymentsList } from '../../../Redux/Slices/PaymentsSlice'
 import { deleteCourse, getcoursesList } from '../../../Redux/Slices/courseSlice'
 import { getAllUserData } from '../../../Redux/Slices/statSlice'
-import { authorizeAdmin, getRequestList, getUserData } from '../../../Redux/Slices/Authslice'
+import { authorizeAdmin, getRequestList, getUserData, rejectAdminreq } from '../../../Redux/Slices/Authslice'
 import toast from 'react-hot-toast'
 
 
@@ -37,6 +37,11 @@ function SuperAdmin() {
     let { data } = useSelector(state => state?.authstate)
     let { SAdminReqList } = useSelector(state => state?.authstate)
 
+    const [requestStatus, setrequestStatus] = useState({
+        aprooved:false,
+        rejected:false
+    })
+
     SAdminReqList = SAdminReqList.filter(reqUser => reqUser.role != "SUPER ADMIN")
 
 
@@ -48,37 +53,6 @@ function SuperAdmin() {
         await dispatch(getcoursesList())
     }
 
-    const openEditCourseModal = (courseData) => {
-        setEditCourseModalData(courseData)
-
-        if (editCourseModalData) {
-
-            document.getElementById('my_modal_1').showModal()
-        }
-    }
-
-    const userData = {
-        labels: ['Registered users', 'Enrolled users'],
-        fontColor: 'white',
-        datasets: [{
-            label: "User details",
-            data: [allUserCount, subscribedUserCount],
-            backgroundColor: ['yellow', 'green'],
-            borderWidth: 2
-        }]
-    }
-
-    const salesdata = {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        fontColor: 'white',
-        datasets: [{
-            label: "Sales / Month",
-            data: finalMonth,
-            backgroundColor: ["rgb(255, 99, 132)"],
-            borderColor: ["White"],
-            borderWidth: 1
-        }]
-    }
 
     const onCourseDelete = async (cid) => {
 
@@ -95,19 +69,31 @@ function SuperAdmin() {
     }
 
     const onAuthorizeAdmin = async (reqUser) => {
-        console.log('clicked');
-
+      
         const response = await dispatch(authorizeAdmin(reqUser))
         if (response.payload.success) {
+            setrequestStatus({
+                ...requestStatus, aprooved:true
+            })
             toast.success('request accepted successfully')
+        }
+    }
+    const rejectAdminrequest = async (reqUser) => {
+      
+        const response = await dispatch(rejectAdminreq(reqUser))
+        if (response.payload.success) {
+            setrequestStatus({
+                ...requestStatus, rejected:true
+            })
+            toast.success('request rejected')
         }
     }
 
 
+
+
     useEffect(() => {
         loadInfo();
-
-
     }, [])
 
 
@@ -145,8 +131,10 @@ function SuperAdmin() {
                                     <div className=' space-x-5'>
                                         <span
                                             onClick={() => onAuthorizeAdmin(reqUser)}
-                                            className='px-2 py-1 font-semibold text-black bg-green-500 rounded-md transition-all ease-in-out duration-200 hover:bg-green-700'>Aproove</span>
-                                        <span className=' px-2 py-1 font-semibold text-black bg-red-600 rounded-md transition-all ease-in-out duration-200 hover:bg-red-700'>Reject</span>
+                                            className='px-2 py-1 font-semibold text-black bg-green-500 rounded-md transition-all ease-in-out duration-200 hover:bg-green-700'>{requestStatus.aprooved ? 'Aprooved':'Aproove'}</span>
+                                        <span
+                                        onClick={() => rejectAdminrequest(reqUser)}
+                                        className=' px-2 py-1 font-semibold text-black bg-red-600 rounded-md transition-all ease-in-out duration-200 hover:bg-red-700'>{requestStatus.rejected ? 'Rejected':'Reject'}</span>
                                     </div>
                                 </div>
                             </li>)}

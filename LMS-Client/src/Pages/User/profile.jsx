@@ -31,8 +31,8 @@ function Profile() {
         toast.dismiss()
         toast.success('subscription cancelled successfully')
         if (response?.pyaload?.success) {
-
-            navigate('/user/profile')
+            await dispatch(getUserData(userData._id))
+          window.location.reload()
         }
 
     }

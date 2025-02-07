@@ -8,6 +8,41 @@ import bill from "../assets/bill gates.jpg";
 import satya from '../assets/satya nadela.jpeg'
 
 
+export const catagories = [
+  {
+    name:'web development',
+    description:'Web development is the process of building, maintaining, and creating websites. It involves web design, programming, publishing, and database management',
+    thumbnail:'https://res.cloudinary.com/lms-jayant-thorat/image/upload/t_Thumbnail/v1738868052/webdev.logo_vonnbr.jpg'
+  },
+  {
+    name:'DBMS',
+    description:'Web development is the process of building, maintaining, and creating websites. It involves web design, programming, publishing, and database management',
+    thumbnail:'https://res.cloudinary.com/lms-jayant-thorat/image/upload/t_Thumbnail/v1738868052/dbms.logo_hkfmnm.jpg'
+  },
+  {
+    name:'Networking',
+    description:'Computer networking is the process of connecting devices to exchange data and share resources. Devices are connected using physical or wireless technologies, and they follow a set of rules called communications protocols.',
+    thumbnail:'https://res.cloudinary.com/lms-jayant-thorat/image/upload/t_Thumbnail/v1738868052/networking.logo_buteco.jpg'
+  },
+  {
+    name:'Programming',
+    description:'Programming is the process of writing instructions for a computer to follow, or coding. It involves designing and implementing algorithms, or step-by-step procedures, to perform specific tasks.',
+    thumbnail:'https://res.cloudinary.com/lms-jayant-thorat/image/upload/t_Thumbnail/v1738868051/programming.logo_kqsxli.png'
+  },
+  {
+    name:'cyber security',
+    description:'Cybersecurity is the practice of protecting systems, networks, and data from cyberattacks. It uses technology, processes, and controls to reduce the risk of cyberattacks.',
+    thumbnail:'https://res.cloudinary.com/lms-jayant-thorat/image/upload/t_Thumbnail/v1738868051/cyber_security_p4z6od.png'
+  },
+  {
+    name:'Artificial Intelligence',
+    description:'AI (artificial intelligence) is a broad concept, while machine learning (ML) is a subset of AI. AI is the ability of a machine to think and act like a human, while ML is a way for machines to learn and improve their performance.',
+    thumbnail:'https://res.cloudinary.com/lms-jayant-thorat/image/upload/t_Thumbnail/v1738868030/Aiml.logo_jvwjyz.png'
+  },
+
+]
+
+
 export const visionaries = [
   {
     id: "1",
