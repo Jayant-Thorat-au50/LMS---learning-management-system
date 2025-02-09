@@ -8,10 +8,10 @@ const morgan = require("morgan");
 // custom lib and middleware imports
 const cloudinary = require("cloudinary");
 const dbConnect = require("./dbConnect.js");
-const {errorMiddleware} = require('./middlewares/errorMiddleware.js')
 
 // Routes imports
 const courseRoutes = require("./Routes/courseRoutes.js");
+const {errorMiddleware} = require('./middlewares/errorMiddleware.js')
 const userRoutes = require("./Routes/User.routes.js");
 const paymentRoutes = require("./Routes/PaymentRoutes.js");
 
