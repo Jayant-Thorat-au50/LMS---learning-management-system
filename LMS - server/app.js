@@ -11,7 +11,7 @@ const dbConnect = require("./dbConnect.js");
 
 // Routes imports
 const courseRoutes = require("./Routes/courseRoutes.js");
-// const {errorMiddleware} = require('./middlewares/errorMiddleware.js')
+const {errorMiddleware} = require('./middlewares/errorMiddleware.js')
 const userRoutes = require("./Routes/User.routes.js");
 const paymentRoutes = require("./Routes/PaymentRoutes.js");
 
@@ -36,7 +36,7 @@ app.use(morgan("dev"));
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/course", courseRoutes);
 app.use("/api/v1/payments", paymentRoutes);
-// app.use(errorMiddleware);
+app.use(errorMiddleware);
 
 app.listen(PORT, () => {
   console.log(
