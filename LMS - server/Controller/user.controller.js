@@ -17,9 +17,12 @@ const sendEmail = require("../Utils/sendEmail.js");
 const fs = require("fs/promises");
 
 const cookieOption = {
-  maxAge: 24 * 60 * 60 * 1000,
   httpOnly: true,
-};
+  secure: true, // Requires HTTPS
+  sameSite: 'None', // Allows cross-site cookies :cite[3]:cite[5]:cite[7]
+  domain: '.rainbow-biscotti-42df77.app', // Use leading dot for subdomains
+  maxAge: 7 * 24 * 60 * 60 * 1000 // 1 week
+}
 
 // user sign up
 const signUp = async (req, res, next) => {
@@ -109,7 +112,7 @@ const signUp = async (req, res, next) => {
     // setting cookies in the client side through the response
     // before sending the data to client
     res.cookie("Token", token, cookieOption);
-
+  //  res.setHeader(token)
     // sending the saved user obj to the client
     return res.status(200).json({
       success: true,
@@ -152,16 +155,15 @@ const login = async (req, res, next) => {
 
     //saving authtoken in the db
 
-    //saving the user
-    await user.save();
+    
 
     // making the passowrd disappear when the user obj is sent to the client
     user.password = undefined;
 
     // sending the user data to the client
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
-      message: "User log in successfully",
+      message: "User logged in successfully",
       user,
     });
   } catch (error) {
@@ -172,15 +174,17 @@ const login = async (req, res, next) => {
 // get user api
 const getUser = async (req, res, next) => {
   // grabbing the id extracted from the token in jwt auth middleware
-  const { userId } = req.params;
+  // const { userId } = req.params;
+
+  const {id} = req.user;
 
   console.log(req.user);
 
   try {
-    const User = await UserModel.findById(userId);
+    const User = await UserModel.findById(id);
 
     // sending the user data to the client
-    res.status(200).json({
+   return res.status(200).json({
       success: true,
       User,
     });
@@ -197,7 +201,7 @@ const logout = async (req, res, next) => {
     const user = await UserModel.findById(userId);
 
     if (!user) {
-      return res.status(200).json({
+      return res.status(400).json({
         success: true,
         message: "User logged out successfully",
       });
@@ -211,7 +215,6 @@ const logout = async (req, res, next) => {
     });
 
     // disable the cookie in the db
-    user.authToken = undefined;
     await user.save();
 
     // sending the response message

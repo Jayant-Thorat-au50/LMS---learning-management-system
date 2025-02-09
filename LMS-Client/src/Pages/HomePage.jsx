@@ -4,22 +4,33 @@ import CourseListByCat from '../components/courseListByCat'
 import Hero from '../components/Hero.jsx'
 import { catagories } from '../Constants/visionary\'sData.js'
 import Testimonials from '../components/Testimonials.jsx'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { getcoursesList } from '../../Redux/Slices/courseSlice.js'
 
 
 
 
 function HomePage() {
 
+    const dispatch = useDispatch()
     const { coursesList } = useSelector(state => state?.courseState);
     const catagoryList = [...new Set(coursesList.map(c => c.catagory))]
     const [viewAll, setViewAll] = useState('')
+
+    const loadInfo = async () => {
+
+        await dispatch(getcoursesList())
+    }
+
+    useEffect(() => {
+        loadInfo()
+    }, [])
 
 
     return (
         <HomeLayout>
 
-            <div className='bg-gradient-to-b from-slate-50 via-teal-100 to-slate-50 pt-10 text-white  flex flex-col px-14 gap-12 min-h-[90vh]'>
+            <div className='bg-gradient-to-b from-slate-50 via-teal-100 to-slate-50 pt-10 text-white  flex flex-col px-0z lg:px-14  gap-12 min-h-[90vh]'>
 
 
                 <Hero />

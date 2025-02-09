@@ -159,16 +159,16 @@ function AdminDashboard() {
 
     return (
         <HomeLayout>
-            <div className=' min-h-[90vh] flex flex-col flex-wrap px-24 pt-5 gap-10'>
+            <div className='  from-blue-200 via-cyan-100 to-slate-50 min-h-[90vh] flex flex-col flex-wrap px-24 pt-5 gap-5'>
                 <h1 className=' text-center  text-3xl text-blue-500 font-semibold'>Admin Dashboard</h1>
-
+z
                 {/* stats data of the user and subscriptions */}
                 <ChartData />
 
                 {/* <UserList openModal={openEditCourseModal} deletecourse={onCourseDelete}/> */}
 
 
-                <div className="overflow-x-auto bg-gradient-to-b from-slate-50 to-teal-100 my-5 px-6 ">
+                <div className="overflow-x-auto bg-gradient-to-b from-slate-50 to-teal-100  my-5 px-6 ">
                     <div className=' border-b-2 border-black flex justify-between items-center py-2 w-full px-2 my-2'>
                         <p className=' text-xl font-semibold text-black'>your courses</p>
                         <button 
@@ -210,7 +210,7 @@ function AdminDashboard() {
                                                 <BsCollectionPlayFill className=' text-white hover:scale-110 object-cover transition-all ease-in-out duration-200' />
                                             </button>
                                             <button
-                                                onClick={() => onCourseDelete(course)}
+                                                onClick={() => onCourseDelete(course._id)}
                                                 className=' bg-red-500 hover:bg-red-700 transition-all ease-in-out duration-300 text-2xl p-2 rounded-md'>
                                                 <BsTrash className=' text-white hover:scale-110 object-cover transition-all ease-in-out duration-200' />
                                             </button>

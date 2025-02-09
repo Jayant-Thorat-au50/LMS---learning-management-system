@@ -76,15 +76,15 @@ function AddNewLecture() {
             <div
                 className=' min-h-[95vh] flex flex-col justify-center items-center '
             >
-                <div className=' w-96 flex flex-col justify-center items-center shadow-[0_0_10px_black] px-4 py-1 gap-3'>
+                <div className=' w-96 flex flex-col bg-white pb-3 mb-4 justify-center items-center shadow-[0_0_10px_black] px-4 py-1 gap-3'>
 
                     <header className=' flex justify-center items-center relative'>
-                        <h1 className=' text-2xl text-yellow-500 font-semibold '>
+                        <h1 className=' text-2xl text-black font-semibold '>
                             Add new lecture
                         </h1>
 
                         <button onClick={() => navigate(-1)} className=' absolute  -left-24  bottom-0'>
-                            <AiOutlineArrowLeft className=' text-white font-bold hover:text-blue-500 transition-all ease-in-out duration-200 text-2xl' />
+                            <AiOutlineArrowLeft className=' text-black font-bold hover:text-blue-500 transition-all ease-in-out duration-200 text-2xl' />
                         </button>
                     </header>
 
@@ -95,13 +95,13 @@ function AddNewLecture() {
                     >
                         <div className='  w-full '>
 
-                            <input value={userInput.title} type="text" id='title' onChange={hanldeInputChange} name='title' className=' text-white w-full py-1 bg-transparent px-2 border' placeholder='Enter the title of the lecture' />
+                            <input value={userInput.title} type="text" id='title' onChange={hanldeInputChange} name='title' className=' text-black w-full py-1 bg-transparent px-2 border-2 border-gray-400 rounded-md' placeholder='Enter the title of the lecture' />
                         </div>
 
 
                         <div className=' flex flex-col w-full gap-1'>
 
-                            <textarea value={userInput.description} type="text" onChange={hanldeInputChange} id='description' name='description' className=' text-white w-full py-1 bg-transparent px-2 border resize-none h-36' placeholder='Enter the description of the lecture' />
+                            <textarea value={userInput.description} type="text" onChange={hanldeInputChange} id='description' name='description' className=' text-white w-full py-1 bg-transparent px-2  border-2 border-gray-400 rounded-md resize-none h-36' placeholder='Enter the description of the lecture' />
                         </div>
 
 
@@ -129,7 +129,7 @@ function AddNewLecture() {
 
 
                             ) : (
-                                <div className=' flex h-48 items-center justify-center border  w-full gap-2 '>
+                                <div className=' flex  border-2 border-gray-400 rounded-md h-36 items-center justify-center   w-full gap-2 '>
                                     <label htmlFor="lecture" className=' w-full h-full flex justify-center items-center  text-2xl text-yellow-400 cursor-pointer'><p className='text-2xl text-yellow-400 '>choose your video :</p></label>
                                     <input value={userInput.lecture} onChange={getVideo} accept='video/mp4 video/x-mp4, video/*' type="file" id='lecture' name='lecture' className=' hidden' />
 

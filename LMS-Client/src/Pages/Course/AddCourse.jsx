@@ -15,6 +15,8 @@ import HomeLayout from '../../components/HomeLayout';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { IoCloudUploadOutline } from "react-icons/io5";
 
+//contstant imports
+
 function AddCourse() {
 
     const dispatch = useDispatch();
@@ -89,8 +91,8 @@ function AddCourse() {
             })
             navigate('/courses')
 
-        }else{
             setShowSpinner(!showSpinner)
+        }else{
         }
     }
 
@@ -187,7 +189,7 @@ function AddCourse() {
                     <div className=' flex justify-center w-full items-center flex-col'>
 
                         { !showSpinner ?(
-                            <button type='Submit' className=' w-full flex justify-center text-center font-bold text-white text-2xl bg-yellow-500 py-1 rounded-sm hover:bg-yellow-600 hover:text-black transition-all ease-in-out duration-300'>
+                            <button type='Submit' className=' w-full flex justify-center text-center font-bold text-black text-2xl bg-blue-400 py-1 rounded-sm hover:bg-blue-600 hover:text-black transition-all ease-in-out duration-300'>
                      
                       
                         <span>Create course</span>

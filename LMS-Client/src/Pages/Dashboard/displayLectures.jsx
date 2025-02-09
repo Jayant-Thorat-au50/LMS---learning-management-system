@@ -103,40 +103,43 @@ onload()
   }, [])
 
   return (
-    <HomeLayout>
+    <div className=' min-h-[100vh]'>
       {lectures?.length > 0 ? (
-      <div className=' flex flex-col gap-5 items-center justify-center min-h-[100vh] bg-[#F3F4F6] w-full py-5 text-white'>
-        <div className=' text-center font-semibold text-2xl text-yellow-500'>
+      <div className=' flex flex-col bg-gray-300 items-center justify-between gap-7 w-full py-5 text-white'>
+        <div className=' text-center font-semibold text-2xl text-blue-600'>
           Course name : <span className=' text-black capitalize'>{state.title}</span>
         </div>
-        <div className='w-full flex justify-center items-start gap-5 h-[85vh]'>
+        <div className='w-full flex justify-center items-start gap-5 '>
           {/* left section for playing videos */}
-          <div className=' space-y-5 w-[55rem] rounded-lg shadow-[0_0_10px_black]'>
+          <div className=' space-y-5 w-[45rem] h-full border-2 border-black rounded'>
             <video
               src={lectures && lectures[currentVideo]?.lectureSrc?.secure_url}
               controls
               disablePictureInPicture
-              className=' object-fill rounded-tr-lg rounded-tl-lg w-full'
+              className=' object-fill rounded-tr-md rounded-tl-md w-full'
               controlsList='nodownload'
             ></video>
 
-            <h1 className=' w-full px-3 text-2xl '>
-              <span className=' text-yellow-500 text-2xl font-semibold'>
+            <div className=' flex flex-col my-5 gap-5 justify-evenly'>
+            <h1 className=' w-full px-3 text-2xl text-black '>
+              <span className=' text-blue-600 text-2xl font-semibold'>
                 {" "} Title :
               </span> {" "}
               {lectures && lectures[currentVideo]?.title}
             </h1>
-            <p className=' w-full px-3 text-2xl flex items-center line-clamp-4'>
-              <span className=' text-yellow-500 line-clamp-4 text-2xl font-semibold'>
+            <p className=' text-black w-full px-3 text-2xl flex items-center line-clamp-4'>
+              <span className=' text-blue-600 line-clamp-4 text-2xl font-semibold'>
                {" "} Description :
               </span>  {" "} 
              {lectures && lectures[currentVideo]?.description}
 
             </p>
+            </div>
+            
           </div>
 
           {/* right section of the page for displaying list of the lectures*/}
-          <ul className=' w-[25rem] overflow-y-scroll h-full shadow-[0_0_10px_black] px-2 gap-3 flex flex-col items-center'>
+          <ul className=' w-[25rem] overflow-y-scroll h-full border-2 border-black px-2 gap-3 flex flex-col items-center'>
             <li className=' flex w-full mt-2  items-center'>
               {role === "ADMIN" ? (
                 <div className=' flex justify-between ps-4 w-full relative'>
@@ -161,7 +164,7 @@ onload()
                     className=' flex h-24 border-b-2 border-black items-center justify-start w-full  '
                   >
                    <div className=' w-[12%] flex justify-center items-center'>
-                   {currentlyPlaying == lecture._id ? (<FaPlay className=' text-blue-300 text-2xl'/>):null}
+                   {currentlyPlaying == lecture._id ? (<FaPlay className=' text-black text-2xl'/>):null}
                    </div>
                     <div className=' flex flex-col  gap-2 w-[88%]'>
                     <p className={role === 'ADMIN'? ( ' text-xl text-black font-semibold line-clamp-1 '):(' text-xl text-black font-semibold line-clamp-2')}>
@@ -269,7 +272,7 @@ onload()
   </dialog>
 
 
-    </HomeLayout>
+    </div>
   )
 }
 

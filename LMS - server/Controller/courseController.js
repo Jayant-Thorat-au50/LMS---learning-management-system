@@ -206,7 +206,7 @@ const deleteCourse = async (req, res, next) => {
       message: "course deleted successfully",
     });
   } catch (error) {
-    return next(new AppError(e.message, 400));
+    return next(new AppError(error.message, 400));
   }
 };
 
@@ -271,7 +271,7 @@ const addLecture = async (req, res, next) => {
           req.file.path,
           {
             folder: "lms-lecture-videos",
-            chunk_size: 50000000,
+            chunk_size: 500000000000,
             resource_type: "video",
           }
         );

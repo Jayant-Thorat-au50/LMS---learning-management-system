@@ -44,12 +44,10 @@ function Header() {
         setList(prev => prev.slice(0, 3))
       }
 
-      const listhide = () => {
-        setList(null)
-      }
+
     
         const sendAdminRequest = async () => {
-          if (window.confirm('Once you become admin you can add your own courses')) {
+          if (window.confirm('Once you become admin you can add your own courses, do you want send request for admin?')) {
           if (!isLoggedIn) {
             navigate('/login')
             toast.error('please login to continue')
@@ -142,7 +140,7 @@ function Header() {
                         <p className=" text-black text-lg font-semibold">About Us</p>
                       </li>
                       <li >
-                        {role === 'USER' | role==='ADMIN'?<p
+                        {role === 'USER' || role==='ADMIN' || !isLoggedIn?<p
                         onClick={role==="USER"? ()=>sendAdminRequest():role==="ADMIN"?()=>navigate('/course/create'):() => navigate('/login')}
                         className=" text-black text-lg font-semibold">Add Courses</p>:null}
                       </li>
@@ -178,7 +176,7 @@ function Header() {
                                   onClick={() => navigate('/user/profile')}
                                   className=" hover:text-xl transition-all ease-linear hover:text-black duration-200 font-semibold">my profile</li>
                                 {role === "ADMIN" ? (
-                                  <li onClick={() => navigate('/admin/dashboard')} className="font-semibold" >Admin Dashboard</li>
+                                  <li onClick={() => navigate('/admin/dashboard')} className="hover:text-xl transition-all ease-linear  hover:text-black  duration-200 font-semibold" >Admin Dashboard</li>
                                 ) : null}
                                 {role === "SUPER ADMIN" ? (
                                   <li onClick={() => navigate('/super-admin/dashboard')} className="hover:text-xl transition-all ease-linear  hover:text-black  duration-200 font-semibold">Super Admin Panel</li>

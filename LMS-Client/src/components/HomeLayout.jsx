@@ -62,20 +62,20 @@ function HomeLayout({ children }) {
     getCourses()
   }, [])
   return (
-    <div className=" h-[100vh]  bg-gradient-to-b from-blue-200 via-cyan-100 to-slate-50  ">
-      <div className="absolute left-0 z-50 w-fit">
+    <div className=" min-h-[100vh]  bg-gradient-to-b from-blue-200 via-cyan-100 to-slate-50  ">
+      <div className="absolute left-0 z-50 w-full lg:w-fit lg:hidden block">
         <input type="checkbox" className="drawer-toggle" id="my-drawer" />
         <div className="drawer-content">
           <label htmlFor="my-drawer" className=" cursor-pointer relative">
             <FiMenu
               onClick={changeWidth}
               size={"32px"}
-              className=" fw-bold text-white m-4"
+              className=" fw-bold text-black m-4"
             />
           </label>
         </div>
 
-        <div className="drawer-side w-0">
+        <div className="drawer-side  lg:hidden block w-0">
           <label htmlFor="my-drawer" className="drawer-overlay "></label>
           <ul className="menu pr-0 text-lg p-4 w-48 sm:w-64 bg-base-200 h-screen text-base-content relative">
             <li className="absolute h-10 text-xl right-2 z-50">

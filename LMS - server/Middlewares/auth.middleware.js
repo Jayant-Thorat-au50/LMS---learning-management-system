@@ -6,13 +6,13 @@ const UserModel = require('../Models/UserModel.js')
  const isLoggedIn = async (req, _res, next) => {
   // extracting token from the cookies
   const { Token } = req.cookies;
+  console.log(Token);
+  
     
   // If no token send unauthorized message
   if (!Token) {
     return next(new AppError("Unauthorized, please login to continue", 401));
   }
-
-
 
   // Decoding the token using jwt package verify method
   const decoded = await jwt.verify(Token, process.env.JWT_SECRET);
