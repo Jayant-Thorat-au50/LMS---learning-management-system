@@ -17,7 +17,7 @@ const paymentRoutes = require("./Routes/PaymentRoutes.js");
 
 const app = express();
 app.use(cors({
-  origin:"https://rainbow-biscotti-42df77.netlify.app",
+  origin:"https://localhost:5173",
   credentials:true
 }));
 const PORT = process.env.PORT;
