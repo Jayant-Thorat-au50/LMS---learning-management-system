@@ -1,9 +1,9 @@
 
 const express = require('express')
 const {addCourse, getAllCourses, getOneCourse, updateCourse, deleteCourse, addLecture, deleteLecture, edit_lecture} = require('../Controller/courseController.js')
- const {isLoggedIn} = require('../middlewares/auth.middleware.js')
-const {authorizeRoles} = require('../middlewares/auth.middleware.js')
-const {upload} = require('../middlewares/multer.middleware.js');
+ const {isLoggedIn} = require('../Middlewares/auth.middleware.js')
+const {authorizeRoles} = require('../Middlewares/auth.middleware.js')
+const {upload} = require('../Middlewares/multer.middleware.js');
 
 
 const courseRoutes = express.Router();

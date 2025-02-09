@@ -17,8 +17,8 @@ const {
   aprooveAdmin,
   rejectAdminReq,
 } = require("../Controller/user.controller.js");
-const {isLoggedIn} = require("../middlewares/auth.middleware.js");
-const { upload } = require("../middlewares/multer.middleware.js");
+const {isLoggedIn} = require("../Middlewares/auth.middleware.js");
+const { upload } = require("../Middlewares/multer.middleware.js");
 const UserRoutes = express.Router();
 
 UserRoutes.post("/register", upload.single("Avatar"), signUp);

@@ -1,6 +1,6 @@
 const express = require ('express')
 const {getRazorpayApiKey, buySubscription,verifySubscription, cancelSubscription, getAllPayments} = require("../Controller/PaymentController.js");
-const {isPremiumMember, isLoggedIn} = require ('../middlewares/auth.middleware.js')
+const {isPremiumMember, isLoggedIn} = require ('../Middlewares/auth.middleware.js')
 
 
 const paymentRoutes = express.Router()

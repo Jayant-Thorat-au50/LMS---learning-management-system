@@ -11,7 +11,7 @@ const dbConnect = require("./dbConnect.js");
 
 // Routes imports
 const courseRoutes = require("./Routes/courseRoutes.js");
-const {errorMiddleware} = require('./middlewares/errorMiddleware.js')
+const {errorMiddleware} = require('./Middlewares/errorMiddleware.js')
 const userRoutes = require("./Routes/User.routes.js");
 const paymentRoutes = require("./Routes/PaymentRoutes.js");
 
