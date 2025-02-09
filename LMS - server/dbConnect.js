@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const mongodbUri = 'mongodb://127.0.0.1:27017/LMS'
+const mongodbUri = 'mongodb+srv://jayantthorat1999:taw3KkZcGgmuqBUN@cluster0.zvmkz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0/LMS'
 
 const dbConnect =  () => {
       mongoose.connect(mongodbUri)
