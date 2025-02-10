@@ -20,7 +20,7 @@ const cookieOption = {
   httpOnly: true,
   secure: true, // Requires HTTPS
   sameSite: 'None', // Allows cross-site cookies 
-  domain: '.rainbow-biscotti-42df77.app', // Use leading dot for subdomains
+  domain: '.frabjous-macaron-4c9d17.netlify.app/', // Use leading dot for subdomains
   maxAge: 7 * 24 * 60 * 60 * 1000 // 1 week
 }
 
