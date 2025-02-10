@@ -8,7 +8,7 @@ const {upload} = require('../Middlewares/multer.middleware.js');
 
 const courseRoutes = express.Router();
 
-courseRoutes.get('/', (req, res) => res.send('kkkkkkkkk') )
+courseRoutes.get('/', getAllCourses )
 
 courseRoutes.post('/add-course',isLoggedIn, upload.single('thumbnail'), addCourse)
 
