@@ -17,7 +17,7 @@ const paymentRoutes = require("./Routes/PaymentRoutes.js");
 
 const app = express();
 app.use(cors({
-  origin:"https://stirring-meringue-c101e0.netlify.app",
+  origin:"https://frabjous-macaron-4c9d17.netlify.app",
   credentials:true
 }));
 const PORT = process.env.PORT;
