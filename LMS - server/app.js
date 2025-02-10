@@ -17,7 +17,7 @@ const paymentRoutes = require("./Routes/PaymentRoutes.js");
 
 const app = express();
 app.use(cors({
-  origin:"https://localhost:5173",
+  origin:"https://charming-genie-e6fbe6.netlify.app/",
   credentials:true
 }));
 const PORT = process.env.PORT;
