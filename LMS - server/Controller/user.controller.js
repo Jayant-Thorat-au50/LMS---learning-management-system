@@ -151,7 +151,7 @@ const login = async (req, res, next) => {
     const token = await user.JwtToken();
 
     // setting cookies in the client side through the response
-    res.cookie("Token", token, cookieOption);
+    res.cookie("Token", token, {httpOnly:true, secure:true});
 
     //saving authtoken in the db
 

@@ -23,7 +23,7 @@ function CourseCard({ data }) {
 
         <div
           onClick={() => navigate('/course/description', { state: { ...data } })}
-            className=' shadow-[0_0_12px_gray]   flex flex-col items-center  w-[19rem] my-5  h-[25rem] cursor-pointer  gap-0 border-black  bg-white group overflow-hidden rounded-md '>
+            className=' shadow-[0_0_12px_gray]   flex flex-col items-center  w-[19rem] my-5  h-[25rem] cursor-pointer mx-auto border-red-600  gap-0   bg-white group overflow-hidden rounded-md '>
 
             <div className=' w-full h-1/2 '>
                 <img src={data?.thumbnail?.secure_Url}  alt="thumbnail" className=' w-full  h-44  hover:scale-110 object-cover transition-all ease-in-out duration-300' />
@@ -32,11 +32,11 @@ function CourseCard({ data }) {
                 <div className=' text-center w-full'>
 
                     <div className=' flex justify-start text-center w-full '>
-                        <h1 className=' mx-auto text-start text-xl text-black font-semibold capitalize line-clamp-2'>{data?.title}</h1>
+                        <h1 className=' mx-auto text-start  lg:text-xl text-black font-semibold capitalize line-clamp-2'>{data?.title}</h1>
                     </div>
                 </div>
-                <p className='capitalize text-black font-bold texl-lg '><span className=' font-semibold text-lg text-blue-500 '>Category</span> : {data?.catagory}</p>
-                {/* <p className=' line-clamp-2 text-black'><span className=' font-semibold text-xl text-blue-400 '>Description</span> : {data?.description}</p> */}
+                <p className='capitalize text-black font-bold text-sm lg:texl-lg '><span className=' font-semibold text-lg text-blue-500 '>Category</span> : {data?.catagory}</p>
+  
                 <p className='capitalize text-gray-500 font-semibold'><span className=' font-semibold text-lg  text-blue-500'>Instructor</span> : {data?.createdby}</p>
                 <p className='font-bold text-black'><span className=' font-semibold text-lg   text-blue-500'> No. of lectures </span> : {data?.noOfLectures}</p>
 

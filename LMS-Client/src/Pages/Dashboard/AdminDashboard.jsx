@@ -159,8 +159,8 @@ function AdminDashboard() {
 
     return (
         <HomeLayout>
-            <div className='  from-blue-200 via-cyan-100 to-slate-50 min-h-[90vh] flex flex-col flex-wrap px-24 pt-5 gap-5'>
-                <h1 className=' text-center  text-3xl text-blue-500 font-semibold'>Admin Dashboard</h1>
+            <div className='  from-blue-200 via-cyan-100 to-slate-50 min-h-[90vh] flex flex-col flex-wrap px-4 lg:px-24 pt-5 gap-1 lg:gap-5'>
+                <h1 className=' text-center w-full text-xl lg:text-3xl text-blue-500 font-semibold'>Admin Dashboard</h1>
 z
                 {/* stats data of the user and subscriptions */}
                 <ChartData />
@@ -168,7 +168,7 @@ z
                 {/* <UserList openModal={openEditCourseModal} deletecourse={onCourseDelete}/> */}
 
 
-                <div className="overflow-x-auto bg-gradient-to-b from-slate-50 to-teal-100  my-5 px-6 ">
+                <div className="overflow-x-scroll bg-white  my-5 px-6 ">
                     <div className=' border-b-2 border-black flex justify-between items-center py-2 w-full px-2 my-2'>
                         <p className=' text-xl font-semibold text-black'>your courses</p>
                         <button 

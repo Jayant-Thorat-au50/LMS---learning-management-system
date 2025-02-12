@@ -111,9 +111,9 @@ function Login() {
 
             </div> */}
 
-            <div className=' w-full flex justify-center items-center h-[88vh] px-10'>
+            <div className=' w-full flex-col-reverse lg:flex-row flex justify-center items-center h-[88vh] px-10'>
 
-            <div className=' w-1/2 h-full '>
+            <div className=' hidden w-full lg:block h-full '>
                <div className=' flex relative w-full ms-14 my-9'>
                <div className=' absolute top-1 left-5'>
                     <img src={loginPageImg} alt="" className=' rounded-tr-3xl h-52 w-48' />
@@ -127,7 +127,7 @@ function Login() {
                </div>
              </div>
 
-               <div className=' bg-blue-200 w-1/2 h-full flex justify-center items-center  border'>
+               <div className='    w-full h-full flex justify-center items-center  border'>
                <form action="" onSubmit={login}  noValidate className='shadow-[0_0_10px_black] w-[25rem] bg-white  h-fit flex  flex-col gap-3 items-center'>
                     <h1 className=' text-center capitalize font-semibold text-2xl my-2 text-blue-600'>Registration page</h1>
 

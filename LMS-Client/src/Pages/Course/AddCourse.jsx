@@ -101,7 +101,7 @@ function AddCourse() {
 
     return (
         <HomeLayout>
-            <div className=' flex justify-center items-center h-[100vh] bg-blue-100'>
+            <div className=' flex justify-center items-center h-[100vh] bg-blue-100 px-7 lg:px-0'>
 
                 <form noValidate
                     className=' flex flex-col justify-center gap-4 rounded-lg p-4 text-white w-[700px] my-10 bg-white shadow-[0_0_10px_black] relative '
@@ -112,7 +112,7 @@ function AddCourse() {
                         <AiOutlineArrowLeft />
                     </Link>
                     <h1 className=' text-center text-yellow-500 text-2xl font-bold'>Create new course</h1>
-                    <div className=' grid grid-cols-2 gap-x-10'>
+                    <div className=' flex flex-col lg:grid grid-cols-2 gap-x-10'>
                         <div className=' space-y-7'>
                             <div>
                                 <label htmlFor="image_upload" className=' cursor-pointer'>

@@ -101,8 +101,8 @@ function SuperAdmin() {
 
     return (
         <HomeLayout>
-            <div className=' min-h-[90vh] bg-white flex flex-col flex-wrap pt-5 gap-10 px-24'>
-                <h1 className=' text-center  text-3xl text-blue-500 font-semibold'>Super Admin Dashboard</h1>
+            <div className=' min-h-[90vh] bg-white flex flex-col flex-wrap pt-5 gap-10 px-2 lg:px-24'>
+                <h1 className=' text-center text-xl w-full lg:text-3xl text-blue-500 font-semibold'>Super Admin Dashboard</h1>
 
 
                 {/* stats data of the user and subscriptions */}
@@ -113,20 +113,22 @@ function SuperAdmin() {
                 {/* list of users */}
                 {/* <UserList openModal={openEditCourseModal} deletecourse={onCourseDelete} /> */}
 
+                      {/* admin requests */}
+
                 <div
                     tabIndex={0}
                     className="bg-gray-300 w-full  focus:bg-gray-200 focus:text-secondary-content collapse">
-                    <div className="collapse-title flex justify-between items-center">
+                    <div className="collapse-title w-full flex justify-between items-center">
                         <p className=' text-black text-xl font-semibold'>Requests to become admin</p>
                         <p className=' text-white bg-green-500 p-2 h-12 w-12 text-xl text-center font-bold rounded-full'>{SAdminReqList.length}</p>
                         </div>
                     <div className="collapse-content">
                         <ul className=' w-full'>
                             {SAdminReqList && SAdminReqList.map(reqUser => <li>
-                                <div className=' border-b-2 my-4 border-gray-400 w-full flex justify-between items-center px-5 '>
-                                    <div className=' flex justify-center items-center gap-4'>
-                                        <img src={reqUser.avatar.secureUrl} alt="" className=' h-16 w-16 rounded-lg' />
-                                        <h3 className=' text-lg capitalize'>{reqUser.fullName}</h3>
+                                <div className=' border-b-2 my-4 border-gray-400 w-full flex justify-between items-center px-1 lg:px-5 '>
+                                    <div className=' flex justify-center items-center gap-2 lg:gap-4'>
+                                        <img src={reqUser.avatar.secureUrl} alt="" className=' lg:h-16 lg:w-16 rounded-lg h-12 w-12' />
+                                        <h3 className=' text-sm lg:text-lg capitalize'>{reqUser.fullName}</h3>
                                     </div>
                                     <div className=' space-x-5'>
                                         <span
@@ -143,8 +145,8 @@ function SuperAdmin() {
                 </div>
 
 
-                <div className="overflow-x-auto bg-blue-200 my-5 px-6 ">
-                    <table className="table">
+                <div className="overflow-x-scroll w-full bg-white border-2 border-gray-300 my-5 px-6 ">
+                    <table className="table w-full">
                         {/* head */}
                         <thead>
                             <tr className=' text-black text-lg'>

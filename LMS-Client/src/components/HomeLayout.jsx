@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FiMenu } from "react-icons/fi";
 import { AiFillCloseCircle } from "react-icons/ai";
 import Footer from "./Footer";
+import logo from '../assets/download-removebg-preview (1).png'
 
 
 // thunck imports
@@ -24,6 +25,7 @@ function HomeLayout({ children }) {
   const isLoggedIn = useSelector((state) => state?.authstate?.isLoggedIn);
   const role = useSelector((state) => state?.authstate?.role);
   let { coursesList } = useSelector((state) => state?.courseState);
+  const {data} = useSelector(state => state?.authstate)
 
   const catagoryList = [...new Set(coursesList.map(c => c.catagory))]
   const [showCourseCatagoryList, setShowCourseCatagoryList] = useState(false)
@@ -39,7 +41,13 @@ function HomeLayout({ children }) {
     setList(prev => prev.slice(0, 3))
   }
 
-  
+        const handleLogout = async () => {
+          const response = await dispatch(logout(data._id));
+          if (response?.payload?.success) {
+            setShowMenuOptions(false)
+            navigate('/')
+          }
+        };
 
   const changeWidth = () => {
     const drawerside = document.getElementsByClassName("drawer-side");
@@ -54,6 +62,26 @@ function HomeLayout({ children }) {
     drawerside[0].style.width = 0;
   };
 
+  const sendAdminRequest = async () => {
+    if (window.confirm('Once you become admin you can add your own courses, do you want send request for admin?')) {
+    if (!isLoggedIn) {
+      navigate('/login')
+      toast.error('please login to continue')
+      return;
+    }
+
+      const response = await dispatch(becomeAdminNow(data._id))
+
+      if (response.payload.success) {
+        toast.success('you will be notified once aprooved')
+        const res = await dispatch(getUserData(data._id));
+        console.log(res);
+
+      }
+
+    }
+  }
+
   useEffect(() => {
     const getCourses = async () => {
       await dispatch(getcoursesList())
@@ -62,10 +90,17 @@ function HomeLayout({ children }) {
     getCourses()
   }, [])
   return (
-    <div className=" min-h-[100vh]  bg-gradient-to-b from-blue-200 via-cyan-100 to-slate-50  ">
-      <div className="absolute left-0 z-50 w-full lg:w-fit lg:hidden block">
+    <div className=" min-h-[100vh] max-w-full overflow-hidden  bg-gradient-to-b from-blue-200 via-cyan-100 to-slate-50  ">
+     
+     <div className="w-full lg:hidden shadow-[0_0_10px_black] border-2 bg-white ps-4 pt-2">
+
+     <img onClick={() => navigate('/')} src={logo} alt="" className=" w-16 h-12 bg-white" />
+     </div>
+     
+     
+      <div className="absolute   top-0  right-0 z-50 w-fit lg:w-fit lg:hidden block">
         <input type="checkbox" className="drawer-toggle" id="my-drawer" />
-        <div className="drawer-content">
+        <div className="drawer-content ">
           <label htmlFor="my-drawer" className=" cursor-pointer relative">
             <FiMenu
               onClick={changeWidth}
@@ -75,16 +110,16 @@ function HomeLayout({ children }) {
           </label>
         </div>
 
-        <div className="drawer-side  lg:hidden block w-0">
+        <div className="drawer-side top-0 -left-24 bg-white absolute  lg:hidden block w-0">
           <label htmlFor="my-drawer" className="drawer-overlay "></label>
-          <ul className="menu pr-0 text-lg p-4 w-48 sm:w-64 bg-base-200 h-screen text-base-content relative">
-            <li className="absolute h-10 text-xl right-2 z-50">
+          <ul className="menu   text-sm  py-4 lg:w-48 w-40 sm:w-64 bg-gray-300 h-screen   text-black relative">
+            <li className="absolute  h-10 text-xl right-2 z-50">
               <button onClick={hideDrawer} className=" text-center hover:bg-gray-600 hover:text-white h-[100%]">
                 <AiFillCloseCircle className="" />
               </button>
             </li>
 
-            <li className=" ">
+            <li className="hover:bg-gray-300 w-full ">
               <Link to={"/"}>Home</Link>
             </li>
             {isLoggedIn && role === "ADMIN" && (
@@ -92,9 +127,12 @@ function HomeLayout({ children }) {
                 <Link to={"/admin/dashboard"}>Admin dashboard</Link>
               </li>
             )}
+              { role !== "SUPER ADMIN" ?(<li>
+                <span onClick={isLoggedIn && role==="USER"?()=>sendAdminRequest() :isLoggedIn && role==="ADMIN"?() => navigate('/course/create') :() => navigate('login')}>Add courses</span>
+              </li>):null}
             {isLoggedIn && role === "SUPER ADMIN" && (
               <li>
-                <Link to={"/superadmin/dashboard"}>Super Admin Dashboard</Link>
+                <Link to={"/super-admin/dashboard"}>Super Admin Dashboard</Link>
               </li>
             )}
             <li>
@@ -110,11 +148,11 @@ function HomeLayout({ children }) {
             {!isLoggedIn && (
               <li>
                 <div className="  flex items-center justify-start">
-                  <button className=" rounded-md bg-primary w-1/2 lg:w-6/12 text-white text-lg font-semibold hover:bg-blue-700 transition-all ease-in-out duration-400 hover:font-bold">
-                    <Link to={'/login'}>Login</Link>
+                  <button className=" rounded-md bg-primary w-[45%]  text-white text-lg px-2 font-semibold hover:bg-blue-700 transition-all ease-in-out duration-400 hover:font-bold">
+                    <Link className=" w-full" to='/login'>Login</Link>
                   </button>
-                  <button className=" rounded-md bg-secondary w-1/2 lg:w-6/12 text-white  text-lg font-semibold hover:bg-pink-500 transition-all ease-in-out duration-400 hover:font-bold">
-                    <Link to={'/signUp'}>Signup</Link>
+                  <button className=" rounded-md bg-secondary w-[55%]  text-white px-1  text-lg font-semibold hover:bg-pink-500 transition-all ease-in-out duration-400 hover:font-bold">
+                    <Link className=" w-full" to={'/signUp'}>Signup</Link>
                   </button>
                 </div>
               </li>
@@ -122,10 +160,10 @@ function HomeLayout({ children }) {
             {isLoggedIn && (
               <li>
                 <div className="  flex items-center justify-start">
-                  <button className=" rounded-md bg-primary w-1/2 lg:w-1/2 text-white text-lg font-semibold">
+                  <button className=" rounded-md bg-primary px-2 w-[45%] text-white text-lg font-semibold">
                     <Link to='/user/profile'>profile</Link>
                   </button>
-                  <button className=" rounded-md bg-secondary w-1/2 lg:w-1/2 text-white  text-lg font-semibold"
+                  <button className=" rounded-md bg-secondary px-1 w-[55%] text-white  text-lg font-semibold"
                     onClick={() => handleLogout()}>
                     logout
                   </button>
