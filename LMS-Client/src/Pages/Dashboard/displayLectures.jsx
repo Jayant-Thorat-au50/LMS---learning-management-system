@@ -103,20 +103,20 @@ onload()
   }, [])
 
   return (
-    <div className=' min-h-[100vh]'>
+    <div className=' min-h-[100vh] max-w-full bg-gray-300 '>
       {lectures?.length > 0 ? (
       <div className=' flex flex-col bg-gray-300 items-center justify-between gap-7 w-full py-5 text-white'>
-        <div className=' text-center font-semibold text-2xl text-blue-600'>
+        <div className=' text-center font-semibold text-xl lg:text-2xl text-blue-600'>
           Course name : <span className=' text-black capitalize'>{state.title}</span>
         </div>
         <div className='w-full flex justify-center items-start gap-5 '>
           {/* left section for playing videos */}
-          <div className=' space-y-5 w-[45rem] h-full border-2 border-black rounded'>
+          <div className=' space-y-5 w-[15rem] lg:px-0 lg:w-[45rem] lg:h-full border-2 border-black rounded'>
             <video
               src={lectures && lectures[currentVideo]?.lectureSrc?.secure_url}
               controls
               disablePictureInPicture
-              className=' object-fill rounded-tr-md rounded-tl-md w-full'
+              className=' object-fill rounded-tr-md h-[20rem] rounded-tl-md '
               controlsList='nodownload'
             ></video>
 
@@ -139,7 +139,7 @@ onload()
           </div>
 
           {/* right section of the page for displaying list of the lectures*/}
-          <ul className=' w-[25rem] overflow-y-scroll h-full border-2 border-black px-2 gap-3 flex flex-col items-center'>
+          <ul className=' hidden w-[25rem] overflow-y-scroll h-full border-2 border-black px-2 gap-3 lg:flex flex-col items-center'>
             <li className=' flex w-full mt-2  items-center'>
               {role === "ADMIN" ? (
                 <div className=' flex justify-between ps-4 w-full relative'>

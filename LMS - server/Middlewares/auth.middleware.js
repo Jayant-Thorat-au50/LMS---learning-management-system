@@ -6,7 +6,6 @@ const UserModel = require('../Models/UserModel.js')
  const isLoggedIn = async (req, _res, next) => {
   // extracting token from the cookies
   const { Token } = req.cookies;
-  console.log(Token);
   
     
   // If no token send unauthorized message
@@ -22,6 +21,8 @@ const UserModel = require('../Models/UserModel.js')
     return next(new AppError("Unauthorized, please login to continue", 401));
   }
    
+  console.log(decoded);
+  
 
   // If all good store the id in req object, here we are modifying the request object and adding a custom field user in it
   req.user = decoded;

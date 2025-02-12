@@ -24,12 +24,12 @@ function AboutUs() {
                             our mission to offer the globe high-quality education. We give students and prospective instructors a forum to exchange information, abilities, and creative ideas. to empower and support humanity's development and well-being
                         </p>
                     </section>
-                    <section className='w-10/12 lg:w-6/12 space-y-6 flex justify-center'>
+                    <section className='w-full lg:w-6/12 space-y-6 flex justify-center'>
                         <img src={aboutMainImage} alt="" className='rounded-lg w-10/12' />
                     </section>
                 </div>
 
-                <div className="carousel w-1/2 bg-white  ">
+                <div className="carousel w-full lg:w-1/2 bg-white  ">
                     {
                         visionaries && visionaries.map((carousel) =>
                             <Carousel

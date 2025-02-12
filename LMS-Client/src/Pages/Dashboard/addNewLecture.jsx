@@ -101,7 +101,7 @@ function AddNewLecture() {
 
                         <div className=' flex flex-col w-full gap-1'>
 
-                            <textarea value={userInput.description} type="text" onChange={hanldeInputChange} id='description' name='description' className=' text-white w-full py-1 bg-transparent px-2  border-2 border-gray-400 rounded-md resize-none h-36' placeholder='Enter the description of the lecture' />
+                            <textarea value={userInput.description} type="text" onChange={hanldeInputChange} id='description' name='description' className=' text-black w-full py-1 bg-transparent px-2  border-2 border-gray-400 rounded-md resize-none h-36' placeholder='Enter the description of the lecture' />
                         </div>
 
 

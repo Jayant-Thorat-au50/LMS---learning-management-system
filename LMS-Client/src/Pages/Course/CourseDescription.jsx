@@ -65,7 +65,7 @@ function CourseDescription() {
 
     return (
         <HomeLayout>
-            <div className=' w-full min-h-[90vh] flex justify-center items-center flex-col px-28 text-white  relative'>
+            <div className=' w-full min-h-[90vh] flex justify-center items-center flex-col px-5 lg:px-28 text-white  relative'>
                 {role === "ADMIN" && courseObj.createdby == data.fullName ? (
                     <div className=' w-fit z-50    absolute right-24 top-10 cursor-pointer '>
                         <button
@@ -73,9 +73,9 @@ function CourseDescription() {
                         className=' btn bg-yellow-500 hover:bg-yellow-600  px-2 py-1 transition-all ease-in-out duration-200 rounded-md text-2xl font-semibold text-black'>Edit Course</button>
                     </div>
                 ):null}
-                <div className=' flex justify-evenly items-start gap-10  py-10 relative'>
+                <div className=' w-full flex justify-evenly flex-col lg:flex-row items-start gap-10  py-10 relative'>
                     {/* left side of the page */}
-                    <div className=' w-6/12   bg-white  shadow-[0_0_10px_gray]  space-y-5 overflow-hidden rounded-md '>
+                    <div className=' w-full lg:w-6/12   bg-white  shadow-[0_0_10px_gray]  space-y-5 overflow-hidden rounded-md '>
                         <img
                             className=' w-full h-48 hover:scale-110 object-cover transition-all ease-in-out duration-200'
                             src={courseObj?.thumbnail?.secure_Url}
@@ -97,9 +97,9 @@ function CourseDescription() {
                         {role === "ADMIN" || role === "SUPER ADMIN" || data?.subscription?.status === "Active" ? (
                             <button
                                 onClick={displayLectures}
-                                className=' bg-yellow-600 text-xl rounded-md px-5 py-3 font-bold hover:bg-yellow-500 transition-all ease-in-out duration-150 hover:text-black w-full tracking-widest'>Watch Lectures</button>
+                                className=' bg-yellow-600 text-xl px-5 py-3 font-semibold lg:font-bold hover:bg-yellow-500 transition-all ease-in-out duration-150 hover:text-black w-full tracking-widest'>Watch Lectures</button>
                         ) : (
-                            <button className=' bg-blue-600 text-xl rounded-md px-5 py-3 font-bold hover:bg-blue-500 transition-all ease-in-out duration-300 hover:text-black w-full tracking-widest'
+                            <button className=' bg-blue-600 text-xl px-5 py-3 font-bold hover:bg-blue-500 transition-all ease-in-out duration-300 hover:text-black w-full tracking-widest'
                                 onClick={() => navigate('/checkout')}
                             >Subscribe Bundle</button>
                         )}

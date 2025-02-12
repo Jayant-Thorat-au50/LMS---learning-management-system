@@ -36,13 +36,13 @@ function Footer() {
   // getting the year by inbuild js method
   const year = new Date().getFullYear();
   return (
-    <footer className=" relative  h-[10vh] flex flex-column sm:flex-row items-center justify-between text-white bg-gray-800 py-5 sm:px-20 px-5 lg:px-5">
+    <footer className=" relative bottom-0  h-[10vh] flex flex-column sm:flex-row items-center justify-between text-white bg-gray-800 py-5 sm:px-20 px-5 lg:px-5">
       <section className=" text-lg">
         Copyright &copy; {year} | All rights reserved
       </section>
 
 
-      <section className=" flex justify-between gap-5 items-center">
+      <section className=" flex-col gap-4  lg:flex justify-between lg:gap-5 items-center">
         {(isLoggedIn && role === 'USER' && data.requestForAdmin === "Pending") ? (<div>
           <p
             onClick={sendAdminRequest}
