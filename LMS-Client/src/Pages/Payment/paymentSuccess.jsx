@@ -13,7 +13,7 @@ function PaymentSuccess() {
                     <p className=' text-white text-3xl px-2 py-2'>Payment successfull</p>
                   </div>
 
-                  <div className=' text-white text-xl text-center flex flex-col items-center gap-12 '>
+                  <div className=' text-dark text-xl text-center flex flex-col items-center gap-12 '>
                   <p className='  '>
                     Welcome to the pro bundle <br /> now you can enjoy all the courses
                   </p>

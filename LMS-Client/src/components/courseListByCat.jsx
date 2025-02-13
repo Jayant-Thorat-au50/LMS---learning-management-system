@@ -21,7 +21,7 @@ function CourseListByCat({ catagory }) {
                         onClick={() =>  navigate(`/course/${catagory}`)}
                         className=' rounded-md text-gray-400  font-bold px-1 py-1 bg-white'>View all &gt;&gt;</button>
                         <button
-                            onClick={() => navigate('course/create')}
+                            onClick={() => navigate('/course/create')}
                             className=' text-black font-bold rounded-md bg-yellow-500 px-1 py-1'>Add Course</button>
                     </div>
                 ) : (

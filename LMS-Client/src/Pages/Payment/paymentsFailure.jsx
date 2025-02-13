@@ -13,7 +13,7 @@ function PaymentFailure() {
                     <p className=' text-white text-3xl px-2 py-2'>Payment failed</p>
                   </div>
 
-                  <div className=' text-white text-xl text-center flex flex-col items-center gap-12 '>
+                  <div className=' text-dark text-xl text-center flex flex-col items-center gap-12 '>
                   <p className='  '>
                     oops! payment failed please try again
                   </p>

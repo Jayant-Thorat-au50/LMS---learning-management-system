@@ -50,10 +50,10 @@ function Hero() {
                 {/* right part */}
                 <div className='   w-[100%] lg:w-[40%]  flex h-[20rem] lg:h-[28rem] items-center  flex-col justify-center relative '>
                     <div className=' flex'>
-                        <img alt="" className='  absolute lg:left-20 lg:top-9  left-10 top-16 w-36 h-28 lg:w-40 lg:h-32 lg:rounded-3xl rounded-lg' src={hero8} />
-                        <img alt="" className=' bg-blue-200 absolute lg:right-8 right-14 top-1 lg:-top-3 w-40 h-40 lg:w-40 lg:h-40 lg:rounded-3xl rounded-lg' src={hero9} />
+                        <img alt="" className='2xl:h-32 2xl:w-40  absolute lg:left-20 lg:top-9  left-10 top-16 w-36 h-28 lg:w-40 lg:h-32 lg:rounded-3xl rounded-lg' src={hero8} />
+                        <img alt="" className=' 2xl:h-44 2xl:w-44 bg-blue-200 absolute lg:right-8 right-14 top-1 lg:-top-3 w-40 h-40 lg:w-40 lg:h-40 lg:rounded-3xl rounded-lg' src={hero9} />
                     </div>
-                    <img alt="" className='  absolute lg:right-10 right-10 w-56 h-32 bottom-2 lg:bottom-24 mt-3 lg:w-56 lg:h-44 lg:rounded-3xl rounded-lg' src={hero5} />
+                    <img alt="" className=' 2xl:w-60 2xl:h-36  absolute lg:right-10 right-10 w-56 h-32 bottom-2 lg:bottom-24 mt-3 lg:w-56 lg:h-44 lg:rounded-3xl rounded-lg' src={hero5} />
                 </div>
             </div>
 

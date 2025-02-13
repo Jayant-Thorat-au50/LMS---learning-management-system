@@ -83,7 +83,9 @@ function AddNewLecture() {
                             Add new lecture
                         </h1>
 
-                        <button onClick={() => navigate(-1)} className=' absolute  -left-24  bottom-0'>
+                        <button onClick={() =>{
+                            toast.dismiss()
+                            navigate(-1)}} className=' absolute  -left-24  bottom-0'>
                             <AiOutlineArrowLeft className=' text-black font-bold hover:text-blue-500 transition-all ease-in-out duration-200 text-2xl' />
                         </button>
                     </header>

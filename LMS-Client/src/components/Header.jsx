@@ -4,9 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { becomeAdminNow, getUserData, logout } from '../../Redux/Slices/Authslice';
 import logo from '../assets/download-removebg-preview (1).png'
 import { CiSearch } from "react-icons/ci";
-import { BsDatabaseFillCheck } from "react-icons/bs";
-import { FiMenu } from "react-icons/fi";
-import { AiFillCloseCircle } from "react-icons/ai";
 import toast from 'react-hot-toast';
 
 function Header() {
@@ -100,7 +97,7 @@ function Header() {
                         </select>
         
                         {/* absolute component of the catagory wise course list in the header */}
-                        {showCourseCatagoryList ? (<div className=" absolute w-[940px] h-[22rem] top-12 left-[6.9rem]  shadow-[0_0_5px_gray] my-1 rounded flex bg-white">
+                        {showCourseCatagoryList ? (<div className=" absolute w-[940px] h-[22rem] lg:top-13 2xl:top-14 left-[6.9rem]  shadow-[0_0_5px_gray] my-1 rounded flex bg-white">
                           <div className={`w-[27%] border-black h-full grid-rows-${catagoryList.length} grid`}>
                             {catagoryList.map((c,idx) => 
                             <div 
@@ -153,7 +150,7 @@ function Header() {
                         <input type="text" value={targetVal} onChange={searchCourses } className=" focus:outline-none text-lg py-1 w-[80%] cursor-pointer text-black bg-white" placeholder="Enter course name..." />
                         {showCourseList ? <div
                         // onClick={searchCourses}
-                        className=' absolute border-2 border-black -bottom-12 z-1 w-36 h-14'>
+                        className=' absolute -bottom-12 z-1 w-36 h-14'>
                           <p>{foundVal}</p>
                         </div>:(null)}
                       </li>

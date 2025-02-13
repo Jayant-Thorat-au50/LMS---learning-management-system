@@ -67,10 +67,10 @@ function CourseDescription() {
         <HomeLayout>
             <div className=' w-full min-h-[90vh] flex justify-center items-center flex-col px-5 lg:px-28 text-white  relative'>
                 {role === "ADMIN" && courseObj.createdby == data.fullName ? (
-                    <div className=' w-fit z-50    absolute right-24 top-10 cursor-pointer '>
+                    <div className=' w-fit z-50    absolute left-6 lg:right-24 top-7 lg:top-10 cursor-pointer '>
                         <button
                          onClick={openEditCourseModal}
-                        className=' btn bg-yellow-500 hover:bg-yellow-600  px-2 py-1 transition-all ease-in-out duration-200 rounded-md text-2xl font-semibold text-black'>Edit Course</button>
+                        className=' lg:btn bg-yellow-500 hover:bg-yellow-600  px-1 py-1 lg:px-2 lg:py-1 transition-all ease-in-out duration-200 rounded-md text-lg lg:text-2xl font-semibold text-black'>Edit Course</button>
                     </div>
                 ):null}
                 <div className=' w-full flex justify-evenly flex-col lg:flex-row items-start gap-10  py-10 relative'>

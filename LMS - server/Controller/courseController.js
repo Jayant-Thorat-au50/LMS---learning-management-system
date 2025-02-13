@@ -271,7 +271,7 @@ const addLecture = async (req, res, next) => {
           req.file.path,
           {
             folder: "lms-lecture-videos",
-            chunk_size: 500000000000,
+            chunk_size: 50000000 ,
             resource_type: "video",
           }
         );

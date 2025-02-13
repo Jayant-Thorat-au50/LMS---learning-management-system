@@ -110,9 +110,8 @@ function SignUp() {
         <HomeLayout>
 
             <div className=' w-full h-[90vh] flex  bg-[#F2F2FD] justify-center items-center'>
-                <div className=' w-full grid grid-cols-2 px-20'>
-                    <form action="" onSubmit={createAccount} encType='multipart/form-data' noValidate className='shadow-[0_0_7px_gray
-                    ] bg-white w-96 flex flex-col gap-2 items-start mx-auto'>
+                <div className=' w-full grid grid-cols-2 px-4 lg:px-20'>
+                    <form onSubmit={createAccount} encType='multipart/form-data' noValidate className='shadow-[0_0_10px_black] bg-white w-96 flex flex-col gap-2 items-start mx-auto'>
                         <h1 className=' text-center px-10 capitalize font-bold text-xl my-2 text-blue-500'>Begin your journy with us!</h1>
 
                         <div className=' flex justify-center items-center w-full flex-col px-10'>
@@ -158,7 +157,7 @@ function SignUp() {
 
                     </form>
 
-                    <div className=' w-3/4 flex flex-col items-start justify-center gap-10 '>
+                    <div className=' hidden w-3/4 lg:flex flex-col items-start justify-center gap-10 '>
                         <h1 className=' text-3xl font-semibold text-black'>come join us</h1>
                         <div className=' w-full flex flex-col justify-center items-start gap-5'>
                             <div className=' text-black text-xl gap-7 flex justify-between items-center'>

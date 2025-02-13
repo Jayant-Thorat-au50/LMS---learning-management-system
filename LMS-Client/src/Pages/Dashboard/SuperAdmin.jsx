@@ -46,6 +46,11 @@ function SuperAdmin() {
 
 
 
+      
+
+   console.log(SAdminReqList);
+   
+
     const loadInfo = async () => {
         const res = await dispatch(getRequestList())
         const res1 = await dispatch(getAllUserData())
@@ -70,6 +75,8 @@ function SuperAdmin() {
 
     const onAuthorizeAdmin = async (reqUser) => {
       
+        console.log(reqUser);
+        
         const response = await dispatch(authorizeAdmin(reqUser))
         if (response.payload.success) {
             setrequestStatus({
@@ -133,10 +140,10 @@ function SuperAdmin() {
                                     <div className=' space-x-5'>
                                         <span
                                             onClick={() => onAuthorizeAdmin(reqUser)}
-                                            className='px-2 py-1 font-semibold text-black bg-green-500 rounded-md transition-all ease-in-out duration-200 hover:bg-green-700'>{requestStatus.aprooved ? 'Aprooved':'Aproove'}</span>
+                                            className='px-2 py-1 font-semibold text-black bg-green-500 rounded-md transition-all ease-in-out duration-200 hover:bg-green-700'>{data.requestForAdmin != "Pending" ? 'Aprooved':'Aproove'}</span>
                                         <span
                                         onClick={() => rejectAdminrequest(reqUser)}
-                                        className=' px-2 py-1 font-semibold text-black bg-red-600 rounded-md transition-all ease-in-out duration-200 hover:bg-red-700'>{requestStatus.rejected ? 'Rejected':'Reject'}</span>
+                                        className=' px-2 py-1 font-semibold text-black bg-red-600 rounded-md transition-all ease-in-out duration-200 hover:bg-red-700'>{data.requestForAdmin != "Pending"  ? 'Rejected':'Reject'}</span>
                                     </div>
                                 </div>
                             </li>)}
@@ -177,7 +184,7 @@ function SuperAdmin() {
                                                 <BsCollectionPlayFill className=' text-white hover:scale-110 object-cover transition-all ease-in-out duration-200' />
                                             </button>
                                             <button
-                                                onClick={() => onCourseDelete(course)}
+                                                onClick={() => onCourseDelete(course._id)}
                                                 className=' bg-red-500 hover:bg-red-700 transition-all ease-in-out duration-300 text-2xl p-2 rounded-md'>
                                                 <BsTrash className=' text-white hover:scale-110 object-cover transition-all ease-in-out duration-200' />
                                             </button>
