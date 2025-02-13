@@ -36,7 +36,7 @@ function HomePage() {
                 <Hero />
 
                    {/* course list by catagory */}
-                <div className=' w-full px-7 border-2 border-black  '>
+                <div className=' w-full px-7   '>
                     {catagoryList.map((catagory) => <CourseListByCat key={catagory} catagory={catagory} />)}
                 </div>
 

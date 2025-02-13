@@ -17,7 +17,7 @@ const paymentRoutes = require("./Routes/PaymentRoutes.js");
 
 const app = express();
 app.use(cors({
-  origin:"http://localhost:5173",
+  origin:"https://zingy-pasca-df4806.netlify.app/",
   credentials:true
 }));
 const PORT = process.env.PORT;
